@@ -19,16 +19,13 @@ module OdaniaCore
 	# end
 	#
 	# This examples shows only a part of the configuration possibilities
-	def self.configure
+	def self.setup
 		yield OdaniaCore::Configuration
+		@@helpers.each { |h| h.define_helpers(self.config) }
 	end
 
 	# Retrieve configuration
 	def self.config
 		OdaniaCore::Configuration
-	end
-
-	def self.setup
-		@@helpers.each { |h| h.define_helpers(self.config) }
 	end
 end

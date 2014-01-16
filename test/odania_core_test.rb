@@ -6,13 +6,13 @@ class OdaniaCoreTest < ActiveSupport::TestCase
 	end
 
 	test 'configure block yields OdaniaCore::Configuration' do
-		OdaniaCore.configure do |config|
+		OdaniaCore.setup do |config|
 			assert_equal OdaniaCore::Configuration, config
 		end
 	end
 
 	test 'configuration' do
-		OdaniaCore.configure do |config|
+		OdaniaCore.setup do |config|
 			config.user_signed_in_function = 'signed_in?'
 			config.current_user_function = 'current_user'
 		end
