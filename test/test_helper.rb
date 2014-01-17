@@ -12,7 +12,29 @@ Rails.backtrace_cleaner.remove_silencers!
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
-# Load fixtures from the engine
-if ActiveSupport::TestCase.method_defined?(:fixture_path=)
-	ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
+# Load factories
+Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| require f }
+
+class ActiveSupport::TestCase
+	ActiveRecord::Migration.check_pending!
+
+	# Add more helper methods to be used by all tests here...
+	include FactoryGirl::Syntax::Methods
+end
+
+# Setup database cleaner
+DatabaseCleaner.strategy = :transaction
+module DatabaseCleanerModule
+	def before_setup
+		DatabaseCleaner.start
+	end
+
+	def after_teardown
+		DatabaseCleaner.clean
+		OdaniaCore::Controllers::Helpers.class_variable_set(:@@current_site, nil)
+	end
+end
+
+class MiniTest::Unit::TestCase
+	include DatabaseCleanerModule
 end

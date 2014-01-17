@@ -12,3 +12,10 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+
+group :development, :test do
+	gem 'factory_girl_rails'
+	gem 'minitest'
+	gem 'minitest-reporters'
+	gem 'database_cleaner'
+end

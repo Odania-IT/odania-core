@@ -1,7 +1,23 @@
 module OdaniaCore
 	module Controllers
 		module Helpers
-			#extend ActiveSupport::Concern
+			# The current site depending on the host, e.g. www.odania.de
+			def current_site
+				@@current_site ||= Site.active.where(host: request.host).first
+			end
+
+			# before_filter to make sure that we have a valid site
+			def valid_site!
+				if current_site.nil?
+					site = Site.active.where(is_default: true).first
+					return redirect_to "http://#{site.host}" unless site.nil?
+
+					render :text => 'There is no (default)-site defined!', status: :service_unavailable
+					return false
+				end
+
+				return true
+			end
 
 			# Define authentication filters and accessor helpers.
 			#
