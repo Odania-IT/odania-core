@@ -1,6 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "active_support/railtie"
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
 require "odania_core"

@@ -16,14 +16,12 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| require f }
 
 class ActiveSupport::TestCase
-	ActiveRecord::Migration.check_pending!
-
 	# Add more helper methods to be used by all tests here...
 	include FactoryGirl::Syntax::Methods
 end
 
 # Setup database cleaner
-DatabaseCleaner.strategy = :transaction
+DatabaseCleaner.strategy = :truncation
 module DatabaseCleanerModule
 	def before_setup
 		DatabaseCleaner.start
