@@ -3,6 +3,7 @@ require "odania_core/engine"
 module OdaniaCore
 	module Controllers
 		autoload :Helpers, 'odania_core/controllers/helpers'
+    autoload :UrlHelpers, 'odania_core/controllers/url_helpers'
 	end
 
 	autoload :Configuration, 'odania_core/configuration'
@@ -28,4 +29,16 @@ module OdaniaCore
 	def self.config
 		OdaniaCore::Configuration
 	end
+
+  # Include helpers in the given scope to AC and AV.
+  def self.include_helpers(scope)
+    ActiveSupport.on_load(:action_controller) do
+      include scope::Helpers if defined?(scope::Helpers)
+      include scope::UrlHelpers
+    end
+
+    ActiveSupport.on_load(:action_view) do
+      include scope::UrlHelpers
+    end
+  end
 end
