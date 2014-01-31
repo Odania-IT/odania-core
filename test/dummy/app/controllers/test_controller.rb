@@ -16,7 +16,7 @@ class TestController < ApplicationController
 	end
 
 	def test_current_site
-		render :text => current_site.to_json
+		render :text => current_site.to_json(only: ['host', 'is_active'])
 	end
 
 	def test_valid_site

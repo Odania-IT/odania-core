@@ -31,9 +31,11 @@ class HelperTest < ActionDispatch::IntegrationTest
 	end
 
 	test 'current_site returns site for host' do
+		create(:site)
+		host! 'www.domain1.com'
 		get '/test/test_current_site'
 		assert_response :success
-		assert_equal 'asd', request.body
+		assert_equal '{"host":"www.domain1.com","is_active":true}', response.body
 	end
 
 	test 'test before_filter without an default site' do
@@ -41,7 +43,7 @@ class HelperTest < ActionDispatch::IntegrationTest
 		get '/test/test_valid_site'
 		assert_response :service_unavailable
 
-		assert_equal 'There is no (default)-site defined!', request.body
+		assert_equal 'There is no (default)-site defined!', response.body
 	end
 
 	test 'test before_filter without an active site' do
@@ -56,7 +58,7 @@ class HelperTest < ActionDispatch::IntegrationTest
 		host! site.host
 		get '/test/test_valid_site'
 		assert_response :success
-		assert_equal 'ok', request.body
+		assert_equal 'ok', response.body
 	end
 end
 
