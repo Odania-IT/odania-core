@@ -15,7 +15,12 @@ FactoryGirl.define do
 		host 'test.host'
 		is_active true
 		is_default true
-		tracking_code "TRACKING CODE"
+		tracking_code 'TRACKING CODE'
 		description 'Default Site Description'
+	end
+
+	factory :redirect_site, class: OdaniaCore::Site do
+		host 'redirect.host'
+		association :redirect_to, factory: :site
 	end
 end

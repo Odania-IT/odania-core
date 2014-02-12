@@ -16,6 +16,10 @@ module OdaniaCore
 					return false
 				end
 
+				unless current_site.redirect_to.nil?
+					return redirect_to "http://#{current_site.redirect_to.host}"
+				end
+
 				return true
 			end
 

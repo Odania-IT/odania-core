@@ -60,5 +60,13 @@ class HelperTest < ActionDispatch::IntegrationTest
 		assert_response :success
 		assert_equal 'ok', response.body
 	end
+
+	test 'test redirect_to in site redirects to correct site' do
+		site = create(:redirect_site)
+		host! site.host
+		get '/test/test_valid_site'
+		assert_response :redirect
+		assert_redirected_to "http://#{site.redirect_to.host}"
+	end
 end
 

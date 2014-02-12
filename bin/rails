@@ -5,4 +5,5 @@ ENGINE_ROOT = File.expand_path('../..', __FILE__)
 ENGINE_PATH = File.expand_path('../../lib/odania_core/engine', __FILE__)
 
 require 'rails/all'
+require 'bundler/setup'
 require 'rails/engine/commands'
