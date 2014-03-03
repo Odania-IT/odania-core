@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @admin_site.name %>
+</p>
+
+<p>
+  <strong>Host:</strong>
+  <%= @admin_site.host %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @admin_site.is_active %>
+</p>
+
+<p>
+  <strong>Is default:</strong>
+  <%= @admin_site.is_default %>
+</p>
+
+<p>
+  <strong>Tracking code:</strong>
+  <%= @admin_site.tracking_code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @admin_site.description %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @admin_site.language %>
+</p>
+
+<p>
+  <strong>Redirect to:</strong>
+  <%= @admin_site.redirect_to %>
+</p>
+
+<%= link_to 'Edit', edit_admin_site_path(@admin_site) %> |
+<%= link_to 'Back', admin_sites_path %>

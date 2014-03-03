@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<strong>Title:</strong>
+	<%= @odania_content.title %>
+</p>
+
+<p>
+	<strong>Body:</strong>
+	<%= @odania_content.body %>
+</p>
+
+<p>
+	<strong>Body short:</strong>
+	<%= @odania_content.body_short %>
+</p>
+
+<p>
+	<strong>Clicks:</strong>
+	<%= @odania_content.clicks %>
+</p>
+
+<p>
+	<strong>Views:</strong>
+	<%= @odania_content.views %>
+</p>
+
+<p>
+	<strong>Publish at:</strong>
+	<%= @odania_content.published_at %>
+</p>
+
+<p>
+	<strong>Published:</strong>
+	<%= @odania_content.is_active %>
+</p>
+
+<p>
+	<strong>Site:</strong>
+	<%= @odania_content.site %>
+</p>
+
+<p>
+	<strong>Language:</strong>
+	<%= @odania_content.language %>
+</p>
+
+<%= link_to 'Back', odania_contents_path %>

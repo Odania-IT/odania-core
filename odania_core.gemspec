@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
 	s.add_dependency 'rails', '~> 4.0.2'
 	s.add_dependency 'mongoid'
+	s.add_dependency 'nokogiri'
 
 	s.add_development_dependency 'minitest'
 	s.add_development_dependency 'minitest-reporters'

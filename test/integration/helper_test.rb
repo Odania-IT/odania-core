@@ -2,11 +2,11 @@ require 'test_helper'
 
 class HelperTest < ActionDispatch::IntegrationTest
 	setup do
-		create(:default_site)
+		@default_site = create(:default_site)
 	end
 
 	test 'user_signed_in_function in called' do
-		OdaniaCore.setup do |config|
+		Odania.setup do |config|
 			config.user_signed_in_function = "'test_user_signed_in'"
 			config.current_user_function = "'test_current_user'"
 		end
@@ -22,8 +22,9 @@ class HelperTest < ActionDispatch::IntegrationTest
 
 	# TODO: Check if we can make a proper test for testing the before_filter
 	test 'authentication before_filter' do
-		OdaniaCore.setup do |config|
+		Odania.setup do |config|
 			config.authenticate_user_function = "return redirect_to '/'#"
+			config.background_enqueue = "return redirect_to '/'#"
 		end
 
 		get '/test/test_authorized'
@@ -31,15 +32,15 @@ class HelperTest < ActionDispatch::IntegrationTest
 	end
 
 	test 'current_site returns site for host' do
-		create(:site)
-		host! 'www.domain1.com'
+		site = create(:site)
+		host! site.host
 		get '/test/test_current_site'
 		assert_response :success
-		assert_equal '{"host":"www.domain1.com","is_active":true}', response.body
+		assert_equal '{"host":"'+site.host+'","is_active":true}', response.body
 	end
 
 	test 'test before_filter without an default site' do
-		OdaniaCore::Site.destroy_all
+		Odania::Site.destroy_all
 		get '/test/test_valid_site'
 		assert_response :service_unavailable
 
@@ -47,10 +48,9 @@ class HelperTest < ActionDispatch::IntegrationTest
 	end
 
 	test 'test before_filter without an active site' do
-		default_site = create(:default_site)
 		get '/test/test_valid_site'
 		assert_response :redirect
-		assert_redirected_to "http://#{default_site.host}"
+		assert_redirected_to "http://#{@default_site.host}"
 	end
 
 	test 'test before_filter for active site' do
@@ -67,6 +67,13 @@ class HelperTest < ActionDispatch::IntegrationTest
 		get '/test/test_valid_site'
 		assert_response :redirect
 		assert_redirected_to "http://#{site.redirect_to.host}"
+	end
+
+	test 'test view helpers' do
+		site = create(:redirect_site)
+		host! site.host
+		get '/test/test_view_helper'
+		assert_response :success
 	end
 end
 

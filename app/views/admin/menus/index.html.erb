@@ -1,0 +1,35 @@
+<h1>Listing admin_menus</h1>
+
+<table>
+	<thead>
+	<tr>
+		<th>Title</th>
+		<th>Published</th>
+		<th>Is default menu</th>
+		<th>Site</th>
+		<th>Language</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<% @admin_menus.each do |admin_menu| %>
+		<tr>
+			<td><%= admin_menu.title %></td>
+			<td><%= admin_menu.published %></td>
+			<td><%= admin_menu.is_default_menu %></td>
+			<td><%= admin_menu.site %></td>
+			<td><%= admin_menu.language %></td>
+			<td><%= link_to 'Show', admin_menu_path(admin_menu) %></td>
+			<td><%= link_to 'Edit', edit_admin_menu_path(admin_menu) %></td>
+			<td><%= link_to 'Destroy', admin_menu_path(admin_menu), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Menu', new_admin_menu_path %>

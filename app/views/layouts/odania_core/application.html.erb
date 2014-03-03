@@ -2,11 +2,13 @@
 <html>
 <head>
 	<title>OdaniaCore</title>
-	<%= stylesheet_link_tag "odania_core/application", media: "all" %>
-	<%= javascript_include_tag "odania_core/application" %>
+	<%= stylesheet_link_tag 'odania_core/application', media: 'all' %>
+	<%= javascript_include_tag 'odania_core/application' %>
 	<%= csrf_meta_tags %>
 </head>
 <body>
+
+<%= render partial: 'odania/shared/menu' %>
 
 <%= yield %>
 

@@ -1,0 +1,5 @@
+<ul>
+	<% current_site.get_current_menu(current_site.language).menu_items.each do |menu_item| %>
+		<li><%= link_to menu_item.title, Odania::TargetType.get_target(menu_item.target_type, menu_item.target_data) %></li>
+	<% end %>
+</ul>

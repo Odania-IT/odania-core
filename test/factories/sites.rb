@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-	factory :site, class: OdaniaCore::Site do
+	factory :site, class: Odania::Site do
 		sequence(:name) { |n| "Site #{n}" }
 		sequence(:host) { |n| "www.domain#{n}.com" }
 		is_active true
@@ -10,7 +10,7 @@ FactoryGirl.define do
 		sequence(:description) { |n| "Site Description #{n}" }
 	end
 
-	factory :default_site, class: OdaniaCore::Site do
+	factory :default_site, class: Odania::Site do
 		name 'Default Site'
 		host 'test.host'
 		is_active true
@@ -19,7 +19,7 @@ FactoryGirl.define do
 		description 'Default Site Description'
 	end
 
-	factory :redirect_site, class: OdaniaCore::Site do
+	factory :redirect_site, class: Odania::Site do
 		host 'redirect.host'
 		association :redirect_to, factory: :site
 	end

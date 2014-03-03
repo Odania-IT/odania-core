@@ -1,0 +1,38 @@
+<h1>Listing odania_contents</h1>
+
+<table>
+	<thead>
+	<tr>
+		<th>Title</th>
+		<th>Body</th>
+		<th>Body short</th>
+		<th>Clicks</th>
+		<th>Views</th>
+		<th>Publish at</th>
+		<th>Published</th>
+		<th>Site</th>
+		<th>Language</th>
+		<th>Category</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<% @odania_contents.each do |odania_content| %>
+		<tr>
+			<td><%= odania_content.title %></td>
+			<td><%= odania_content.body %></td>
+			<td><%= odania_content.body_short %></td>
+			<td><%= odania_content.clicks %></td>
+			<td><%= odania_content.views %></td>
+			<td><%= odania_content.published_at %></td>
+			<td><%= odania_content.is_active %></td>
+			<td><%= odania_content.site %></td>
+			<td><%= odania_content.language %></td>
+			<td><%= link_to 'Show', odania_content %></td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

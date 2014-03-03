@@ -22,4 +22,7 @@ class TestController < ApplicationController
 	def test_valid_site
 		render :text => 'ok'
 	end
+
+	def test_view_helper
+	end
 end
