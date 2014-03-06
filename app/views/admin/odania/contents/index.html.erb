@@ -1,0 +1,35 @@
+<h1>Listing admin_contents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Body short</th>
+      <th>Publish at</th>
+      <th>Language</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_contents.each do |admin_content| %>
+      <tr>
+        <td><%= admin_content.title %></td>
+        <td><%= admin_content.body %></td>
+        <td><%= admin_content.body_short %></td>
+        <td><%= admin_content.published_at %></td>
+        <td><%= admin_content.language %></td>
+        <td><%= link_to 'Show', admin_content %></td>
+        <td><%= link_to 'Edit', edit_admin_odania_content_path(admin_content) %></td>
+        <td><%= link_to 'Destroy', admin_content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Content', new_admin_odania_content_path %>

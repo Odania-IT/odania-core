@@ -29,7 +29,7 @@ module DatabaseCleanerModule
 
 	def after_teardown
 		DatabaseCleaner.clean
-		Odania::Controllers::UrlHelpers.class_variable_set(:@@current_site, nil)
+		Odania::Controllers::UrlHelpers.instance_variable_set(:@current_site, nil)
 	end
 end
 

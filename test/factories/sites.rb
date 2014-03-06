@@ -8,6 +8,7 @@ FactoryGirl.define do
 		is_default false
 		sequence(:tracking_code) { |n| "TRACKING CODE #{n}" }
 		sequence(:description) { |n| "Site Description #{n}" }
+		language
 	end
 
 	factory :default_site, class: Odania::Site do
@@ -17,10 +18,12 @@ FactoryGirl.define do
 		is_default true
 		tracking_code 'TRACKING CODE'
 		description 'Default Site Description'
+		language
 	end
 
 	factory :redirect_site, class: Odania::Site do
 		host 'redirect.host'
 		association :redirect_to, factory: :site
+		language
 	end
 end

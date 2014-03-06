@@ -6,7 +6,7 @@ module Odania
 		field :name, type: String
 		field :host, type: String
 		field :is_active, type: Mongoid::Boolean, default: true
-		field :is_default, type: String, default: false
+		field :is_default, type: Mongoid::Boolean, default: false
 		field :tracking_code, type: String
 		field :description, type: String
 		field :template, type: String
@@ -27,6 +27,7 @@ module Odania
 		validates_uniqueness_of :host, :name
 		validates_length_of :host, minimum: 4
 		validate :validate_template_exists
+		validates_presence_of :language_id
 
 		def self.get_site(host)
 			Site.active.where(host: host).first

@@ -1,0 +1,57 @@
+<%= form_for([:admin, @admin_site]) do |f| %>
+	<% if @admin_site.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@admin_site.errors.count, "error") %> prohibited this admin_site from being saved:</h2>
+
+			<ul>
+				<% @admin_site.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field">
+		<%= f.label :name %>
+		<br>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :host %>
+		<br>
+		<%= f.text_field :host %>
+	</div>
+	<div class="field">
+		<%= f.label :is_active %>
+		<br>
+		<%= f.check_box :is_active %>
+	</div>
+	<div class="field">
+		<%= f.label :is_default %>
+		<br>
+		<%= f.check_box :is_default %>
+	</div>
+	<div class="field">
+		<%= f.label :tracking_code %>
+		<br>
+		<%= f.text_area :tracking_code %>
+	</div>
+	<div class="field">
+		<%= f.label :description %>
+		<br>
+		<%= f.text_area :description %>
+	</div>
+	<div class="field">
+		<%= f.label :language_id %>
+		<br>
+		<%= f.collection_select :language_id, Odania::Language.order_by([:name, :asc]), :id, :name %>
+	</div>
+	<div class="field">
+		<%= f.label :redirect_to_id %>
+		<br>
+		<%= f.collection_select :redirect_to_id, Odania::Site.order_by([:name, :asc]), :id, :name, {include_blank: true} %>
+	</div>
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+<% end %>

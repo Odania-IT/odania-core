@@ -8,10 +8,12 @@ Rails.application.routes.draw do
 	post '/contact' => 'info#contact_send'
 
 	namespace :admin do
-		resources :contents
-		resources :menus
-		resources :sites
-		resources :languages
+		namespace :odania do
+			resources :contents
+			resources :menus
+			resources :sites
+			resources :languages
+		end
 	end
 
 	root to: 'odania/welcome#index'
