@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 			resources :sites
 			resources :languages
 		end
+		get '/' => 'dashboard#index'
 	end
 
 	root to: 'odania/welcome#index'

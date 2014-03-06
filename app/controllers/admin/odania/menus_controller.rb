@@ -1,4 +1,4 @@
-class Admin::Odania::MenusController < ApplicationController
+class Admin::Odania::MenusController < AdminController
 	before_action :set_admin_menu, only: [:show, :edit, :update, :destroy]
 
 	# GET /admin/menus

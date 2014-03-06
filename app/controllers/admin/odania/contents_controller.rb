@@ -1,4 +1,4 @@
-class Admin::Odania::ContentsController < ApplicationController
+class Admin::Odania::ContentsController < AdminController
 	before_action :set_admin_content, only: [:show, :edit, :update, :destroy]
 
 	# GET /admin/contents

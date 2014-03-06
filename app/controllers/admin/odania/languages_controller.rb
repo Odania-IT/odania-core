@@ -1,4 +1,4 @@
-class Admin::Odania::LanguagesController < ApplicationController
+class Admin::Odania::LanguagesController < AdminController
 	before_action :set_admin_language, only: [:show, :edit, :update, :destroy]
 
 	# GET /admin/languages

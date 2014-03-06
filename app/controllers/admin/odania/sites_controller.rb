@@ -1,4 +1,4 @@
-class Admin::Odania::SitesController < ApplicationController
+class Admin::Odania::SitesController < AdminController
 	before_action :set_admin_site, only: [:show, :edit, :update, :destroy]
 
 	# GET /admin/sites

@@ -15,6 +15,10 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 # Load factories
 Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| require f }
 
+# Setup mock config
+require 'support/test_setup'
+OdaniaTestMock.user_authenticated = true
+
 class ActiveSupport::TestCase
 	# Add more helper methods to be used by all tests here...
 	include FactoryGirl::Syntax::Methods
