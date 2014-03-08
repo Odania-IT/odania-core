@@ -42,7 +42,7 @@ class Admin::Odania::SitesControllerTest < ActionController::TestCase
 	test 'should create content' do
 		data = {name: 'Page1', host: 'www.test.de', is_active: true, tracking_code: 'TRACK',
 				  description: 'description is here', template: 'ASDASD', language_id: @site.language_id}
-		Odania.templates << 'ASDASD'
+		Odania.templates['ASDASD'] = {name: 'Test Template', template: 'ASDASD'}
 		assert_difference 'Odania::Site.count' do
 			post :create, {odania_site: data}
 		end

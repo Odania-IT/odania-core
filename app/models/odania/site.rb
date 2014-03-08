@@ -48,6 +48,7 @@ module Odania
 		end
 
 		def validate_template_exists
+			self.template = nil if ''.eql? self.template
 			if !self.template.nil? and !Odania.templates.include?(self.template)
 				errors.add(:template, 'invalid template')
 			end
