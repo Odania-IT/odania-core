@@ -8,7 +8,7 @@
 		<th>Is active</th>
 		<th>Is default</th>
 		<th>Tracking code</th>
-		<th>Description</th>
+		<th>Template</th>
 		<th>Language</th>
 		<th>Redirect to</th>
 		<th></th>
@@ -25,7 +25,7 @@
 			<td><%= admin_site.is_active %></td>
 			<td><%= admin_site.is_default %></td>
 			<td><%= admin_site.tracking_code %></td>
-			<td><%= admin_site.description %></td>
+			<td><%= admin_site.get_template_name %></td>
 			<td><%= admin_site.language.name %></td>
 			<td><%= admin_site.redirect_to.nil? ? '-' : admin_site.redirect_to.name %></td>
 			<td><%= link_to 'Show', admin_odania_site_path(admin_site) %></td>

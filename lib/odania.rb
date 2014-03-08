@@ -53,7 +53,16 @@ module Odania
 
 	# Registered Templates
 	mattr_reader :templates
-	@@templates = Set.new
+	@@templates = Hash.new
+
+	def self.templates_for_select
+		result = []
+
+		self.templates.each_value do |template|
+			result << [template[:name], template[:template]]
+		end
+		result
+	end
 
 	# Trackable classes. Only these classes are accepted in deliver/click and will increase the counter
 	mattr_reader :trackable_classes

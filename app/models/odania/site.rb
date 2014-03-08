@@ -52,5 +52,13 @@ module Odania
 				errors.add(:template, 'invalid template')
 			end
 		end
+
+		def get_template_name
+			return '-' if self.template.blank?
+
+			template_info = Odania.templates[self.template]
+			return 'error' if template_info.nil?
+			template_info[:name]
+		end
 	end
 end

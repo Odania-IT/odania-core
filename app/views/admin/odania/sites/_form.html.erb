@@ -51,6 +51,11 @@
 		<br>
 		<%= f.collection_select :redirect_to_id, Odania::Site.order_by([:name, :asc]), :id, :name, {include_blank: true} %>
 	</div>
+	<div class="field">
+		<%= f.label :template %>
+		<br>
+		<%= f.select :template, Odania.templates_for_select, {include_blank: true} %>
+	</div>
 	<div class="actions">
 		<%= f.submit %>
 	</div>
