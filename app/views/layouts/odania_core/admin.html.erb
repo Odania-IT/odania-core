@@ -8,9 +8,20 @@
 </head>
 <body>
 
-<%= render partial: 'admin/odania/shared/menu' %>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-3" style="margin-top: 60px;">
+			<div class="well sidebar-nav">
+				<%= render partial: 'admin/odania/shared/menu' %>
+			</div>
+		</div>
 
-<%= yield %>
+		<div class="col-md-9 hfeed" style="margin-top: 60px;">
+			<%= render :partial => 'odania/shared/flashes' %>
+			<%= yield %>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>

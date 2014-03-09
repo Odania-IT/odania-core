@@ -19,11 +19,15 @@ PATH
   remote: .
   specs:
     odania_core (0.0.1)
+      bootstrap-sass (~> 3.1.1)
       ckeditor
+      coffee-rails (~> 4.0.1)
+      jquery-rails
       mongoid
       mongoid-paperclip
       nokogiri
       rails (~> 4.0.3)
+      sass-rails (~> 4.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -55,6 +59,8 @@ GEM
     ansi (1.4.3)
     arel (4.0.2)
     atomic (1.1.15)
+    bootstrap-sass (3.1.1.0)
+      sass (~> 3.2)
     bson (2.1.2)
     builder (3.1.4)
     ckeditor (4.0.10)
@@ -64,9 +70,17 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.3)
       climate_control (>= 0.0.3, < 1.0)
+    coffee-rails (4.0.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.0)
     connection_pool (1.2.0)
     database_cleaner (1.0.0.RC1)
     erubis (2.7.0)
+    execjs (2.0.2)
     factory_girl (4.3.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.3.0)
@@ -75,6 +89,10 @@ GEM
     hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
+    jquery-rails (3.1.0)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -122,6 +140,13 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.1.1)
+    ref (1.0.5)
+    sass (3.3.0)
+      rake
+    sass-rails (4.0.1)
+      railties (>= 4.0.0, < 5.0)
+      sass (>= 3.1.10)
+      sprockets-rails (~> 2.0.0)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -131,6 +156,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thor (0.18.1)
     thread_safe (0.2.0)
       atomic (>= 1.1.7, < 2)
@@ -144,12 +172,17 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-sass
   ckeditor
   database_cleaner
   factory_girl_rails
+  jquery-rails
+  libv8 (~> 3.11.8.12)
   minitest
   minitest-reporters
   mongoid!
   mongoid-paperclip!
   odania_core!
   paperclip (~> 3)
+  therubyracer (>= 0.11.4)
+  therubyrhino (>= 0.11.4)

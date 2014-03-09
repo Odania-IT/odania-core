@@ -22,4 +22,10 @@ group :development, :test do
 	gem 'database_cleaner'
 	gem 'ckeditor'
 	gem 'paperclip', '~> 3'
+
+	gem 'libv8', '~> 3.11.8.12', :platforms => :ruby
+	gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'
+	gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
+	gem 'bootstrap-sass'
+	gem 'jquery-rails'
 end

@@ -1,0 +1,12 @@
+<!-- Meta details. Date, author, category and comment -->
+<div class="meta">
+	<abbr class="updated published" title="<%= odania_content.created_at.iso8601 %>">
+		<i class="icon-calendar"></i><%= format_date(odania_content.created_at) %>
+	</abbr>
+	<i class="icon-user"></i> <%= t('authorship_by') %> <%= odania_content.user.name %>
+	<i class="icon-folder-open"></i> <%= link_to 'KATEGORIE-FIXME', {rel: 'tag'} %>
+	<span class="pull-right">
+		<i class="icon-eye-open"></i><%= odania_content.views %>
+		<i class="icon-download"></i><%= odania_content.clicks %>
+	</span>
+</div>

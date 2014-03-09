@@ -1,4 +1,5 @@
 require 'odania'
+require 'viewable'
 
 module OdaniaCore
 	class Engine < ::Rails::Engine

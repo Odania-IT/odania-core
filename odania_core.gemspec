@@ -21,6 +21,11 @@ Gem::Specification.new do |s|
 	s.add_dependency 'nokogiri'
 	s.add_dependency 'ckeditor'
 	s.add_dependency 'mongoid-paperclip'
+	s.add_dependency 'sass-rails', '~> 4.0.1'
+	s.add_dependency 'bootstrap-sass', '~> 3.1.1'
+	s.add_dependency 'coffee-rails', '~> 4.0.1'
+	s.add_dependency 'jquery-rails'
+
 
 	s.add_development_dependency 'minitest'
 	s.add_development_dependency 'minitest-reporters'

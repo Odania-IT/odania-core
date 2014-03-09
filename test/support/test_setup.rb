@@ -1,17 +1,9 @@
-class OdaniaTestUser
-	attr_accessor :admin_layout
-
-	def initialize(layout=nil)
-		self.admin_layout = layout
-	end
-end
-
 module OdaniaTestMock
 	mattr_accessor :signed_in
 	@@signed_in = false
 
 	mattr_accessor :current_user
-	@@current_user = OdaniaTestUser.new
+	@@current_user = Odania::User.find_or_create_by(name: 'Admin')
 
 	mattr_accessor :user_authenticated
 	@@user_authenticated = false

@@ -1,10 +1,15 @@
-<%= form_tag do %>
-	<%= collection_select(:site, :id, Odania::Site.order_by([:name, :asc]), :id, :name, selected: session[:site_id]) %>
-	<%= submit_tag t('Select') %>
-<% end %>
-
-<ul>
-	<% Odania.admin.admin_pages.each do |admin_page| %>
-		<li><%= link_to admin_page[:name], admin_page[:path] %></li>
+<div class="container-fluid">
+	<%= form_tag({}, {method: 'get'}) do %>
+		<%= collection_select(:site, :id, Odania::Site.order_by([:name, :asc]), :id, :name, selected: session[:site_id]) %>
+		<%= submit_tag 'Select' %>
 	<% end %>
-</ul>
+	<br/>
+
+	<div class="nav-collapse">
+		<ul class="nav nav-list">
+			<% Odania.admin.admin_pages.each do |admin_page| %>
+				<li><%= link_to admin_page[:name], admin_page[:path] %></li>
+			<% end %>
+		</ul>
+	</div>
+</div>

@@ -1,28 +1,16 @@
-<p id="notice"><%= notice %></p>
+<% content_for :title do %><%= @odania_content.title %> - <%= current_site.name.html_safe %>
+<% end %>
 
-<p>
-	<strong>Title:</strong>
-	<%= @odania_content.title %>
-</p>
+<div class="entry hentry">
+	<h1 class="entry-title"><%= @odania_content.title %></h1>
 
-<p>
-	<strong>Body:</strong>
-	<%= @odania_content.body.html_safe %>
-</p>
+	<%= render :partial => 'odania/contents/content_info', :locals => {odania_content: @odania_content} %>
 
-<p>
-	<strong>Clicks:</strong>
-	<%= @odania_content.clicks %>
-</p>
-
-<p>
-	<strong>Views:</strong>
-	<%= @odania_content.views %>
-</p>
-
-<p>
-	<strong>Publish at:</strong>
-	<%= @odania_content.published_at %>
-</p>
+	<p class="entry-content">
+		<%= @odania_content.body.html_safe %>
+	</p>
+</div>
 
 <%= link_to 'Back', odania_contents_path %>
+
+<%= render :partial => 'odania/shared/update_view_counter', :locals => {obj: @odania_content} %>

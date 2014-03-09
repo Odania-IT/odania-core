@@ -69,7 +69,7 @@ module Odania
 
 			# Set layout depending on the current site
 			def set_layout
-				current_site.template || 'application'
+				current_site.template || 'odania_core/application'
 			end
 		end
 	end

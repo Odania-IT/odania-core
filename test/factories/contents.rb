@@ -11,5 +11,6 @@ FactoryGirl.define do
 		is_active true
 		site
 		language
+		user
 	end
 end

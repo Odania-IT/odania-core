@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>OdaniaCore</title>
+	<title><%= content_for?(:title) ? strip_tags(yield(:title)) : strip_tags(current_site.name) %></title>
+	<meta name="language" content="<%= current_site.language.iso_639_1 %>"/>
 	<%= stylesheet_link_tag 'odania_core/application', media: 'all' %>
 	<%= javascript_include_tag 'odania_core/application' %>
 	<%= csrf_meta_tags %>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Mike Petersen Odania IT">
 </head>
 <body>
 
-<%= render partial: 'odania/shared/menu' %>
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<%= render partial: 'odania/shared/menu' %>
+	</div>
+</div>
 
-<%= yield %>
+<div class="container-fluid">
+	<div class="row-fluid">
 
+		<div class="col-md-9 hfeed" style="margin-top: 60px;">
+			<%= render :partial => 'odania/shared/flashes' %>
+			<%= yield %>
+		</div>
+	</div>
+</div>
+
+<%= current_site.tracking_code %>
 </body>
 </html>

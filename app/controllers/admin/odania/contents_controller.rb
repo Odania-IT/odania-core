@@ -24,6 +24,7 @@ class Admin::Odania::ContentsController < AdminController
 	# POST /admin/contents
 	def create
 		@admin_content = Odania::Content.new(admin_content_params)
+		@admin_content.user_id = current_user.id
 
 		if @admin_content.save
 			redirect_to admin_odania_contents_path, notice: 'Content was successfully created.'

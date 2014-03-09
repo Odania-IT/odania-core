@@ -16,8 +16,10 @@ Rails.application.routes.draw do
 			resources :languages
 		end
 		get '/' => 'dashboard#index'
-		post '/select_site' => 'dashboard#select_site'
 	end
+
+	# Track views
+	match "track_view/:type/:id" => "odania/statistics#track_view", :as => :update_views, via: [:get, :post, :put]
 
 	root to: 'odania/welcome#index'
 end

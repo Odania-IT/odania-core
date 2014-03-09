@@ -1,5 +1,7 @@
 class Odania::Content
 	include Mongoid::Document
+	include Mongoid::Timestamps
+
 	field :title, type: String
 	field :body, type: String
 	field :body_short, type: String
@@ -10,12 +12,13 @@ class Odania::Content
 
 	belongs_to :site, :class_name => 'Odania::Site'
 	belongs_to :language, :class_name => 'Odania::Language'
+	belongs_to :user, :class_name => 'Odania::User'
 
 	scope :active, -> { where(is_active: true) }
 
 	validates_length_of :title, minimum: 1
 	validates_length_of :body, minimum: 10
-	validates_presence_of :language_id, :site_id
+	validates_presence_of :language_id, :site_id, :user_id
 
 	before_save do
 		self.is_active = (self.published_at <= Time.now)

@@ -77,7 +77,7 @@ module Odania
 	# Trackable classes. Only these classes are accepted in deliver/click and will increase the counter
 	mattr_reader :trackable_classes
 	@@trackable_classes = Set.new
-	@@trackable_classes << 'Content'
+	@@trackable_classes << 'Odania::Content'
 
 	def self.admin
 		Odania::Admin
