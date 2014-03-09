@@ -40,9 +40,10 @@ class Admin::Odania::ContentsControllerTest < ActionController::TestCase
 	end
 
 	test 'should create content' do
-		data = {title: 'Test Title', body: 'ContentBody', body_short: 'Short', published_at: Time.now, language: @language.id.to_s}
+		data = {title: 'Test Title', body: 'ContentBody', body_short: 'Short', published_at: Time.now,
+				  language_id: @language.id.to_s, site_id: @content.site.id}
 		assert_difference 'Odania::Content.count' do
-			post :create, {admin_content: data}
+			post :create, {odania_content: data}
 		end
 		assert_response :redirect
 		assert_redirected_to admin_odania_contents_path
@@ -50,7 +51,7 @@ class Admin::Odania::ContentsControllerTest < ActionController::TestCase
 
 	test 'should update content' do
 		data = {title: 'Test Title', body: 'ContentBody', body_short: 'Short', published_at: @content.published_at, language_id: @content.language_id}
-		post :update, {id: @content.id.to_s, admin_content: data}
+		post :update, {id: @content.id.to_s, odania_content: data}
 		assert_response :redirect
 		assert_redirected_to admin_odania_contents_path
 	end

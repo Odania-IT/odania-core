@@ -27,7 +27,7 @@ module Odania
 		validates_uniqueness_of :host, :name
 		validates_length_of :host, minimum: 4
 		validate :validate_template_exists
-		validates_presence_of :language_id
+		validates_presence_of :language_id, :host, :name
 
 		def self.get_site(host)
 			Site.active.where(host: host).first

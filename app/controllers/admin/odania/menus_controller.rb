@@ -3,7 +3,7 @@ class Admin::Odania::MenusController < AdminController
 
 	# GET /admin/menus
 	def index
-		@admin_menus = Odania::Menu.all
+		@admin_menus = @admin_site.menus.order_by([:name, :asc])
 	end
 
 	# GET /admin/menus/1
@@ -13,6 +13,8 @@ class Admin::Odania::MenusController < AdminController
 	# GET /admin/menus/new
 	def new
 		@admin_menu = Odania::Menu.new
+		@admin_menu.site_id = @admin_site.id
+		@admin_menu.language_id = @admin_site.language_id
 	end
 
 	# GET /admin/menus/1/edit

@@ -22,6 +22,7 @@ FactoryGirl.define do
 	end
 
 	factory :redirect_site, class: Odania::Site do
+		name 'RedirectSite'
 		host 'redirect.host'
 		association :redirect_to, factory: :site
 		language

@@ -5,6 +5,7 @@ module Odania
 	end
 
 	autoload :Configuration, 'odania/configuration'
+	autoload :Admin, 'odania/admin'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers
@@ -64,8 +65,21 @@ module Odania
 		result
 	end
 
+	# Registered Components
+	# Components are available for display in side bar
+	mattr_accessor :components
+	@@components = Set.new
+	@@components << {template: 'odania/components/display_sites', description: 'Display specified sites',
+						  parameters: [['set', 'sites']]}
+	@@components << {template: 'odania/components/display_links', description: 'Display specified links',
+						  parameters: [['target', 'links']]}
+
 	# Trackable classes. Only these classes are accepted in deliver/click and will increase the counter
 	mattr_reader :trackable_classes
 	@@trackable_classes = Set.new
 	@@trackable_classes << 'Content'
+
+	def self.admin
+		Odania::Admin
+	end
 end

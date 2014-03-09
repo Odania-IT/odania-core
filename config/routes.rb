@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+	mount Ckeditor::Engine => '/ckeditor'
 	resources :contents, module: 'odania', as: 'odania_contents', only: [:index, :show]
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
 			resources :languages
 		end
 		get '/' => 'dashboard#index'
+		post '/select_site' => 'dashboard#select_site'
 	end
 
 	root to: 'odania/welcome#index'

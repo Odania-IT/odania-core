@@ -15,8 +15,11 @@ gemspec
 
 group :development, :test do
 	gem 'mongoid', github: 'mongoid/mongoid'
+	gem 'mongoid-paperclip', github: 'meskyanichi/mongoid-paperclip', require: 'mongoid_paperclip'
 	gem 'factory_girl_rails'
 	gem 'minitest'
 	gem 'minitest-reporters'
 	gem 'database_cleaner'
+	gem 'ckeditor'
+	gem 'paperclip', '~> 3'
 end

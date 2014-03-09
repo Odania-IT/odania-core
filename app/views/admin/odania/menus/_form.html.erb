@@ -29,7 +29,7 @@
 	<div class="field">
 		<%= f.label :site %>
 		<br>
-		<%= f.text_field :site %>
+		<%= f.collection_select :site_id, Odania::Site.order_by([:name, :asc]), :id, :name %>
 	</div>
 	<div class="field">
 		<%= f.label :language_id %>

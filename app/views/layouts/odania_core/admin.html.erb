@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OdaniaCore</title>
+	<%= stylesheet_link_tag 'odania_core_admin/application', media: 'all' %>
+	<%= javascript_include_tag 'odania_core_admin/application' %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= render partial: 'admin/odania/shared/menu' %>
+
+<%= yield %>
+
+</body>
+</html>

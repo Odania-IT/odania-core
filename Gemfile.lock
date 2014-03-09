@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/meskyanichi/mongoid-paperclip.git
+  revision: 2ca1f39a090a6a12783d72987e880c9f602e7a7e
+  specs:
+    mongoid-paperclip (0.0.8)
+      paperclip (>= 2.3.6)
+
+GIT
   remote: git://github.com/mongoid/mongoid.git
   revision: 34b3d895cf05fe9ba630f0f24529ece89bf973a5
   specs:
@@ -12,7 +19,9 @@ PATH
   remote: .
   specs:
     odania_core (0.0.1)
+      ckeditor
       mongoid
+      mongoid-paperclip
       nokogiri
       rails (~> 4.0.3)
 
@@ -48,6 +57,13 @@ GEM
     atomic (1.1.15)
     bson (2.1.2)
     builder (3.1.4)
+    ckeditor (4.0.10)
+      mime-types
+      orm_adapter (~> 0.5.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.3)
+      climate_control (>= 0.0.3, < 1.0)
     connection_pool (1.2.0)
     database_cleaner (1.0.0.RC1)
     erubis (2.7.0)
@@ -79,6 +95,12 @@ GEM
       mini_portile (~> 0.5.0)
     optionable (0.2.0)
     origin (2.1.0)
+    orm_adapter (0.5.0)
+    paperclip (3.5.4)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     polyglot (0.3.4)
     powerbar (1.0.11)
       ansi (~> 1.4.0)
@@ -122,9 +144,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ckeditor
   database_cleaner
   factory_girl_rails
   minitest
   minitest-reporters
   mongoid!
+  mongoid-paperclip!
   odania_core!
+  paperclip (~> 3)

@@ -3,7 +3,7 @@ class Admin::Odania::ContentsController < AdminController
 
 	# GET /admin/contents
 	def index
-		@admin_contents = Odania::Content.all
+		@admin_contents = @admin_site.contents.order_by([:name, :asc])
 	end
 
 	# GET /admin/contents/1
@@ -13,6 +13,8 @@ class Admin::Odania::ContentsController < AdminController
 	# GET /admin/contents/new
 	def new
 		@admin_content = Odania::Content.new
+		@admin_content.site_id = @admin_site.id
+		@admin_content.language_id = @admin_site.language_id
 	end
 
 	# GET /admin/contents/1/edit
@@ -54,6 +56,6 @@ class Admin::Odania::ContentsController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def admin_content_params
-		params.require(:admin_content).permit(:title, :body, :body_short, :published_at, :language_id)
+		params.require(:odania_content).permit(:title, :body, :body_short, :published_at, :language_id, :site_id)
 	end
 end

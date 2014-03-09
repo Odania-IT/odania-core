@@ -7,12 +7,7 @@
 
 <p>
 	<strong>Body:</strong>
-	<%= @odania_content.body %>
-</p>
-
-<p>
-	<strong>Body short:</strong>
-	<%= @odania_content.body_short %>
+	<%= @odania_content.body.html_safe %>
 </p>
 
 <p>
@@ -28,21 +23,6 @@
 <p>
 	<strong>Publish at:</strong>
 	<%= @odania_content.published_at %>
-</p>
-
-<p>
-	<strong>Published:</strong>
-	<%= @odania_content.is_active %>
-</p>
-
-<p>
-	<strong>Site:</strong>
-	<%= @odania_content.site %>
-</p>
-
-<p>
-	<strong>Language:</strong>
-	<%= @odania_content.language %>
 </p>
 
 <%= link_to 'Back', odania_contents_path %>
