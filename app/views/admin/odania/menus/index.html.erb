@@ -19,7 +19,7 @@
 		<tr>
 			<td><%= admin_menu.title %></td>
 			<td><%= admin_menu.published %></td>
-			<td><%= admin_menu.is_default_menu %></td>
+			<td><%= icon_for_bool(admin_menu.is_default_menu) %></td>
 			<td><%= admin_menu.site %></td>
 			<td><%= admin_menu.language %></td>
 			<td><%= link_to 'Show', admin_odania_menu_path(admin_menu) %></td>

@@ -23,8 +23,8 @@
 		<tr>
 			<td><%= admin_site.name %></td>
 			<td><%= admin_site.host %></td>
-			<td><%= admin_site.is_active %></td>
-			<td><%= admin_site.is_default %></td>
+			<td><%= icon_for_bool(admin_site.is_active) %></td>
+			<td><%= icon_for_bool(admin_site.is_default) %></td>
 			<td><%= admin_site.tracking_code %></td>
 			<td><%= admin_site.get_template_name %></td>
 			<td><%= admin_site.default_language.iso_639_1 %></td>

@@ -15,5 +15,10 @@ module Odania
 			end
 			result.join(', ')
 		end
+
+		def icon_for_bool(b)
+			return '<span class="glyphicon glyphicon-ok"></span>'.html_safe if b
+			'<span class="glyphicon glyphicon-remove"></span>'.html_safe
+		end
 	end
 end

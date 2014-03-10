@@ -42,7 +42,7 @@ class Admin::Odania::MenusControllerTest < ActionController::TestCase
 	test 'should create content' do
 		data = {title: 'Test Title', published: true}
 		assert_difference 'Odania::Menu.count' do
-			post :create, {admin_menu: data}
+			post :create, {odania_menu: data}
 		end
 		assert_response :redirect
 		assert_redirected_to admin_odania_menus_path
@@ -50,7 +50,7 @@ class Admin::Odania::MenusControllerTest < ActionController::TestCase
 
 	test 'should update content' do
 		data = {title: 'Test Title', published: true}
-		post :update, {id: @menu.id.to_s, admin_menu: data}
+		post :update, {id: @menu.id.to_s, odania_menu: data}
 		assert_response :redirect
 		assert_redirected_to admin_odania_menus_path
 	end

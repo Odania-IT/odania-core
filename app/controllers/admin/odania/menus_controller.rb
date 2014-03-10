@@ -56,6 +56,6 @@ class Admin::Odania::MenusController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def admin_menu_params
-		params.require(:admin_menu).permit(:title, :published, :is_default_menu, :site, :language)
+		params.require(:odania_menu).permit(:title, :published, :is_default_menu, :site, :language)
 	end
 end
