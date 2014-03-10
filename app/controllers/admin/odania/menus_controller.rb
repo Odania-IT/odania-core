@@ -14,7 +14,7 @@ class Admin::Odania::MenusController < AdminController
 	def new
 		@admin_menu = Odania::Menu.new
 		@admin_menu.site_id = @admin_site.id
-		@admin_menu.language_id = @admin_site.language_id
+		@admin_menu.language_id = @admin_site.default_language_id
 	end
 
 	# GET /admin/menus/1/edit

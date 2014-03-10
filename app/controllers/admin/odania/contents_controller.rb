@@ -14,7 +14,7 @@ class Admin::Odania::ContentsController < AdminController
 	def new
 		@admin_content = Odania::Content.new
 		@admin_content.site_id = @admin_site.id
-		@admin_content.language_id = @admin_site.language_id
+		@admin_content.language_id = @admin_site.default_language_id
 	end
 
 	# GET /admin/contents/1/edit

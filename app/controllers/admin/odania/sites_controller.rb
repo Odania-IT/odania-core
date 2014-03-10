@@ -54,6 +54,7 @@ class Admin::Odania::SitesController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def admin_site_params
-		params.require(:odania_site).permit(:name, :host, :is_active, :is_default, :tracking_code, :description, :language_id, :redirect_to_id, :template)
+		params.require(:odania_site).permit(:name, :host, :is_active, :is_default, :tracking_code, :description,
+														:redirect_to_id, :template, :default_language_id, :language_ids => [])
 	end
 end

@@ -9,6 +9,7 @@
 		<th>Is default</th>
 		<th>Tracking code</th>
 		<th>Template</th>
+		<th>Default Language</th>
 		<th>Language</th>
 		<th>Redirect to</th>
 		<th></th>
@@ -26,7 +27,8 @@
 			<td><%= admin_site.is_default %></td>
 			<td><%= admin_site.tracking_code %></td>
 			<td><%= admin_site.get_template_name %></td>
-			<td><%= admin_site.language.name %></td>
+			<td><%= admin_site.default_language.iso_639_1 %></td>
+			<td><%= list_languages(admin_site.languages) %></td>
 			<td><%= admin_site.redirect_to.nil? ? '-' : admin_site.redirect_to.name %></td>
 			<td><%= link_to 'Show', admin_odania_site_path(admin_site) %></td>
 			<td><%= link_to 'Edit', edit_admin_odania_site_path(admin_site) %></td>

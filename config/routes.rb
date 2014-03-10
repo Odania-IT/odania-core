@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 	end
 
 	# Track views
-	match "track_view/:type/:id" => "odania/statistics#track_view", :as => :update_views, via: [:get, :post, :put]
+	match 'track_view/:type/:id' => 'odania/statistics#track_view', :as => :update_views, via: [:get, :post, :put]
 
 	root to: 'odania/welcome#index'
 end

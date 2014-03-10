@@ -15,7 +15,7 @@ class Odania::WelcomeControllerTest < ActionController::TestCase
 	end
 
 	test 'test should redirect to first parent menu item' do
-		menu = create(:menu_with_items, site: @site, amount: 1, is_default_menu: true)
+		menu = create(:menu_with_items, site: @site, amount: 1, language: @site.default_language)
 		menu_item = menu.menu_items.first
 
 		get :index
@@ -24,7 +24,7 @@ class Odania::WelcomeControllerTest < ActionController::TestCase
 	end
 
 	test 'test should redirect to default menu item' do
-		menu = create(:menu_with_items, site: @site, amount: 1, is_default_menu: true)
+		menu = create(:menu_with_items, site: @site, amount: 1, language: @site.default_language)
 		menu_item = create(:menu_item, menu: menu, is_default_page: true)
 
 		get :index

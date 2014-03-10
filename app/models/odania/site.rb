@@ -17,7 +17,8 @@ module Odania
 		# SEO
 		field :keywords, type: String
 
-		belongs_to :language, :class_name => 'Odania::Language'
+		has_and_belongs_to_many :languages, inverse_of: nil, :class_name => 'Odania::Language'
+		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
 		has_many :menus, :class_name => 'Odania::Menu'
 		has_many :contents, :class_name => 'Odania::Content'
@@ -26,24 +27,25 @@ module Odania
 
 		validates_uniqueness_of :host, :name
 		validates_length_of :host, minimum: 4
-		validate :validate_template_exists
-		validates_presence_of :language_id, :host, :name
+		validate :validate_template_exists, :validate_language_is_present
+		validates_presence_of :host, :name
 
 		def self.get_site(host)
-			Site.active.where(host: host).first
+			Odania::Site.active.where(host: host).first
 		end
 
 		attr_accessor :menu_cache
-		def get_current_menu(language)
-			iso_639_1 = language.nil? ? '' : language.iso_639_1
+		def get_current_menu(locale)
 			self.menu_cache = {} if self.menu_cache.nil?
-			return self.menu_cache[iso_639_1] unless self.menu_cache[iso_639_1].nil?
+			return self.menu_cache[locale] unless self.menu_cache[locale].nil?
 
-			current_menu = self.menus.where(language_id: language.id).first unless language.nil?
-			current_menu = self.menus.where(is_default_menu: true).first if current_menu.nil?
+			language = Odania::Language.where(iso_638_1: locale).first
+			language = self.default_language if language.nil?
+
+			current_menu = self.menus.where(language_id: language.id).first unless locale.nil?
 			current_menu = self.menus.build if current_menu.nil?
 
-			self.menu_cache[iso_639_1] = current_menu
+			self.menu_cache[locale] = current_menu
 			return current_menu
 		end
 
@@ -54,12 +56,36 @@ module Odania
 			end
 		end
 
+		def validate_language_is_present
+			if self.default_language_id.nil?
+				self.language_ids << self.default_language_id
+			end
+
+			if self.language_ids.empty?
+				if self.default_language.nil?
+					errors.add(:languages, 'select at least one language')
+				else
+					self.language_ids << self.default_language_id
+				end
+			end
+
+			unless self.language_ids.include? self.default_language_id
+				errors.add(:languages, 'default language has to be in the list of languages')
+			end
+		end
+
 		def get_template_name
 			return '-' if self.template.blank?
 
 			template_info = Odania.templates[self.template]
 			return 'error' if template_info.nil?
 			template_info[:name]
+		end
+
+		before_save do
+			self.default_language = self.languages.first if self.default_language.nil?
+
+			return true
 		end
 	end
 end

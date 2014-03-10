@@ -15,10 +15,4 @@ class Odania::StatisticsController < ApplicationController
 
 		render :text => updated ? 'updated' : 'duplicate'
 	end
-
-	private
-
-	def get_mongo_id(id)
-		id.split('-').first
-	end
 end

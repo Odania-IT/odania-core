@@ -3,12 +3,12 @@ class Odania::ContentsController < ApplicationController
 
 	# GET /odania/contents
 	def index
-		@odania_contents = Odania::Content.all
+		@odania_contents = current_site.contents
 	end
 
 	# GET /odania/contents/1
 	def show
-		@odania_content = Odania::Content.where(_id: params[:id]).first
+		@odania_content = current_site.contents.where(_id: get_mongo_id(params[:id])).first
 		return not_found if @odania_content.nil?
 	end
 end

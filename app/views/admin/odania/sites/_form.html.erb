@@ -42,9 +42,14 @@
 		<%= f.text_area :description %>
 	</div>
 	<div class="field">
-		<%= f.label :language_id %>
+		<%= f.label :language_ids %>
 		<br>
-		<%= f.collection_select :language_id, Odania::Language.order_by([:name, :asc]), :id, :name %>
+		<%= f.collection_select :language_ids, Odania::Language.order_by([:name, :asc]), :id, :name, {}, {multiple: true} %>
+	</div>
+	<div class="field">
+		<%= f.label :default_language_id %>
+		<br>
+		<%= f.collection_select :default_language_id, Odania::Language.order_by([:name, :asc]), :id, :name %>
 	</div>
 	<div class="field">
 		<%= f.label :redirect_to_id %>

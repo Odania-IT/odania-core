@@ -22,9 +22,9 @@
 		<%= f.check_box :published %>
 	</div>
 	<div class="field">
-		<%= f.label :is_default_menu %>
+		<%= f.label :menu_type %>
 		<br>
-		<%= f.check_box :is_default_menu %>
+		<%= f.select :menu_type, Odania::Menu::MENU_TYPES %>
 	</div>
 	<div class="field">
 		<%= f.label :site %>

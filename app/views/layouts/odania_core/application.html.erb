@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title><%= content_for?(:title) ? strip_tags(yield(:title)) : strip_tags(current_site.name) %></title>
-	<meta name="language" content="<%= current_site.language.iso_639_1 %>"/>
+	<meta name="language" content="<%= current_menu.get_locale %>"/>
 	<%= stylesheet_link_tag 'odania_core/application', media: 'all' %>
 	<%= javascript_include_tag 'odania_core/application' %>
 	<%= csrf_meta_tags %>
@@ -13,8 +13,8 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
 		<%= render partial: 'odania/shared/menu' %>
 	</div>
 </div>
