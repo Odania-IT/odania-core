@@ -16,7 +16,7 @@ class Odania::Menu
 	embeds_many :menu_items, :class_name => 'Odania::MenuItem'
 
 	validates_presence_of :title, minimum: 2
-	validates_uniqueness_of :site_id, scope: :language_id
+	validates_uniqueness_of :site_id, scope: [:language_id, :menu_type]
 	index({site_id: 1, language_id: 1, menu_type: 1}, {unique: true})
 
 	def get_locale
