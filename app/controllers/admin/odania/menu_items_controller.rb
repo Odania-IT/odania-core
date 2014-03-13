@@ -4,7 +4,7 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# GET /odania/menu_items
 	def index
-		@odania_menu_items = @odania_menu.menu_items.order_by([:parent_id, :asc])
+		@odania_menu_items = @odania_menu.menu_items.order('parent_id ASC')
 	end
 
 	# GET /odania/menu_items/1
@@ -51,14 +51,14 @@ class Admin::Odania::MenuItemsController < AdminController
 	private
 	# Set the odania menu that is currently edited
 	def set_odania_menu
-		@odania_menu = Odania::Menu.where(_id: params[:odania_menu]).first
+		@odania_menu = Odania::Menu.where(id: params[:odania_menu]).first
 		@odania_menu = Odania::Menu.first if @odania_menu.nil?
 		redirect_to admin_odania_menus_path if @odania_menu.nil?
 	end
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_odania_menu_item
-		@odania_menu_item = @odania_menu.menu_items.where(_id: params[:id]).first
+		@odania_menu_item = @odania_menu.menu_items.where(id: params[:id]).first
 		redirect_to admin_odania_menu_items_path(odania_menu: @odania_menu.id.to_s) if @odania_menu_item.nil?
 	end
 

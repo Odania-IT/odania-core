@@ -3,7 +3,7 @@ class Admin::Odania::MenusController < AdminController
 
 	# GET /admin/menus
 	def index
-		@admin_menus = @admin_site.menus.order_by([:name, :asc])
+		@admin_menus = @admin_site.menus.order('title ASC')
 	end
 
 	# GET /admin/menus/1
@@ -50,7 +50,7 @@ class Admin::Odania::MenusController < AdminController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_admin_menu
-		@admin_menu = Odania::Menu.where(_id: params[:id]).first
+		@admin_menu = Odania::Menu.where(id: params[:id]).first
 		redirect_to admin_odania_menus_path if @admin_menu.nil?
 	end
 

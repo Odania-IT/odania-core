@@ -1,15 +1,4 @@
-class Odania::Content
-	include Mongoid::Document
-	include Mongoid::Timestamps
-
-	field :title, type: String
-	field :body, type: String
-	field :body_short, type: String
-	field :clicks, type: Integer, default: 0
-	field :views, type: Integer, default: 0
-	field :published_at, type: DateTime, default: Time.now
-	field :is_active, type: Mongoid::Boolean
-
+class Odania::Content < ActiveRecord::Base
 	belongs_to :site, :class_name => 'Odania::Site'
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'

@@ -2,8 +2,11 @@ module OdaniaTestMock
 	mattr_accessor :signed_in
 	@@signed_in = false
 
-	mattr_accessor :current_user
-	@@current_user = Odania::User.find_or_create_by(name: 'Admin')
+	mattr_accessor :mock_current_user
+
+	def self.current_user
+		@@mock_current_user ||= Odania::User.find_or_create_by(name: 'Admin')
+	end
 
 	mattr_accessor :user_authenticated
 	@@user_authenticated = false

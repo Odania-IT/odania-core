@@ -1,23 +1,5 @@
 module Odania
-	class Site
-		include Mongoid::Document
-		include Mongoid::Timestamps
-
-		field :name, type: String
-		field :host, type: String
-		field :is_active, type: Mongoid::Boolean, default: true
-		field :is_default, type: Mongoid::Boolean, default: false
-		field :tracking_code, type: String
-		field :description, type: String
-		field :template, type: String
-
-		# Are users allowed to signup. Otherwise only admins create accounts.
-		field :user_signup_allowed, type: Mongoid::Boolean, default: false
-
-		# SEO
-		field :keywords, type: String
-
-		has_and_belongs_to_many :languages, inverse_of: nil, :class_name => 'Odania::Language'
+	class Site < ActiveRecord::Base
 		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
 		has_many :menus, :class_name => 'Odania::Menu'
@@ -39,7 +21,7 @@ module Odania
 			self.menu_cache = {} if self.menu_cache.nil?
 			return self.menu_cache[locale] unless self.menu_cache[locale].nil?
 
-			language = Odania::Language.where(iso_638_1: locale).first
+			language = Odania::Language.where(iso_639_1: locale).first
 			language = self.default_language if language.nil?
 
 			current_menu = self.menus.where(language_id: language.id).first unless locale.nil?
@@ -58,18 +40,6 @@ module Odania
 
 		def validate_language_is_present
 			if self.default_language_id.nil?
-				self.language_ids << self.default_language_id
-			end
-
-			if self.language_ids.empty?
-				if self.default_language.nil?
-					errors.add(:languages, 'select at least one language')
-				else
-					self.language_ids << self.default_language_id
-				end
-			end
-
-			unless self.language_ids.include? self.default_language_id
 				errors.add(:languages, 'default language has to be in the list of languages')
 			end
 		end
@@ -82,8 +52,16 @@ module Odania
 			template_info[:name]
 		end
 
+		def get_languages
+			langs = []
+			self.menus.each do |menu|
+				langs << menu.language
+			end
+			langs
+		end
+
 		before_save do
-			self.default_language = self.languages.first if self.default_language.nil?
+			self.is_active = true if self.is_active.nil?
 
 			return true
 		end

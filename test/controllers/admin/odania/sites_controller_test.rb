@@ -41,7 +41,7 @@ class Admin::Odania::SitesControllerTest < ActionController::TestCase
 
 	test 'should create site' do
 		data = {name: 'Page1', host: 'www.test.de', is_active: true, tracking_code: 'TRACK',
-				  description: 'description is here', template: 'ASDASD', language_ids: [@site.default_language_id]}
+				  description: 'description is here', template: 'ASDASD', default_language_id: @site.default_language_id}
 		Odania.templates['ASDASD'] = {name: 'Test Template', template: 'ASDASD'}
 		assert_difference 'Odania::Site.count' do
 			post :create, {odania_site: data}
@@ -52,7 +52,7 @@ class Admin::Odania::SitesControllerTest < ActionController::TestCase
 
 	test 'should not create site due to invalid template' do
 		data = {name: 'Page1', host: 'www.test.de', is_active: true, tracking_code: 'TRACK',
-				  description: 'description is here', template: 'ASDASD', language_ids: [@site.default_language_id]}
+				  description: 'description is here', template: 'ASDASD'}
 		Odania.templates.clear
 		post :create, {odania_site: data}
 		assert_response :success

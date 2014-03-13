@@ -6,7 +6,7 @@ class Odania::StatisticsController < ApplicationController
 		class_name = params[:type].nil? ? '' : params[:type].to_s
 
 		if Odania.trackable_classes.include? class_name
-			obj = class_name.constantize.where(_id: get_mongo_id(params[:id])).first
+			obj = class_name.constantize.where(id: params[:id].to_i).first
 
 			unless obj.nil?
 				updated = update_view_count(obj)

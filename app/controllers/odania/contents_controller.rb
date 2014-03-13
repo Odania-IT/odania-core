@@ -8,7 +8,7 @@ class Odania::ContentsController < ApplicationController
 
 	# GET /odania/contents/1
 	def show
-		@odania_content = current_site.contents.where(_id: get_mongo_id(params[:id])).first
+		@odania_content = current_site.contents.where(id: params[:id].to_i).first
 		return not_found if @odania_content.nil?
 	end
 end

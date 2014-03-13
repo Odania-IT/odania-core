@@ -3,7 +3,7 @@ class Admin::Odania::ContentsController < AdminController
 
 	# GET /admin/contents
 	def index
-		@admin_contents = @admin_site.contents.order_by([:name, :asc])
+		@admin_contents = @admin_site.contents.order('title ASC')
 	end
 
 	# GET /admin/contents/1
@@ -51,7 +51,7 @@ class Admin::Odania::ContentsController < AdminController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_admin_content
-		@admin_content = Odania::Content.where(_id: params[:id]).first
+		@admin_content = Odania::Content.where(id: params[:id]).first
 		redirect_to admin_odania_contents_path if @admin_content.nil?
 	end
 

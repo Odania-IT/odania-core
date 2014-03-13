@@ -1,20 +1,3 @@
-GIT
-  remote: git://github.com/meskyanichi/mongoid-paperclip.git
-  revision: 2ca1f39a090a6a12783d72987e880c9f602e7a7e
-  specs:
-    mongoid-paperclip (0.0.8)
-      paperclip (>= 2.3.6)
-
-GIT
-  remote: git://github.com/mongoid/mongoid.git
-  revision: 34b3d895cf05fe9ba630f0f24529ece89bf973a5
-  specs:
-    mongoid (4.0.0.alpha2)
-      activemodel (>= 4.0.0)
-      moped (~> 2.0.beta5)
-      origin (~> 2.1)
-      tzinfo (>= 0.3.37)
-
 PATH
   remote: .
   specs:
@@ -23,8 +6,6 @@ PATH
       ckeditor
       coffee-rails (~> 4.0.1)
       jquery-rails
-      mongoid
-      mongoid-paperclip
       nokogiri
       rails (~> 4.0.3)
       sass-rails (~> 4.0.1)
@@ -61,7 +42,6 @@ GEM
     atomic (1.1.15)
     bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
-    bson (2.1.2)
     builder (3.1.4)
     ckeditor (4.0.10)
       mime-types
@@ -77,7 +57,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
-    connection_pool (1.2.0)
     database_cleaner (1.0.0.RC1)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -104,15 +83,10 @@ GEM
       builder
       minitest (>= 2.12, < 5.0)
       powerbar
-    moped (2.0.0.beta5)
-      bson (~> 2.1)
-      connection_pool (~> 1.2)
-      optionable (~> 0.2.0)
     multi_json (1.9.0)
+    mysql2 (0.3.15)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
-    optionable (0.2.0)
-    origin (2.1.0)
     orm_adapter (0.5.0)
     paperclip (3.5.4)
       activemodel (>= 3.0.0)
@@ -156,6 +130,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sqlite3 (1.3.9)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
@@ -180,9 +155,9 @@ DEPENDENCIES
   libv8 (~> 3.11.8.12)
   minitest
   minitest-reporters
-  mongoid!
-  mongoid-paperclip!
+  mysql2
   odania_core!
   paperclip (~> 3)
+  sqlite3
   therubyracer (>= 0.11.4)
   therubyrhino (>= 0.11.4)

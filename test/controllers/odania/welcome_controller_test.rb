@@ -26,7 +26,7 @@ class Odania::WelcomeControllerTest < ActionController::TestCase
 	test 'test should redirect to default menu item' do
 		menu = create(:menu_with_items, site: @site, amount: 1, language: @site.default_language)
 		menu_item = create(:menu_item, menu: menu)
-		menu.default_menu_item = menu_item.id.to_s
+		menu.default_menu_item = menu_item
 		menu.save!
 
 		get :index

@@ -17,10 +17,8 @@ Gem::Specification.new do |s|
 	s.test_files = Dir['test/**/*']
 
 	s.add_dependency 'rails', '~> 4.0.3'
-	s.add_dependency 'mongoid'
 	s.add_dependency 'nokogiri'
 	s.add_dependency 'ckeditor'
-	s.add_dependency 'mongoid-paperclip'
 	s.add_dependency 'sass-rails', '~> 4.0.1'
 	s.add_dependency 'bootstrap-sass', '~> 3.1.1'
 	s.add_dependency 'coffee-rails', '~> 4.0.1'
@@ -31,4 +29,6 @@ Gem::Specification.new do |s|
 	s.add_development_dependency 'minitest-reporters'
 	s.add_development_dependency 'factory_girl_rails'
 	s.add_development_dependency 'database_cleaner'
+	s.add_development_dependency 'sqlite3'
+	s.add_development_dependency 'mysql2'
 end

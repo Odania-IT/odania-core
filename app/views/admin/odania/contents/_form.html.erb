@@ -14,7 +14,7 @@
 	<div class="field">
 		<%= f.label :site_id %>
 		<br/>
-		<%= f.collection_select :site_id, Odania::Site.order_by([:name, :asc]), :id, :name %>
+		<%= f.collection_select :site_id, Odania::Site.order('name ASC'), :id, :name %>
 	</div>
 	<div class="field">
 		<%= f.label :title %>
@@ -39,7 +39,7 @@
 	<div class="field">
 		<%= f.label :language_id %>
 		<br/>
-		<%= f.collection_select :language_id, Odania::Language.order_by([:name, :asc]), :id, :name %>
+		<%= f.collection_select :language_id, Odania::Language.order('name ASC'), :id, :name %>
 	</div>
 	<div class="actions">
 		<%= f.submit %>

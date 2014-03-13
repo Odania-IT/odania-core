@@ -71,11 +71,6 @@ module Odania
 			def set_layout
 				current_site.template || 'odania_core/application'
 			end
-
-			# Retrieve the id from the url presentation, e.g. 531bb4986d696b29ad010000-asdasdasd
-			def get_mongo_id(id)
-				id.split('-').first
-			end
 		end
 	end
 end

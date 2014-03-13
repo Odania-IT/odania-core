@@ -48,7 +48,7 @@ class Admin::Odania::SitesController < AdminController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_admin_site
-		@admin_site = Odania::Site.where(_id: params[:id]).first
+		@admin_site = Odania::Site.where(id: params[:id]).first
 		redirect_to admin_odania_sites_path if @admin_site.nil?
 	end
 

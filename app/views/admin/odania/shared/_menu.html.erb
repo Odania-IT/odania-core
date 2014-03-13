@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<%= form_tag({}, {method: 'get'}) do %>
-		<%= collection_select(:site, :id, Odania::Site.order_by([:name, :asc]), :id, :name, selected: session[:site_id]) %>
+		<%= collection_select(:site, :id, Odania::Site.order('name ASC'), :id, :name, selected: session[:site_id]) %>
 		<%= submit_tag 'Select' %>
 	<% end %>
 	<br/>

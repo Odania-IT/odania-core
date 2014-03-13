@@ -48,7 +48,7 @@ class Admin::Odania::LanguagesController < AdminController
 	private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_admin_language
-		@admin_language = Odania::Language.where(_id: params[:id]).first
+		@admin_language = Odania::Language.where(id: params[:id]).first
 		redirect_to admin_odania_languages_path if @admin_language.nil?
 	end
 

@@ -11,5 +11,5 @@ matrix:
     - rvm: jruby-head
 notifications:
   email: true
-services:
-  - mongodb
+before_script:
+  - cp test/dummy/config/database.yml.dist test/dummy/config/database.yml
