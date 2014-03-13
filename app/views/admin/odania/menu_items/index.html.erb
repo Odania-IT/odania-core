@@ -1,0 +1,35 @@
+<h1>Listing odania_menu_items</h1>
+
+<table>
+	<thead>
+	<tr>
+		<th>Title</th>
+		<th>Published</th>
+		<th>Target type</th>
+		<th>Target date</th>
+		<th>Parent</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<% @odania_menu_items.each do |odania_menu_item| %>
+		<tr>
+			<td><%= odania_menu_item.title %></td>
+			<td><%= odania_menu_item.published %></td>
+			<td><%= odania_menu_item.target_type %></td>
+			<td><%= odania_menu_item.target_data %></td>
+			<td><%= odania_menu_item.parent %></td>
+			<td><%= link_to 'Show', [:admin, odania_menu_item] %></td>
+			<td><%= link_to 'Edit', edit_admin_odania_menu_item_path(odania_menu_item) %></td>
+			<td><%= link_to 'Destroy', [:admin, odania_menu_item], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Menu item', new_admin_odania_menu_item_path %>

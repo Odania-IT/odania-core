@@ -1,0 +1,43 @@
+<%= form_for([:admin, @odania_menu_item]) do |f| %>
+	<% if @odania_menu_item.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@odania_menu_item.errors.count, "error") %> prohibited this odania_menu_item from being
+				saved:</h2>
+
+			<ul>
+				<% @odania_menu_item.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field">
+		<%= f.label :title %>
+		<br>
+		<%= f.text_field :title %>
+	</div>
+	<div class="field">
+		<%= f.label :published %>
+		<br>
+		<%= f.check_box :published %>
+	</div>
+	<div class="field">
+		<%= f.label :target_type %>
+		<br>
+		<%= f.text_field :target_type %>
+	</div>
+	<div class="field">
+		<%= f.label :target_data %>
+		<br>
+		<%= f.text_field :target_data %>
+	</div>
+	<div class="field">
+		<%= f.label :parent %>
+		<br>
+		<%= f.text_field :parent %>
+	</div>
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+<% end %>

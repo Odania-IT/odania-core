@@ -22,11 +22,6 @@
 		<%= f.check_box :published %>
 	</div>
 	<div class="field">
-		<%= f.label :menu_type %>
-		<br>
-		<%= f.select :menu_type, Odania::Menu::MENU_TYPES %>
-	</div>
-	<div class="field">
 		<%= f.label :site %>
 		<br>
 		<%= f.collection_select :site_id, Odania::Site.order_by([:name, :asc]), :id, :name %>

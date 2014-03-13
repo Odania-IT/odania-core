@@ -6,6 +6,7 @@ FactoryGirl.define do
 		language
 		title 'MyString'
 		published true
+		sequence(:prefix) { |n| "p#{n}" }
 
 		factory :menu_with_items do
 			# Default value for amount of items

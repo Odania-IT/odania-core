@@ -5,7 +5,7 @@
 	<tr>
 		<th>Title</th>
 		<th>Published</th>
-		<th>Menu type</th>
+		<th>Prefix</th>
 		<th>Site</th>
 		<th>Language</th>
 		<th></th>
@@ -19,7 +19,7 @@
 		<tr>
 			<td><%= admin_menu.title %></td>
 			<td><%= admin_menu.published %></td>
-			<td><%= admin_menu.menu_type %></td>
+			<td><%= admin_menu.prefix %></td>
 			<td><%= admin_menu.site.name %></td>
 			<td><%= admin_menu.language.iso_639_1 %></td>
 			<td><%= link_to 'Show', admin_odania_menu_path(admin_menu) %></td>

@@ -6,7 +6,7 @@ class Admin::Odania::MenusControllerTest < ActionController::TestCase
 		site = create(:default_site)
 		@request.host = site.host
 		@content = create(:content, site: site)
-		@menu = create(:menu)
+		@menu = create(:menu_with_items, site: site, amount: 4, language: site.default_language)
 	end
 
 	test 'test should get index' do

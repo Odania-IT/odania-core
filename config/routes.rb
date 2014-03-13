@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 		namespace :odania do
 			resources :contents
 			resources :menus
+			resources :menu_items
 			resources :sites
 			resources :languages
 		end

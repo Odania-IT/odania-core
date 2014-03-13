@@ -12,5 +12,6 @@ module Odania
 		@@admin_pages << {name: 'Contents', path: '/admin/odania/contents'}
 		@@admin_pages << {name: 'Languages', path: '/admin/odania/languages'}
 		@@admin_pages << {name: 'Menus', path: '/admin/odania/menus'}
+		@@admin_pages << {name: 'Menu Items', path: '/admin/odania/menu_items'}
 	end
 end
