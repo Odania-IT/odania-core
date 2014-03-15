@@ -20,5 +20,10 @@ module Odania
 			return '<span class="glyphicon glyphicon-ok"></span>'.html_safe if b
 			'<span class="glyphicon glyphicon-remove"></span>'.html_safe
 		end
+
+		def star_icon_for_bool(b)
+			return '<span class="glyphicon glyphicon-star"></span>'.html_safe if b
+			'<span class="glyphicon glyphicon-star-empty"></span>'.html_safe
+		end
 	end
 end

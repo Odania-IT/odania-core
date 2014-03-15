@@ -40,7 +40,7 @@ class Admin::Odania::MenuItemsControllerTest < ActionController::TestCase
 	end
 
 	test 'should create content' do
-		data = {title: 'Test Title', published: true}
+		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::INTERNAL, target_data_id: 1, target_data_type: 'Odania::Content'}
 		assert_difference 'Odania::MenuItem.count' do
 			post :create, {odania_menu_item: data, odania_menu: @menu.id.to_s}
 		end
@@ -49,7 +49,7 @@ class Admin::Odania::MenuItemsControllerTest < ActionController::TestCase
 	end
 
 	test 'should update content' do
-		data = {title: 'Test Title', published: true}
+		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::URL, target_data_url: 'http://www.onlinegames-info.com'}
 		post :update, {id: @menu.menu_items.first.id.to_s, odania_menu_item: data, odania_menu: @menu.id.to_s}
 		assert_response :redirect
 		assert_redirected_to admin_odania_menu_items_path(odania_menu: @menu.id.to_s)

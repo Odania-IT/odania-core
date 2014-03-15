@@ -3,6 +3,7 @@
 <table>
 	<thead>
 	<tr>
+		<th></th>
 		<th>Title</th>
 		<th>Published</th>
 		<th>Target type</th>
@@ -17,6 +18,7 @@
 	<tbody>
 	<% @odania_menu_items.each do |odania_menu_item| %>
 		<tr>
+			<td><%= link_to star_icon_for_bool(@odania_menu.default_menu_item_id.eql?(odania_menu_item.id)), set_default_admin_odania_menu_item_path(odania_menu_item) %></td>
 			<td><%= odania_menu_item.title %></td>
 			<td><%= odania_menu_item.published %></td>
 			<td><%= odania_menu_item.target_type %></td>

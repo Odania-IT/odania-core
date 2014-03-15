@@ -25,17 +25,27 @@
 	<div class="field">
 		<%= f.label :target_type %>
 		<br>
-		<%= f.text_field :target_type %>
+		<%= f.select :target_type, Odania::TargetType::TARGETS %>
 	</div>
 	<div class="field">
-		<%= f.label :target_data %>
+		<%= f.label :target_data_url %>
 		<br>
-		<%= f.text_field :target_data %>
+		<%= f.text_field :target_data_url %>
 	</div>
 	<div class="field">
-		<%= f.label :parent %>
+		<%= f.label :target_data_id %>
 		<br>
-		<%= f.text_field :parent %>
+		<%= f.text_field :target_data_id %>
+	</div>
+	<div class="field">
+		<%= f.label :target_data_type %>
+		<br>
+		<%= f.text_field :target_data_type %>
+	</div>
+	<div class="field">
+		<%= f.label :parent_id %>
+		<br>
+		<%= f.collection_select :parent_id, Odania::MenuItem.order('title ASC'), :id, :title, {include_blank: true} %>
 	</div>
 	<div class="actions">
 		<%= f.submit %>

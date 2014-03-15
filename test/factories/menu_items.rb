@@ -5,6 +5,6 @@ FactoryGirl.define do
 		sequence(:title) { |n| "title#{n}" }
 		published true
 		target_type Odania::TargetType::URL
-		target_data {{'url' => 'http://target.url.de'}}
+		target_data_url 'http://target.url.de'
 	end
 end

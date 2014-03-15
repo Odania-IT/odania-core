@@ -14,6 +14,7 @@ class Odania::Content < ActiveRecord::Base
 	end
 
 	before_save do
+		self.published_at = Time.now if self.published_at.nil?
 		self.is_active = (self.published_at <= Time.now)
 		self.body_short = truncate_words(self.body, 50) if self.body_short.nil?
 

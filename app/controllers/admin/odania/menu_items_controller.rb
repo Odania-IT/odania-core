@@ -1,6 +1,6 @@
 class Admin::Odania::MenuItemsController < AdminController
 	before_filter :set_odania_menu
-	before_action :set_odania_menu_item, only: [:show, :edit, :update, :destroy]
+	before_action :set_odania_menu_item, only: [:show, :edit, :update, :destroy, :set_default]
 
 	# GET /odania/menu_items
 	def index
@@ -18,6 +18,7 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# GET /odania/menu_items/1/edit
 	def edit
+		Odania::TargetType.set_from_target_data(@odania_menu_item)
 	end
 
 	# POST /odania/menu_items
@@ -48,6 +49,13 @@ class Admin::Odania::MenuItemsController < AdminController
 		redirect_to admin_odania_menu_items_path(odania_menu: @odania_menu.id.to_s), notice: 'Menu item was successfully destroyed.'
 	end
 
+	def set_default
+		@odania_menu.default_menu_item_id = @odania_menu_item.id
+		@odania_menu.save!
+
+		redirect_to admin_odania_menu_items_path(odania_menu: @odania_menu.id.to_s), notice: 'Menu item set to default.'
+	end
+
 	private
 	# Set the odania menu that is currently edited
 	def set_odania_menu
@@ -64,6 +72,7 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def odania_menu_item_params
-		params.require(:odania_menu_item).permit(:title, :published, :target_type, :target_date, :parent)
+		params.require(:odania_menu_item).permit(:title, :published, :target_type, :parent,
+															  :target_data_url, :target_data_id, :target_data_type)
 	end
 end

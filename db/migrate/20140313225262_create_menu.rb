@@ -3,7 +3,7 @@ class CreateMenu < ActiveRecord::Migration
 		create_table :menus do |t|
 			t.string :title
 			t.boolean :published
-			t.integer :default_menu_item
+			t.integer :default_menu_item_id
 			t.string :prefix
 			t.integer :site_id
 			t.integer :language_id
