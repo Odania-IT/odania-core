@@ -54,6 +54,6 @@ class Admin::Odania::LanguagesController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def admin_language_params
-		params.require(:admin_language).permit(:name, :iso_639_1)
+		params.require(:odania_language).permit(:name, :iso_639_1)
 	end
 end

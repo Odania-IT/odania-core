@@ -41,7 +41,7 @@ class Admin::Odania::LanguagesControllerTest < ActionController::TestCase
 	test 'should create content' do
 		data = {name: 'Engilish', iso_639_1: 'en'}
 		assert_difference 'Odania::Language.count' do
-			post :create, {admin_language: data}
+			post :create, {odania_language: data}
 		end
 		assert_response :redirect
 		assert_redirected_to admin_odania_languages_path
@@ -49,7 +49,7 @@ class Admin::Odania::LanguagesControllerTest < ActionController::TestCase
 
 	test 'should update content' do
 		data = {name: 'Engilish', iso_639_1: 'en'}
-		post :update, {id: @language.id.to_s, admin_language: data}
+		post :update, {id: @language.id.to_s, odania_language: data}
 		assert_response :redirect
 		assert_redirected_to admin_odania_languages_path
 	end

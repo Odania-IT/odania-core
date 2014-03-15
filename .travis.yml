@@ -12,4 +12,4 @@ matrix:
 notifications:
   email: true
 before_script:
-  - cp test/dummy/config/database.yml.dist test/dummy/config/database.yml
+  - cp test/dummy/config/database.yml.travis test/dummy/config/database.yml
