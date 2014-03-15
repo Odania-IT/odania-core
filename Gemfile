@@ -26,4 +26,7 @@ group :development, :test do
 	gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
 	gem 'bootstrap-sass'
 	gem 'jquery-rails'
+
+	# Necessary for travis
+	gem 'sqlite3'
 end
