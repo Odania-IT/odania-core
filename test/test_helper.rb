@@ -25,7 +25,7 @@ class ActiveSupport::TestCase
 end
 
 # Setup database cleaner
-DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.strategy = :transaction
 module DatabaseCleanerModule
 	def before_setup
 		DatabaseCleaner.start

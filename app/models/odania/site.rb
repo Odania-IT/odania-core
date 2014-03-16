@@ -40,7 +40,7 @@ module Odania
 
 		def validate_language_is_present
 			if self.default_language_id.nil?
-				errors.add(:languages, 'default language has to be in the list of languages')
+				errors.add(:default_language_id, 'has to be set')
 			end
 		end
 
