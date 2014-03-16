@@ -1,29 +1,29 @@
-<p id="notice"><%= notice %></p>
+<% cache do %>
+	<p>
+		<strong>Title:</strong>
+		<%= @admin_content.title %>
+	</p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @admin_content.title %>
-</p>
+	<p>
+		<strong>Body:</strong>
+		<%= @admin_content.body.html_safe %>
+	</p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @admin_content.body.html_safe %>
-</p>
+	<p>
+		<strong>Body short:</strong>
+		<%= @admin_content.body_short.html_safe %>
+	</p>
 
-<p>
-  <strong>Body short:</strong>
-  <%= @admin_content.body_short.html_safe %>
-</p>
+	<p>
+		<strong>Publish at:</strong>
+		<%= @admin_content.published_at %>
+	</p>
 
-<p>
-  <strong>Publish at:</strong>
-  <%= @admin_content.published_at %>
-</p>
+	<p>
+		<strong>Language:</strong>
+		<%= @admin_content.language.name %>
+	</p>
 
-<p>
-  <strong>Language:</strong>
-  <%= @admin_content.language.name %>
-</p>
-
-<%= link_to 'Edit', edit_admin_odania_content_path(@admin_content) %> |
-<%= link_to 'Back', admin_odania_contents_path %>
+	<%= link_to 'Edit', edit_admin_odania_content_path(@admin_content) %> |
+	<%= link_to 'Back', admin_odania_contents_path %>
+<% end %>
