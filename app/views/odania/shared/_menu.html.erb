@@ -1,5 +1,3 @@
 <ul>
-	<% current_menu.menu_items.each do |menu_item| %>
-		<li><%= link_to menu_item.title, Odania::TargetType.get_target(menu_item.target_type, menu_item.target_data) %></li>
-	<% end %>
+	<%= render :partial => 'odania/shared/menu_part', locals: {menu_items: current_menu.menu_items.where(parent_id: nil)} %>
 </ul>

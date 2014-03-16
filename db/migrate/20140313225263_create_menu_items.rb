@@ -7,6 +7,7 @@ class CreateMenuItems < ActiveRecord::Migration
 			t.string :target_type
 			t.text :target_data
 			t.integer :parent_id
+			t.integer :position
 		end
 
 		add_index :menu_items, [:menu_id]

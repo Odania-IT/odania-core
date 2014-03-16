@@ -31,7 +31,9 @@ namespace :odania do
 			site = Odania::Site.where(host: host_name).first
 			language = Odania::Language.first
 
-			if site.nil?
+			if language.nil?
+				puts "Create a language first"
+			elsif site.nil?
 				site = Odania::Site.create!(default_language_id: language.id, :name => host_name, :host => host_name, :is_default => (Odania::Site.count == 0))
 				puts "Site #{site.host} created!"
 			else
