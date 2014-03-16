@@ -1,4 +1,4 @@
-<%= form_for([:admin, @odania_menu_item]) do |f| %>
+<%= form_for([:admin, @odania_menu, @odania_menu_item]) do |f| %>
 	<% if @odania_menu_item.errors.any? %>
 		<div id="error_explanation">
 			<h2><%= pluralize(@odania_menu_item.errors.count, "error") %> prohibited this odania_menu_item from being

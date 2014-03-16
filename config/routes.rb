@@ -11,12 +11,14 @@ Rails.application.routes.draw do
 	namespace :admin do
 		namespace :odania do
 			resources :contents
-			resources :menus
-			resources :menu_items do
-				member do
-					get :set_default
+			resources :menus do
+				resources :menu_items, controller: 'menu_items', as: 'odania_menu_items' do
+					member do
+						get :set_default
+					end
 				end
 			end
+			get 'menu_items' => 'menu_items#overview'
 			resources :sites
 			resources :languages
 		end

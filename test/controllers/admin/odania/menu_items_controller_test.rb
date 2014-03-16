@@ -10,31 +10,31 @@ class Admin::Odania::MenuItemsControllerTest < ActionController::TestCase
 	end
 
 	test 'test should get index' do
-		get :index, {odania_menu: @menu.id.to_s}
+		get :index, {menu_id: @menu.id.to_s}
 		assert_response :success
 		assert_not_nil assigns(:odania_menu_items)
 	end
 
 	test 'test should show content' do
-		get :show, {id: @menu.menu_items.first.id.to_s, odania_menu: @menu.id.to_s}
+		get :show, {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s}
 		assert_response :success
 		assert_not_nil assigns(:odania_menu_item)
 	end
 
 	test 'test should redirect on invalid id' do
-		get :show, {id: 'asd65dsadsatest-test', odania_menu: @menu.id.to_s}
+		get :show, {id: 'asd65dsadsatest-test', menu_id: @menu.id.to_s}
 		assert_response :redirect
-		assert_redirected_to admin_odania_menu_items_path(odania_menu: @menu.id.to_s)
+		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
 	end
 
 	test 'should render new content' do
-		get :new, {odania_menu: @menu.id.to_s}
+		get :new, {menu_id: @menu.id.to_s}
 		assert_response :success
 		assert_not_nil assigns(:odania_menu_item)
 	end
 
 	test 'should render edit content' do
-		get :edit, {id: @menu.menu_items.first.id.to_s, odania_menu: @menu.id.to_s}
+		get :edit, {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s}
 		assert_response :success
 		assert_not_nil assigns(:odania_menu_item)
 	end
@@ -42,24 +42,24 @@ class Admin::Odania::MenuItemsControllerTest < ActionController::TestCase
 	test 'should create content' do
 		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::INTERNAL, target_data_id: 1, target_data_type: 'Odania::Content'}
 		assert_difference 'Odania::MenuItem.count' do
-			post :create, {odania_menu_item: data, odania_menu: @menu.id.to_s}
+			post :create, {odania_menu_item: data, menu_id: @menu.id.to_s}
 		end
 		assert_response :redirect
-		assert_redirected_to admin_odania_menu_items_path(odania_menu: @menu.id.to_s)
+		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
 	end
 
 	test 'should update content' do
 		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::URL, target_data_url: 'http://www.onlinegames-info.com'}
-		post :update, {id: @menu.menu_items.first.id.to_s, odania_menu_item: data, odania_menu: @menu.id.to_s}
+		post :update, {id: @menu.menu_items.first.id.to_s, odania_menu_item: data, menu_id: @menu.id.to_s}
 		assert_response :redirect
-		assert_redirected_to admin_odania_menu_items_path(odania_menu: @menu.id.to_s)
+		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
 	end
 
 	test 'should destroy content' do
 		assert_difference 'Odania::MenuItem.count', -1 do
-			delete :destroy, {id: @menu.menu_items.first.id.to_s, odania_menu: @menu.id.to_s}
+			delete :destroy, {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s}
 		end
 		assert_response :redirect
-		assert_redirected_to admin_odania_menu_items_path(odania_menu: @menu.id.to_s)
+		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
 	end
 end
