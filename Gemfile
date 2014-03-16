@@ -29,4 +29,6 @@ group :development, :test do
 
 	# Necessary for travis
 	gem 'sqlite3'
+	gem 'mysql2'
+	gem 'pg'
 end

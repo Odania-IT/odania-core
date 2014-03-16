@@ -93,6 +93,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.17.1)
     polyglot (0.3.4)
     powerbar (1.0.11)
       ansi (~> 1.4.0)
@@ -158,6 +159,7 @@ DEPENDENCIES
   mysql2
   odania_core!
   paperclip (~> 3)
+  pg
   sqlite3
   therubyracer (>= 0.11.4)
   therubyrhino (>= 0.11.4)
