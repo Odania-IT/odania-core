@@ -5,11 +5,20 @@ rvm:
   - 2.0.0
   - jruby
   - jruby-head
-env: JRUBY_OPTS="--server -Xcompile.invokedynamic=false -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify -J-Xms512m -J-Xmx1024m"
+env:
+  - JRUBY_OPTS="--server -Xcompile.invokedynamic=false -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify -J-Xms512m -J-Xmx1024m"
+  - DB=sqlite
+  - DB=mysql
 matrix:
   allow_failures:
     - rvm: jruby-head
 notifications:
   email: true
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake app:db:test:prepare
+  - bundle exec rake
 before_script:
   - cp test/dummy/config/database.yml.travis test/dummy/config/database.yml
+  - mysql -e 'create database odania_core_test'
+  - psql -c 'create database odania_core_test' -U postgres

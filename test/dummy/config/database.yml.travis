@@ -1,13 +1,31 @@
-development:
+sqlite: &sqlite
   adapter: sqlite3
-  database: db/development.sqlite3
-  timeout: 5000
+  database: db/<%= Rails.env %>.sqlite3
 
-test:
-  adapter: sqlite3
-  database: db/test.sqlite3
+mysql: &mysql
+  adapter: mysql2
+  username: root
+  password:
+  database: odania_core_<%= Rails.env %>
+
+postgresql: &postgresql
+  adapter: postgresql
+  username: postgres
+  password:
+  database: odania_core_<%= Rails.env %>
+  min_messages: ERROR
+
+defaults: &defaults
+  pool: 5
   timeout: 5000
+  host: localhost
+  <<: *<%= ENV['DB'] || "sqlite" %>
+
+development:
+  <<: *defaults
+
+test: &test
+  <<: *defaults
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  <<: *defaults
