@@ -28,7 +28,16 @@ group :development, :test do
 	gem 'jquery-rails'
 
 	# Necessary for travis
-	gem 'sqlite3'
-	gem 'mysql2'
-	gem 'pg'
+	platforms :jruby do
+		gem 'activerecord-jdbcsqlite3-adapter'
+		gem 'activerecord-jdbcmysql-adapter'
+		gem 'activerecord-jdbcpostgresql-adapter'
+		gem 'jruby-openssl'
+	end
+
+	platforms :mri do
+		gem 'sqlite3'
+		gem 'mysql2'
+		gem 'pg'
+	end
 end

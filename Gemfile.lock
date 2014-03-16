@@ -148,11 +148,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-jdbcmysql-adapter
+  activerecord-jdbcpostgresql-adapter
+  activerecord-jdbcsqlite3-adapter
   bootstrap-sass
   ckeditor
   database_cleaner
   factory_girl_rails
   jquery-rails
+  jruby-openssl
   libv8 (~> 3.11.8.12)
   minitest
   minitest-reporters
