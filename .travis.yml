@@ -6,14 +6,17 @@ rvm:
   - 2.1.0
   - jruby
   - jruby-head
+  - ruby-head
+  - ree
 env:
   - DB=sqlite
   - DB=mysql
   - DB=postgresql
 matrix:
   allow_failures:
-    - rvm: jruby-head
     - rvm: 2.1.0
+    - rvm: ruby-head
+    - rvm: jruby-head
 notifications:
   email: true
 script:
