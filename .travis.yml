@@ -14,7 +14,7 @@ env:
   - DB=postgresql
 matrix:
   allow_failures:
-    - rvm: 2.1.0
+    - rvm: ree
     - rvm: ruby-head
     - rvm: jruby-head
 notifications:
