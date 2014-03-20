@@ -1,5 +1,5 @@
 class Admin::Odania::MenuItemsController < AdminController
-	before_filter :set_odania_menu
+	before_filter :set_odania_menu, except: [:select_odania_menu]
 	before_action :set_odania_menu_item, only: [:show, :edit, :update, :destroy, :set_default]
 
 	# GET /odania/menu_items
@@ -63,10 +63,24 @@ class Admin::Odania::MenuItemsController < AdminController
 		redirect_to admin_odania_menu_odania_menu_items_path(menu_id: menu.id.to_s)
 	end
 
+	def select_odania_menu
+		if params[:menu]
+			if params[:menu][:id]
+				@odania_menu = Odania::Menu.where(id: params[:menu][:id]).first
+				return redirect_to admin_odania_menu_odania_menu_items_path(menu_id: @odania_menu.id.to_s) unless @odania_menu.nil?
+			end
+		end
+
+		@odania_menu = Odania::Menu.where(id: params[:odania_menu]).first
+		@odania_menu = Odania::Menu.first if @odania_menu.nil?
+		redirect_to admin_odania_menu_odania_menu_items_path(@odania_menu.id.to_s) unless @odania_menu.nil?
+		redirect_to admin_odania_menus_path
+	end
+
 	private
 	# Set the odania menu that is currently edited
 	def set_odania_menu
-		@odania_menu = Odania::Menu.where(id: params[:odania_menu]).first
+		@odania_menu = Odania::Menu.where(id: params[:menu_id]).first
 		@odania_menu = Odania::Menu.first if @odania_menu.nil?
 		redirect_to admin_odania_menus_path if @odania_menu.nil?
 	end

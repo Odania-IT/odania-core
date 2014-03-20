@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 					member do
 						get :set_default
 					end
+
+					collection do
+						post :select_odania_menu
+					end
 				end
 			end
 			get 'menu_items' => 'menu_items#overview'

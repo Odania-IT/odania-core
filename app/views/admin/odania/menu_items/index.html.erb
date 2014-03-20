@@ -1,3 +1,5 @@
+<%= render partial: 'admin/odania/menu_items/select_menu_item' %>
+
 <h1>Listing odania_menu_items</h1>
 
 <table>
@@ -23,7 +25,7 @@
 			<td><%= odania_menu_item.published %></td>
 			<td><%= odania_menu_item.target_type %></td>
 			<td><%= odania_menu_item.target_data %></td>
-			<td><%= odania_menu_item.parent %></td>
+			<td><%= odania_menu_item.parent_id.nil? ? '-' : odania_menu_item.parent.title %></td>
 			<td><%= link_to 'Show', admin_odania_menu_odania_menu_item_path(@odania_menu, odania_menu_item) %></td>
 			<td><%= link_to 'Edit', edit_admin_odania_menu_odania_menu_item_path(@odania_menu, odania_menu_item) %></td>
 			<td><%= link_to 'Destroy', admin_odania_menu_odania_menu_item_path(@odania_menu, odania_menu_item), method: :delete, data: {confirm: 'Are you sure?'} %></td>

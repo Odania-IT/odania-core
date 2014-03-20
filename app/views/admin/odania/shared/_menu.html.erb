@@ -4,6 +4,7 @@
 		<%= submit_tag 'Select' %>
 	<% end %>
 	<br/>
+	<%= content_for?(:admin_selection) ? yield(:admin_selection) : '' %>
 
 	<div class="nav-collapse">
 		<ul class="nav nav-list">
