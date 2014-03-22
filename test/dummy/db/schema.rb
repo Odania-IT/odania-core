@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20140313225265) do
     t.datetime "updated_at"
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
 
   create_table "contents", force: true do |t|
     t.string   "title",                        null: false
@@ -44,15 +44,15 @@ ActiveRecord::Schema.define(version: 20140313225265) do
     t.datetime "updated_at"
   end
 
-  add_index "contents", ["site_id", "is_active"], name: "index_contents_on_site_id_and_is_active", using: :btree
-  add_index "contents", ["user_id"], name: "index_contents_on_user_id", using: :btree
+  add_index "contents", ["site_id", "is_active"], name: "index_contents_on_site_id_and_is_active"
+  add_index "contents", ["user_id"], name: "index_contents_on_user_id"
 
   create_table "languages", force: true do |t|
     t.string "name"
     t.string "iso_639_1"
   end
 
-  add_index "languages", ["iso_639_1"], name: "index_languages_on_iso_639_1", unique: true, using: :btree
+  add_index "languages", ["iso_639_1"], name: "index_languages_on_iso_639_1", unique: true
 
   create_table "menu_items", force: true do |t|
     t.integer "menu_id"
@@ -61,10 +61,11 @@ ActiveRecord::Schema.define(version: 20140313225265) do
     t.string  "target_type"
     t.text    "target_data"
     t.integer "parent_id"
-    t.integer "position",    null: false
+    t.integer "position"
+    t.string  "full_path"
   end
 
-  add_index "menu_items", ["menu_id"], name: "index_menu_items_on_menu_id", using: :btree
+  add_index "menu_items", ["menu_id", "full_path"], name: "index_menu_items_on_menu_id_and_full_path"
 
   create_table "menus", force: true do |t|
     t.string   "title"
@@ -77,7 +78,7 @@ ActiveRecord::Schema.define(version: 20140313225265) do
     t.datetime "updated_at"
   end
 
-  add_index "menus", ["site_id", "language_id"], name: "index_menus_on_site_id_and_language_id", unique: true, using: :btree
+  add_index "menus", ["site_id", "language_id"], name: "index_menus_on_site_id_and_language_id", unique: true
 
   create_table "sites", force: true do |t|
     t.string  "name"
@@ -92,7 +93,7 @@ ActiveRecord::Schema.define(version: 20140313225265) do
     t.integer "redirect_to_id"
   end
 
-  add_index "sites", ["host"], name: "index_sites_on_host", unique: true, using: :btree
+  add_index "sites", ["host"], name: "index_sites_on_host", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name"

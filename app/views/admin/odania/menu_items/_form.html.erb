@@ -25,23 +25,11 @@
 	<div class="field">
 		<%= f.label :target_type %>
 		<br>
-		<%= f.select :target_type, Odania::TargetType::TARGETS %>
+		<%= f.select :target_type, Odania::TargetType.targets.keys %>
 	</div>
-	<div class="field">
-		<%= f.label :target_data_url %>
-		<br>
-		<%= f.text_field :target_data_url %>
-	</div>
-	<div class="field">
-		<%= f.label :target_data_id %>
-		<br>
-		<%= f.text_field :target_data_id %>
-	</div>
-	<div class="field">
-		<%= f.label :target_data_type %>
-		<br>
-		<%= f.text_field :target_data_type %>
-	</div>
+
+	<%= render partial: Odania::TargetType.targets[@odania_menu_item.target_type][:selector], locals: {menu_item: @odania_menu_item} %>
+
 	<div class="field">
 		<%= f.label :parent_id %>
 		<br>

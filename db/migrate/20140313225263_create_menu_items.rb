@@ -8,8 +8,9 @@ class CreateMenuItems < ActiveRecord::Migration
 			t.text :target_data
 			t.integer :parent_id
 			t.integer :position
+			t.string :full_path
 		end
 
-		add_index :menu_items, [:menu_id]
+		add_index :menu_items, [:menu_id, :full_path]
 	end
 end

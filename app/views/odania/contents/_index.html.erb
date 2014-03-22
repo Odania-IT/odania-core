@@ -13,14 +13,14 @@
 	</thead>
 
 	<tbody>
-	<% @odania_contents.each do |odania_content| %>
+	<% odania_contents.each do |odania_content| %>
 		<tr>
 			<td><%= odania_content.title %></td>
 			<td><%= odania_content.body_short.html_safe %></td>
 			<td><%= odania_content.clicks %></td>
 			<td><%= odania_content.views %></td>
 			<td><%= odania_content.published_at %></td>
-			<td><%= link_to 'Show', odania_content %></td>
+			<td><%= link_to 'Show', "#{@current_menu_item.full_path}/#{odania_content.to_param}" %></td>
 		</tr>
 	<% end %>
 	</tbody>

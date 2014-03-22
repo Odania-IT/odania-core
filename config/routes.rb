@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 	mount Ckeditor::Engine => '/ckeditor'
-	resources :contents, module: 'odania', as: 'odania_contents', only: [:index, :show]
+	#resources :contents, module: 'odania', as: 'odania_contents', only: [:index, :show]
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 
@@ -32,5 +32,7 @@ Rails.application.routes.draw do
 	# Track views
 	match 'track_view/:type/:id' => 'odania/statistics#track_view', :as => :update_views, via: [:get, :post, :put]
 
-	root to: 'odania/welcome#index'
+	get '*path' => 'odania/menu#show_page'
+
+	root to: 'odania/menu#index'
 end

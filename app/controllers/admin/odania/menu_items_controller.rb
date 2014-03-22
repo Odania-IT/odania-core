@@ -14,19 +14,20 @@ class Admin::Odania::MenuItemsController < AdminController
 	# GET /odania/menu_items/new
 	def new
 		@odania_menu_item = Odania::MenuItem.new
+		@odania_menu_item.target_type = Odania::TargetType.targets.keys.first
 	end
 
 	# GET /odania/menu_items/1/edit
 	def edit
-		Odania::TargetType.set_from_target_data(@odania_menu_item)
 	end
 
 	# POST /odania/menu_items
 	def create
 		@odania_menu_item = Odania::MenuItem.new(odania_menu_item_params)
-		@odania_menu.menu_items << @odania_menu_item
+		@odania_menu_item.target_data = odania_target_data_params
+		@odania_menu_item.menu_id = @odania_menu.id
 
-		if @odania_menu.save
+		if @odania_menu_item.save
 			redirect_to admin_odania_menu_odania_menu_items_path(@odania_menu), notice: 'Menu item was successfully created.'
 		else
 			render action: 'new'
@@ -35,6 +36,7 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# PATCH/PUT /odania/menu_items/1
 	def update
+		@odania_menu_item.target_data = odania_target_data_params
 		if @odania_menu_item.update(odania_menu_item_params)
 			redirect_to admin_odania_menu_odania_menu_items_path(@odania_menu), notice: 'Menu item was successfully updated.'
 		else
@@ -93,7 +95,11 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def odania_menu_item_params
-		params.require(:odania_menu_item).permit(:title, :published, :target_type, :parent_id,
-															  :target_data_url, :target_data_id, :target_data_type)
+		params.require(:odania_menu_item).permit(:title, :published, :target_type, :parent_id)
+	end
+
+	# Parameter for target data
+	def odania_target_data_params
+		params.require(:target_data)
 	end
 end

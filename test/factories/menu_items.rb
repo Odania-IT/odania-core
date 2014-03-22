@@ -4,7 +4,7 @@ FactoryGirl.define do
 	factory :menu_item, :class => 'Odania::MenuItem' do
 		sequence(:title) { |n| "title#{n}" }
 		published true
-		target_type Odania::TargetType::URL
-		target_data_url 'http://target.url.de'
+		target_type 'URL'
+		target_data {{'url' => 'http://target.url.de'}}
 	end
 end

@@ -1,56 +1,34 @@
 module Odania
 	module TargetType
-		INTERNAL = 'internal'
-		URL = 'url'
-
-		TARGETS = [URL, INTERNAL]
+		mattr_reader :targets
+		@@targets = Hash.new
+		@@targets['CONTENT'] = {type: 'CONTENT', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_id',
+										  render_func: 'render_content', selector: 'admin/odania/contents/choose_content'}
+		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
+										  render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list'}
+		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
+								  render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url'}
 
 		class << self
-			def get_target(type, data)
-				if INTERNAL.eql? type
-					return get_internal_url(data)
-				elsif URL.eql? type
-					return data['url']
-				end
-			end
+			def get_target(type, data, site, subpart)
+				target_info = self.targets[type]
+				return nil if target_info.nil?
 
-			def get_internal_url(data)
-				obj = data['type'].constantize.where(id: data['id']).first
-				return '/' if obj.nil?
-				obj
+				m = target_info[:module].constantize
+				return m.send(target_info[:render_func], data, site, subpart) if m.respond_to?(target_info[:render_func])
+				return nil
 			end
 
 			def validate_data(target_type, target_data)
 				return 'invalid target_data' if target_data.nil?
 
-				if URL.eql? target_type
-					return 'invalid target url' if target_data['url'].nil?
-				elsif INTERNAL.eql? target_type
-					return 'invalid internal link' if target_data['id'].nil? or target_data['type'].nil?
-				end
+				target_info = self.targets[target_type]
+				return 'invalid target_type' if target_info.nil?
+
+				m = target_info[:module].constantize
+				return m.send(target_info[:validator_func], target_data) if m.respond_to?(target_info[:validator_func])
 
 				return nil
-			end
-
-			def get_target_data(target_type, obj)
-				if URL.eql? target_type
-					return {'url' => obj.target_data_url}
-				elsif INTERNAL.eql? target_type
-					return {'id' => obj.target_data_id, 'type' => obj.target_data_type}
-				end
-
-				return {}
-			end
-
-			def set_from_target_data(obj)
-				return if obj.target_data.nil?
-
-				if URL.eql? obj.target_type
-					obj.target_data_url = obj.target_data['url']
-				elsif INTERNAL.eql? obj.target_type
-					obj.target_data_id = obj.target_data['id']
-					obj.target_data_type = obj.target_data['type']
-				end
 			end
 		end
 	end

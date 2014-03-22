@@ -40,19 +40,28 @@ class Admin::Odania::MenuItemsControllerTest < ActionController::TestCase
 	end
 
 	test 'should create content' do
-		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::INTERNAL, target_data_id: 1, target_data_type: 'Odania::Content'}
+		content = create(:content)
+
+		data = {title: 'Test Title', published: true, target_type: 'CONTENT'}
 		assert_difference 'Odania::MenuItem.count' do
-			post :create, {odania_menu_item: data, menu_id: @menu.id.to_s}
+			post :create, {odania_menu_item: data, target_data: {id: content.id}, menu_id: @menu.id.to_s}
 		end
 		assert_response :redirect
 		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
 	end
 
 	test 'should update content' do
-		data = {title: 'Test Title', published: true, target_type: Odania::TargetType::URL, target_data_url: 'http://www.onlinegames-info.com'}
-		post :update, {id: @menu.menu_items.first.id.to_s, odania_menu_item: data, menu_id: @menu.id.to_s}
+		data = {title: 'Test Title', published: true, target_type: 'URL'}
+		menu_item = @menu.menu_items.first
+		target_data = {'url' => 'http://www.perfect-reach.com'}
+		post :update, {id: menu_item.id.to_s, odania_menu_item: data, menu_id: @menu.id.to_s, target_data: target_data}
 		assert_response :redirect
 		assert_redirected_to admin_odania_menu_odania_menu_items_path(menu_id: @menu.id.to_s)
+		menu_item.reload
+		assert_equal target_data, menu_item.target_data
+		assert_equal data[:title], menu_item.title
+		assert_equal data[:published], menu_item.published
+		assert_equal data[:target_type], menu_item.target_type
 	end
 
 	test 'should destroy content' do
