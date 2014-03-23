@@ -1,27 +1,10 @@
-<h1>Listing odania_contents</h1>
+<%= render :partial => 'odania/shared/page_links', :locals => {tmp_pages: odania_contents} %>
 
-<table>
-	<thead>
-	<tr>
-		<th>Title</th>
-		<th>Body short</th>
-		<th>Clicks</th>
-		<th>Views</th>
-		<th>Publish at</th>
-		<th></th>
-	</tr>
-	</thead>
-
-	<tbody>
-	<% odania_contents.each do |odania_content| %>
-		<tr>
-			<td><%= odania_content.title %></td>
-			<td><%= odania_content.body_short.html_safe %></td>
-			<td><%= odania_content.clicks %></td>
-			<td><%= odania_content.views %></td>
-			<td><%= odania_content.published_at %></td>
-			<td><%= link_to 'Show', "#{@current_menu_item.full_path}/#{odania_content.to_param}" %></td>
-		</tr>
+<div class="posts">
+	<% odania_contents.each_with_index do |odania_content, idx| %>
+		<%= render :partial => 'odania/contents/show_short', :locals => {odania_content: odania_content, words: 200} %>
+		<hr/>
 	<% end %>
-	</tbody>
-</table>
+</div>
+
+<%= render :partial => 'odania/shared/page_links', :locals => {tmp_pages: odania_contents} %>

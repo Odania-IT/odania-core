@@ -3,6 +3,7 @@ class CreateContent < ActiveRecord::Migration
 		create_table :contents do |t|
 			t.string :title, null: false
 			t.text :body, null: false
+			t.text :body_filtered, null: false
 			t.text :body_short, null: false
 			t.integer :clicks, default: 0
 			t.integer :views, default: 0
@@ -11,6 +12,7 @@ class CreateContent < ActiveRecord::Migration
 			t.integer :site_id, null: false
 			t.integer :language_id, null: false
 			t.integer :user_id, null: false
+			t.text :tags, default: ''
 			t.timestamps
 		end
 

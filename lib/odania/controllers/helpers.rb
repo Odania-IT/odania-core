@@ -60,13 +60,6 @@ module Odania
 				render :template => 'error_pages/404', :layout => false, :status => :not_found
 			end
 
-			# Returns a string that has a max of length words. Tags are stripped first
-			def truncate_words(text, length = 30, end_string = '...')
-				return if text.blank?
-				words = strip_tags(text).split()
-				(words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')).html_safe
-			end
-
 			# Set layout depending on the current site
 			def set_layout
 				current_site.template || 'odania_core/application'

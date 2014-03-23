@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+	get 'tags' => 'tags#index'
+	get 'tags/:tag' => 'tags#show', as: 'tag'
 	mount Ckeditor::Engine => '/ckeditor'
-	#resources :contents, module: 'odania', as: 'odania_contents', only: [:index, :show]
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 

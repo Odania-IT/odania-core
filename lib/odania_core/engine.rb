@@ -8,7 +8,6 @@ module OdaniaCore
 		end
 
 		config.generators do |g|
-			g.orm :mongoid
 			g.template_engine :erb
 			g.test_framework :factory_girl
 		end

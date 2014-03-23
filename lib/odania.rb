@@ -7,6 +7,8 @@ module Odania
 	autoload :Configuration, 'odania/configuration'
 	autoload :Admin, 'odania/admin'
 	autoload :CoreTargetTypeUtil, 'odania/core_target_type_util'
+	autoload :TextHelper, 'odania/text_helper'
+	autoload :TagModule, 'odania/tag_module'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers

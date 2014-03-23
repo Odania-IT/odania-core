@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313225265) do
+ActiveRecord::Schema.define(version: 20140323201249) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -30,16 +30,18 @@ ActiveRecord::Schema.define(version: 20140313225265) do
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
 
   create_table "contents", force: true do |t|
-    t.string   "title",                        null: false
-    t.text     "body",                         null: false
-    t.text     "body_short",                   null: false
-    t.integer  "clicks",       default: 0
-    t.integer  "views",        default: 0
-    t.datetime "published_at",                 null: false
-    t.boolean  "is_active",    default: false
-    t.integer  "site_id",                      null: false
-    t.integer  "language_id",                  null: false
-    t.integer  "user_id",                      null: false
+    t.string   "title",                         null: false
+    t.text     "body",                          null: false
+    t.text     "body_filtered",                 null: false
+    t.text     "body_short",                    null: false
+    t.integer  "clicks",        default: 0
+    t.integer  "views",         default: 0
+    t.datetime "published_at",                  null: false
+    t.boolean  "is_active",     default: false
+    t.integer  "site_id",                       null: false
+    t.integer  "language_id",                   null: false
+    t.integer  "user_id",                       null: false
+    t.text     "tags",          default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,6 +96,19 @@ ActiveRecord::Schema.define(version: 20140313225265) do
   end
 
   add_index "sites", ["host"], name: "index_sites_on_host", unique: true
+
+  create_table "tag_xrefs", force: true do |t|
+    t.integer "tag_id"
+    t.string  "ref_type"
+    t.integer "ref_id"
+  end
+
+  create_table "tags", force: true do |t|
+    t.string  "name",              null: false
+    t.integer "count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name"

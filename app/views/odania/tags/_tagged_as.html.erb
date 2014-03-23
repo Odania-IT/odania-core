@@ -1,0 +1,9 @@
+<p class="category">
+	<% unless odania_content.tags.empty? %>
+		<%= t('Tagged as') %>: %>
+		<% odania_content.tags.split(',').each_with_index do |tag, idx| %>
+			<% if idx > 0 %>, <% end %>
+			<%= link_to tag, tag_url(tag: tag.parameterize) %>
+		<% end %>
+	<% end %>
+</p>

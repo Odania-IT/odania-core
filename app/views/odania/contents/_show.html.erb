@@ -7,7 +7,7 @@
 	<%= render :partial => 'odania/contents/content_info', :locals => {odania_content: odania_content} %>
 
 	<p class="entry-content">
-		<%= odania_content.body.html_safe %>
+		<%= odania_content.body_filtered.html_safe %>
 	</p>
 </div>
 
