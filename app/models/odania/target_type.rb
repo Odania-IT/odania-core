@@ -39,7 +39,7 @@ module Odania
 				target_info = self.targets[menu_item.target_type]
 				return if target_info.nil?
 
-				url = "/#{obj.menu_item.full_path}"
+				url = "#{obj.menu_item.get_target_path}"
 				url += "/#{obj.to_param}" if target_info[:add_id_to_url]
 				return url
 			end
