@@ -1,5 +1,5 @@
 <% cache do %>
-	<ul>
+	<ul class="nav navbar-nav">
 		<%= render :partial => 'odania/shared/menu_part', locals: {menu_items: current_menu.menu_items.where(parent_id: nil)} %>
 	</ul>
 <% end %>
