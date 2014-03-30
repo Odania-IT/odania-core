@@ -1,9 +1,10 @@
 class Odania::Content < ActiveRecord::Base
-	include Odania::TagModule
+	acts_as_taggable
 
 	belongs_to :site, :class_name => 'Odania::Site'
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'
+	belongs_to :menu_item, class_name: 'Odania::MenuItem'
 
 	scope :active, -> { where(is_active: true) }
 
@@ -18,11 +19,14 @@ class Odania::Content < ActiveRecord::Base
 	before_save do
 		self.published_at = Time.now if self.published_at.nil?
 		self.is_active = (self.published_at <= Time.now)
-		prev_tags = self.tags.dup
-		self.tags, self.body_filtered = Odania::Filter.filter_html(self, self.body)
+		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body)
 		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil?
 
-		update_tags(prev_tags, self.tags)
+		# Set menu item id
+		if self.menu_item_id.nil?
+			menu_item = Odania::MenuItem.where(target_type: 'CONTENT_LIST').first
+			self.menu_item_id = menu_item.nil? ? nil : menu_item.id
+		end
 
 		return true
 	end

@@ -12,10 +12,14 @@ class Odania::MenuItem < ActiveRecord::Base
 			errors.add(:target_type, 'invalid target_type')
 		end
 
-		error_msg = Odania::TargetType.validate_data(self.target_type, self.target_data)
+		error_msg = Odania::TargetType.validate_data(self, self.target_type, self.target_data)
 		unless error_msg.nil?
 			errors.add(:target_type, error_msg)
 		end
+	end
+
+	def get_target_path
+		"/#{self.menu.prefix}/#{self.full_path}"
 	end
 
 	before_save do

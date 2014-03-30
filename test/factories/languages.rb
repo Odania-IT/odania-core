@@ -9,6 +9,6 @@ FactoryGirl.define do
 	factory :default_language, class: Odania::Language do
 		name 'German'
 		iso_639_1 'de'
-		initialize_with { Odania::Language.find_or_create_by(iso_639_1: iso_639_1)}
+		initialize_with { Odania::Language.find_or_create_by(iso_639_1: iso_639_1) }
 	end
 end

@@ -2,6 +2,7 @@ class CreateContent < ActiveRecord::Migration
 	def change
 		create_table :contents do |t|
 			t.string :title, null: false
+			t.integer :menu_item_id
 			t.text :body, null: false
 			t.text :body_filtered, null: false
 			t.text :body_short, null: false
@@ -12,11 +13,10 @@ class CreateContent < ActiveRecord::Migration
 			t.integer :site_id, null: false
 			t.integer :language_id, null: false
 			t.integer :user_id, null: false
-			t.text :tags, default: ''
 			t.timestamps
 		end
 
-		add_index :contents, [:site_id, :is_active]
+		add_index :contents, [:site_id, :language_id, :is_active]
 		add_index :contents, [:user_id]
 	end
 end

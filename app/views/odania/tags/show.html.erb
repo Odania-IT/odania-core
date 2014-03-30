@@ -1,2 +1,7 @@
-<h1>Odania::Tags#show</h1>
-<p>Find me in app/views/odania/tags/show.html.erb</p>
+<h1><%= t('Tag _tag', tag: @tag) %></h1>
+
+<p>
+	<% @tag_xrefs.each do |tag_xref| %>
+		<%= link_to tag_xref.ref.title, Odania::TargetType.get_link_for_obj(tag_xref.ref) %>
+	<% end %>
+</p>

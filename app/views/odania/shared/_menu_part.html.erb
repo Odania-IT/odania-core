@@ -1,4 +1,4 @@
 <% menu_items.order('position ASC').each do |menu_item| %>
-	<li><%= link_to menu_item.title, "/#{menu_item.full_path}" %></li>
+	<li><%= link_to menu_item.title, menu_item.get_target_path %></li>
 	<%= render :partial => 'odania/shared/menu_part', locals: {menu_items: current_menu.menu_items.where(parent_id: menu_item.id)} %>
 <% end %>

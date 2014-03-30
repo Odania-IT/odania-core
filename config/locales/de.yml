@@ -1,4 +1,9 @@
 de:
   Under construction: 'Under construction'
   This page is still under construction: 'Diese Seite befindet sich im Aufbau. Bitte schaue später noch einmal vorbei.'
-  Select: 'Select'
+  Select: 'Auswählen'
+  Tagged as: 'Markiert als'
+  authorship_by: 'Autor'
+  Tags: 'Tags'
+  Tag _tag: "Tag %{tag}"
+  Read more: 'Weiter lesen'

@@ -24,6 +24,6 @@
 		<%= @admin_content.language.name %>
 	</p>
 
-	<%= link_to 'Edit', edit_admin_odania_content_path(@admin_content) %> |
-	<%= link_to 'Back', admin_odania_contents_path %>
+	<%= link_to 'Edit', edit_admin_odania_menu_odania_content_path(@odania_menu, @admin_content) %> |
+	<%= link_to 'Back', admin_odania_menu_odania_contents_path(@odania_menu) %>
 <% end %>

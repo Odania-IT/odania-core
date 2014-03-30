@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140323201249) do
 
   create_table "contents", force: true do |t|
     t.string   "title",                         null: false
+    t.integer  "menu_item_id"
     t.text     "body",                          null: false
     t.text     "body_filtered",                 null: false
     t.text     "body_short",                    null: false
@@ -41,12 +42,11 @@ ActiveRecord::Schema.define(version: 20140323201249) do
     t.integer  "site_id",                       null: false
     t.integer  "language_id",                   null: false
     t.integer  "user_id",                       null: false
-    t.text     "tags",          default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "contents", ["site_id", "is_active"], name: "index_contents_on_site_id_and_is_active"
+  add_index "contents", ["site_id", "language_id", "is_active"], name: "index_contents_on_site_id_and_language_id_and_is_active"
   add_index "contents", ["user_id"], name: "index_contents_on_user_id"
 
   create_table "languages", force: true do |t|
@@ -101,14 +101,19 @@ ActiveRecord::Schema.define(version: 20140323201249) do
     t.integer "tag_id"
     t.string  "ref_type"
     t.integer "ref_id"
+    t.string  "context"
   end
+
+  add_index "tag_xrefs", ["ref_type", "ref_id", "context"], name: "index_tag_xrefs_on_ref_type_and_ref_id_and_context"
+  add_index "tag_xrefs", ["tag_id", "context"], name: "index_tag_xrefs_on_tag_id_and_context"
 
   create_table "tags", force: true do |t|
-    t.string  "name",              null: false
-    t.integer "count", default: 0
+    t.string  "name",                null: false
+    t.integer "site_id",             null: false
+    t.integer "count",   default: 0
   end
 
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
+  add_index "tags", ["site_id", "name"], name: "index_tags_on_site_id_and_name", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name"

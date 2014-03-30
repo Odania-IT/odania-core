@@ -47,6 +47,21 @@ class Admin::Odania::MenusController < AdminController
 		redirect_to admin_odania_menus_path, notice: 'Menu was successfully destroyed.'
 	end
 
+	def select_odania_menu
+		if params[:menu]
+			if params[:menu][:id]
+				@odania_menu = Odania::Menu.where(id: params[:menu][:id]).first
+				session[:menu_id] = @odania_menu.id
+				return redirect_to admin_odania_menu_odania_menu_items_path(menu_id: @odania_menu.id.to_s) unless @odania_menu.nil?
+			end
+		end
+
+		@odania_menu = Odania::Menu.where(id: params[:odania_menu]).first
+		@odania_menu = Odania::Menu.first if @odania_menu.nil?
+		redirect_to admin_odania_menu_odania_menu_items_path(@odania_menu.id.to_s) unless @odania_menu.nil?
+		redirect_to admin_odania_menu_path(menu_id: @odania_menu.id.to_s)
+	end
+
 	private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_admin_menu
@@ -56,6 +71,6 @@ class Admin::Odania::MenusController < AdminController
 
 	# Only allow a trusted parameter "white list" through.
 	def admin_menu_params
-		params.require(:odania_menu).permit(:title, :published, :is_default_menu, :menu_type, :site_id, :language_id)
+		params.require(:odania_menu).permit(:title, :published, :is_default_menu, :menu_type, :site_id, :language_id, :prefix)
 	end
 end

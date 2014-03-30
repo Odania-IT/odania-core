@@ -1,7 +1,8 @@
-<% cache(:expires_in => 1.hour) do %>
+<% cache(:expires_in => 1.hour) do
+	path = "#{@current_menu_item.get_target_path}/#{odania_content.to_param}"
+	%>
 	<div class="entry hentry">
-		<h2 class="entry-title"><%= link_to odania_content.title, "#{@current_menu_item.full_path}/#{odania_content.to_param}",
-														{:class => 'bookmark', :rel => 'tag'} %></h2>
+		<h2 class="entry-title"><%= link_to odania_content.title, path, {:class => 'bookmark', :rel => 'tag'} %></h2>
 
 		<%= render :partial => 'odania/contents/content_info', :locals => {odania_content: odania_content} %>
 
@@ -10,8 +11,7 @@
 		</p>
 
 		<p>
-			<%= link_to (t('Read more')+' &raquo;').html_safe, "#{@current_menu_item.full_path}/#{odania_content.to_param}",
-							{class: 'btn btn-primary'} %>
+			<%= link_to (t('Read more')+' &raquo;').html_safe, path, {class: 'btn btn-primary'} %>
 		</p>
 
 		<%= render :partial => 'odania/tags/tagged_as', :locals => {odania_content: odania_content} %>

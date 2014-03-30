@@ -8,7 +8,8 @@ module Odania
 	autoload :Admin, 'odania/admin'
 	autoload :CoreTargetTypeUtil, 'odania/core_target_type_util'
 	autoload :TextHelper, 'odania/text_helper'
-	autoload :TagModule, 'odania/tag_module'
+	autoload :Taggable, 'odania/taggable'
+	autoload :Filter, 'odania/filter'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers
@@ -52,6 +53,10 @@ module Odania
 
 		ActiveSupport.on_load(:action_view) do
 			include scope::UrlHelpers
+		end
+
+		ActiveSupport.on_load(:active_record) do
+			extend Odania::Taggable
 		end
 	end
 

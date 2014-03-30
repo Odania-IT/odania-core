@@ -18,6 +18,14 @@ module Odania
 					return redirect_to "http://#{current_site.redirect_to.host}"
 				end
 
+				if current_menu.nil?
+					site = Site.active.where(is_default: true).first
+					return redirect_to "http://#{site.host}" unless site.nil?
+
+					render :text => 'There is no (default)-site defined!', status: :service_unavailable
+					return false
+				end
+
 				return true
 			end
 

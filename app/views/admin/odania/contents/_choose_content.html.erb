@@ -1,7 +1,8 @@
 <div class="field">
 	<label for="target_data[id]">Content</label>
 	<select name="target_data[id]">
-		<%= options_for_select Odania::Content.where(site_id: session[:site_id]).order('title ASC').map {|c| [c.title, c.id]} %>
+		<%= options_for_select Odania::Content.where(site_id: session[:site_id], language_id: @odania_menu.language.id).
+										  order('title ASC').map { |c| [c.title, c.id] } %>
 	</select>
 	<br>
 </div>

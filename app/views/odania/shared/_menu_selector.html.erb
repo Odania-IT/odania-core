@@ -1,0 +1,5 @@
+<% cache do %>
+	<% current_site.menus.each do |menu| %>
+		<%= link_to menu.title, menu.get_target_path %>
+	<% end %>
+<% end %>

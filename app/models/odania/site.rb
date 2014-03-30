@@ -1,9 +1,13 @@
 module Odania
 	class Site < ActiveRecord::Base
+		include Odania::Taggable::TagCount
+
 		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
 		has_many :menus, :class_name => 'Odania::Menu'
 		has_many :contents, :class_name => 'Odania::Content'
+
+		has_many :tags, class_name: 'Odania::Tag'
 
 		scope :active, -> { where(is_active: true) }
 
@@ -17,6 +21,7 @@ module Odania
 		end
 
 		attr_accessor :menu_cache
+
 		def get_current_menu(locale)
 			self.menu_cache = {} if self.menu_cache.nil?
 			return self.menu_cache[locale] unless self.menu_cache[locale].nil?
@@ -25,7 +30,7 @@ module Odania
 			language = self.default_language if language.nil?
 
 			current_menu = self.menus.where(language_id: language.id).first unless locale.nil?
-			current_menu = self.menus.build if current_menu.nil?
+			return nil if current_menu.nil?
 
 			self.menu_cache[locale] = current_menu
 			return current_menu

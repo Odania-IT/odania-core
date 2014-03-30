@@ -55,6 +55,8 @@ class HelperTest < ActionDispatch::IntegrationTest
 
 	test 'test before_filter for active site' do
 		site = create(:site)
+		create(:menu_with_items, site: site, amount: 1, language: site.default_language)
+
 		host! site.host
 		get '/test/test_valid_site'
 		assert_response :success
@@ -70,9 +72,9 @@ class HelperTest < ActionDispatch::IntegrationTest
 	end
 
 	test 'test view helpers' do
-		site = create(:redirect_site)
-		host! site.host
-		get '/test/test_view_helper'
+		menu = create(:menu_with_items, site: @default_site, amount: 1, language: @default_site.default_language)
+		host! @default_site.host
+		get '/test/test_view_helper', {locale: menu.language.iso_639_1}
 		assert_response :success
 	end
 end

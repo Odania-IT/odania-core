@@ -1,5 +1,5 @@
 <% if tmp_pages and tmp_pages.respond_to?('current_page') then %>
 	<div class="pagination paging">
-		<%= paginate tmp_pages, :left => 3, :right => 3, :window => 5 %>
+		<%= will_paginate tmp_pages %>
 	</div>
 <% end %>

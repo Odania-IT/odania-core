@@ -1,4 +1,6 @@
 class Odania::DeliverController < ApplicationController
+	skip_before_filter :valid_site!
+
 	def click
 		target = URI.unescape(params[:target])
 

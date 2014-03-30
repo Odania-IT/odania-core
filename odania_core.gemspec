@@ -23,8 +23,9 @@ Gem::Specification.new do |s|
 	s.add_dependency 'bootstrap-sass', '~> 3.1.1'
 	s.add_dependency 'coffee-rails', '~> 4.0.1'
 	s.add_dependency 'jquery-rails'
-	s.add_dependency 'kaminari'
+	s.add_dependency 'will_paginate', '~> 3.0'
 	s.add_dependency 'sanitize'
+	s.add_dependency 'http_accept_language'
 
 
 	s.add_development_dependency 'minitest'

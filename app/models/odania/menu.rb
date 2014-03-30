@@ -11,4 +11,14 @@ class Odania::Menu < ActiveRecord::Base
 		return language.iso_639_1 unless language.nil?
 		return Odania::Language.first.iso_639_1
 	end
+
+	def get_target_path
+		"/#{self.prefix}"
+	end
+
+	before_save do
+		self.prefix = self.language.iso_639_1 if (self.prefix.nil? or self.prefix.blank?) and !self.language.nil?
+
+		return true
+	end
 end
