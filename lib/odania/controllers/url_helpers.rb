@@ -8,8 +8,8 @@ module Odania
 			end
 
 			def current_menu
-				unless params[:menu_title].blank?
-					@current_menu ||= current_site.menus.where(prefix: params[:menu_title]).first
+				unless params[:locale].blank?
+					@current_menu ||= current_site.menus.where(prefix: params[:locale]).first
 				end
 
 				@current_menu ||= current_site.get_current_menu(I18n.locale.to_s)

@@ -29,7 +29,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.target_data = {'url' => 'http://www.planetech.de'}
 		menu_item.save!
 
-		get :menu_index, {menu_title: @menu.prefix}
+		get :menu_index, {locale: @menu.language.iso_639_1}
 		assert_response :redirect
 		assert_redirected_to 'http://www.planetech.de'
 	end
@@ -42,7 +42,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.menu_id = @menu.id
 		menu_item.save!
 
-		get :show_page, {menu_title: @menu.prefix, path: menu_item.full_path}
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path}
 		assert_response :success
 		assert_template 'odania/contents/_show'
 	end
@@ -57,7 +57,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.parent_id = parent_menu_item.id
 		menu_item.save!
 
-		get :show_page, {menu_title: @menu.prefix, path: menu_item.full_path}
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path}
 		assert_response :success
 		assert_template 'odania/contents/_show'
 	end
@@ -70,7 +70,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.target_data = {}
 		menu_item.save!
 
-		get :show_page, {menu_title: @menu.prefix, path: menu_item.full_path}
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path}
 		assert_response :success
 		assert_template 'odania/contents/_index'
 	end
@@ -83,7 +83,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.target_data = {}
 		menu_item.save!
 
-		get :show_page, {menu_title: @menu.prefix, path: menu_item.full_path+'/'+content.to_param}
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path+'/'+content.to_param}
 		assert_response :success
 		assert_template 'odania/contents/_show'
 	end

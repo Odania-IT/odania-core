@@ -34,8 +34,10 @@ Rails.application.routes.draw do
 	# Track views
 	match 'track_view/:type/:id' => 'odania/statistics#track_view', :as => :update_views, via: [:get, :post, :put]
 
-	get '/:menu_title' => 'odania/menu#menu_index'
-	get '/:menu_title/*path' => 'odania/menu#show_page'
+	constraints(locale: /[a-z][a-z]/) do
+		get '/:locale' => 'odania/menu#menu_index'
+		get '/:locale/*path' => 'odania/menu#show_page'
+	end
 
 	root to: 'odania/menu#index'
 end
