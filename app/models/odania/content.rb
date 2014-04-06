@@ -20,7 +20,7 @@ class Odania::Content < ActiveRecord::Base
 		self.published_at = Time.now if self.published_at.nil?
 		self.is_active = (self.published_at <= Time.now)
 		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body)
-		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil?
+		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil? or self.body_short.blank?
 
 		# Set menu item id
 		if self.menu_item_id.nil?
