@@ -1,3 +1,15 @@
+# Require dependent gems
+require 'rubygems'
+require 'ckeditor'
+require 'sanitize'
+require 'http_accept_language'
+require 'will_paginate'
+require 'sass-rails'
+require 'coffee-rails'
+require 'jquery-rails'
+require 'bootstrap-sass'
+
+# Require internals
 require 'odania'
 require 'viewable'
 

@@ -19,7 +19,7 @@ class Odania::MenuItem < ActiveRecord::Base
 	end
 
 	def get_target_path
-		"/#{self.menu.prefix}/#{self.full_path}"
+		"#{self.menu.get_target_path}/#{self.full_path}"
 	end
 
 	before_save do

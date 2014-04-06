@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20140323201249) do
     t.string   "title"
     t.boolean  "published"
     t.integer  "default_menu_item_id"
-    t.string   "prefix"
     t.integer  "site_id"
     t.integer  "language_id"
     t.datetime "created_at"
@@ -101,7 +100,7 @@ ActiveRecord::Schema.define(version: 20140323201249) do
     t.integer "tag_id"
     t.string  "ref_type"
     t.integer "ref_id"
-    t.string  "context"
+    t.string  "context",  limit: 128
   end
 
   add_index "tag_xrefs", ["ref_type", "ref_id", "context"], name: "index_tag_xrefs_on_ref_type_and_ref_id_and_context"

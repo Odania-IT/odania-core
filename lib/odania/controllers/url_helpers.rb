@@ -9,7 +9,7 @@ module Odania
 
 			def current_menu
 				unless params[:locale].blank?
-					@current_menu ||= current_site.menus.where(prefix: params[:locale]).first
+					@current_menu ||= current_site.menus.joins(:language).where('languages.iso_639_1' => params[:locale]).first
 				end
 
 				@current_menu ||= current_site.get_current_menu(I18n.locale.to_s)
