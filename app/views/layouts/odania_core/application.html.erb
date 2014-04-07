@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title><%= content_for?(:title) ? strip_tags(yield(:title)) : strip_tags(current_site.name) %></title>
-	<meta name="language" content="<%= current_menu.get_locale %>"/>
+	<meta name="language" content="<%= I18n.locale.to_s %>"/>
 	<%= stylesheet_link_tag 'odania_core/application', media: 'all' %>
 	<%= javascript_include_tag 'odania_core/application' %>
 	<%= csrf_meta_tags %>

@@ -5,9 +5,9 @@ class Odania::TagsController < ApplicationController
 
 	def show
 		@tag = current_site.tags.where(name: params[:tag]).first
-		return render action: 'not_found', status: :not_found if @tag.nil?
+		return render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found if @tag.nil?
 
 		@tag_xrefs = @tag.tag_xrefs
-		render action: 'not_found', status: :not_found if @tag_xrefs.empty?
+		return render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found  if @tag_xrefs.empty?
 	end
 end

@@ -8,11 +8,12 @@ module Odania
 			end
 
 			def current_menu
-				unless params[:locale].blank?
-					@current_menu ||= current_site.menus.joins(:language).where('languages.iso_639_1' => params[:locale]).first
+				cur_locale = params[:locale]
+				if cur_locale.nil?
+					cur_locale = current_site.default_language.iso_639_1
 				end
 
-				@current_menu ||= current_site.get_current_menu(I18n.locale.to_s)
+				@current_menu ||= current_site.get_current_menu(cur_locale)
 				I18n.locale = @current_menu.language.iso_639_1 unless @current_menu.nil?
 				return @current_menu
 			end

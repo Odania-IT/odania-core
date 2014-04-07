@@ -32,6 +32,6 @@ class Odania::TagsControllerTest < ActionController::TestCase
 	test 'test should render not found on invalid tag' do
 		get :show, {tag: 'ABC'}
 		assert_response :not_found
-		assert_template :not_found
+		assert_template 'odania/common/not_found_error'
 	end
 end

@@ -9,12 +9,12 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		@menu = create(:menu_with_items, site: @site, amount: 1, language: @site.default_language)
 	end
 
-	test 'test should redirect to default' do
+	test 'test should render 404' do
 		site = create(:site)
 		@request.host = site.host
 
 		get :index
-		assert_redirected_to "http://#{@site.host}"
+		assert_response :not_found
 	end
 
 	test 'test should redirect to menu prefix' do

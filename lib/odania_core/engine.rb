@@ -1,6 +1,7 @@
 # Require dependent gems
 require 'rubygems'
 require 'ckeditor'
+require 'paperclip'
 require 'sanitize'
 require 'http_accept_language'
 require 'will_paginate'

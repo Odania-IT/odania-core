@@ -14,7 +14,7 @@ class AdminController < ApplicationController
 		@admin_site = Odania::Site.first if @admin_site.nil?
 		session[:site_id] = @admin_site.id.to_s unless @admin_site.nil?
 
-		set_odania_menu
+		set_odania_menu unless @admin_site.nil?
 	end
 
 	# Set the odania menu that is currently edited

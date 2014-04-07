@@ -27,9 +27,8 @@ module Odania
 			return self.menu_cache[locale] unless self.menu_cache[locale].nil?
 
 			language = Odania::Language.where(iso_639_1: locale).first
-			language = self.default_language if language.nil?
 
-			current_menu = self.menus.where(language_id: language.id).first unless locale.nil?
+			current_menu = self.menus.where(language_id: language.id).first unless locale.nil? or language.nil?
 			return nil if current_menu.nil?
 
 			self.menu_cache[locale] = current_menu

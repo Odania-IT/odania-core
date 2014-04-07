@@ -1,6 +1,6 @@
 class CreateSites < ActiveRecord::Migration
 	def change
-		create_table :sites do |t|
+		create_table :odania_sites do |t|
 			t.string :name
 			t.string :host
 			t.boolean :is_active
@@ -13,6 +13,6 @@ class CreateSites < ActiveRecord::Migration
 			t.integer :redirect_to_id
 		end
 
-		add_index :sites, [:host], unique: true
+		add_index :odania_sites, [:host], unique: true
 	end
 end

@@ -1,6 +1,6 @@
 class CreateContent < ActiveRecord::Migration
 	def change
-		create_table :contents do |t|
+		create_table :odania_contents do |t|
 			t.string :title, null: false
 			t.integer :menu_item_id
 			t.text :body, null: false
@@ -16,7 +16,7 @@ class CreateContent < ActiveRecord::Migration
 			t.timestamps
 		end
 
-		add_index :contents, [:site_id, :language_id, :is_active]
-		add_index :contents, [:user_id]
+		add_index :odania_contents, [:site_id, :language_id, :is_active]
+		add_index :odania_contents, [:user_id]
 	end
 end

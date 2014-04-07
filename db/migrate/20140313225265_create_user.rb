@@ -1,6 +1,6 @@
 class CreateUser < ActiveRecord::Migration
 	def change
-		create_table :users do |t|
+		create_table :odania_users do |t|
 			t.string :name
 			t.string :admin_layout
 			t.timestamps

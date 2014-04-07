@@ -1,6 +1,6 @@
 class CreateMenuItems < ActiveRecord::Migration
 	def change
-		create_table :menu_items do |t|
+		create_table :odania_menu_items do |t|
 			t.integer :menu_id
 			t.string :title
 			t.boolean :published
@@ -11,6 +11,6 @@ class CreateMenuItems < ActiveRecord::Migration
 			t.string :full_path
 		end
 
-		add_index :menu_items, [:menu_id, :full_path]
+		add_index :odania_menu_items, [:menu_id, :full_path]
 	end
 end

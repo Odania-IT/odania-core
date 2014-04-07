@@ -1,4 +1,8 @@
 module Odania
+	def self.table_name_prefix
+		'odania_'
+	end
+
 	module Controllers
 		autoload :Helpers, 'odania/controllers/helpers'
 		autoload :UrlHelpers, 'odania/controllers/url_helpers'

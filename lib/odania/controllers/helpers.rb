@@ -15,14 +15,16 @@ module Odania
 				end
 
 				unless current_site.redirect_to.nil?
-					return redirect_to "http://#{current_site.redirect_to.host}"
+					redirect_to "http://#{current_site.redirect_to.host}"
+					return false
 				end
 
-				if current_menu.nil?
-					site = Site.active.where(is_default: true).first
-					return redirect_to "http://#{site.host}" unless site.nil?
+				return true
+			end
 
-					render :text => 'There is no (default)-site defined!', status: :service_unavailable
+			def valid_menu!
+				if current_menu.nil?
+					render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error'
 					return false
 				end
 

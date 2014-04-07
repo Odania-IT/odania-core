@@ -1,5 +1,6 @@
 class Odania::MenuController < ApplicationController
 	before_filter :valid_site!
+	before_filter :valid_menu!, except: [:index]
 
 	def index
 		accepted_langs = current_site.menus.map { |o| o.language.iso_639_1 }
@@ -7,11 +8,13 @@ class Odania::MenuController < ApplicationController
 		language = Odania::Language.where(iso_639_1: locale).first if locale.nil?
 		language = current_site.default_language if language.nil?
 		menu = current_site.menus.where(language_id: language.id).first
+
+		return not_found if menu.nil?
 		redirect_to menu.get_target_path
 	end
 
 	def menu_index
-		menu_item = current_menu.default_menu_item unless current_menu.default_menu_item.nil?
+		menu_item = current_menu.default_menu_item unless current_menu.default_menu_item_id.nil?
 		menu_item = current_menu.menu_items.where(parent_id: nil).first if menu_item.nil?
 
 		return redirect_to menu_item.target_data['url'] if 'URL'.eql? menu_item.target_type
@@ -34,12 +37,12 @@ class Odania::MenuController < ApplicationController
 	end
 
 	def not_found
-		render action: 'not_found', status: :not_found
+		render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found
 	end
 
 	def error(err_msg=nil)
 		@error_msg = err_msg
-		render action: 'error', status: :bad_request
+		render template: 'odania/common/internal_server_error', layout: 'layouts/odania_core/error', status: :bad_request
 	end
 
 	private
