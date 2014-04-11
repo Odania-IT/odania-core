@@ -5,7 +5,7 @@
 	<% end %>
 	<br/>
 	<%= form_tag(select_odania_menu_admin_odania_menus_path(return_to: request.path)) do %>
-		<%= collection_select(:menu, :id, Odania::Menu.order('title ASC'), :id, :title, selected: @odania_menu.id) %>
+		<%= collection_select(:menu, :id, Odania::Menu.order('title ASC'), :id, :title, selected: (@odania_menu.nil? ? nil : @odania_menu.id)) %>
 		<%= submit_tag 'Select' %>
 	<% end %>
 	<br/>
