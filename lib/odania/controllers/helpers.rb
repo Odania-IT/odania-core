@@ -66,8 +66,14 @@ module Odania
 			end
 
 			# Raise a not found exception
-			def not_found
-				render :template => 'error_pages/404', :layout => false, :status => :not_found
+			def render_not_found
+				render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found
+			end
+
+			# Raise an error
+			def render_error(err_msg=nil)
+				@error_msg = err_msg
+				render template: 'odania/common/internal_server_error', layout: 'layouts/odania_core/error', status: :bad_request
 			end
 
 			# Set layout depending on the current site

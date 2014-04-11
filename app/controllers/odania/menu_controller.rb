@@ -9,7 +9,7 @@ class Odania::MenuController < ApplicationController
 		language = current_site.default_language if language.nil?
 		menu = current_site.menus.where(language_id: language.id).first
 
-		return not_found if menu.nil?
+		return render_not_found if menu.nil?
 		redirect_to menu.get_target_path
 	end
 
@@ -36,23 +36,14 @@ class Odania::MenuController < ApplicationController
 		display_menu_item(menu_item, last_part_of_path)
 	end
 
-	def not_found
-		render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found
-	end
-
-	def error(err_msg=nil)
-		@error_msg = err_msg
-		render template: 'odania/common/internal_server_error', layout: 'layouts/odania_core/error', status: :bad_request
-	end
-
 	private
 
 	def display_menu_item(menu_item, last_part_of_path=nil)
-		return not_found if menu_item.nil?
+		return render_not_found if menu_item.nil?
 		data = Odania::TargetType.get_target(menu_item, current_site, last_part_of_path)
 
-		return not_found if data.nil?
-		return error(data[:error]) if data[:error]
+		return render_not_found if data.nil?
+		return render_error(data[:error]) if data[:error]
 
 		unless data[:render_partial].nil?
 			@current_menu_item = menu_item
