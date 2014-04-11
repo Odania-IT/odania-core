@@ -66,6 +66,8 @@ module Odania
 
 		before_save do
 			self.is_active = true if self.is_active.nil?
+
+			true
 		end
 	end
 end
