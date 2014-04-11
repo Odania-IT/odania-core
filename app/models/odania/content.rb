@@ -27,7 +27,5 @@ class Odania::Content < ActiveRecord::Base
 			menu_item = Odania::MenuItem.where(target_type: 'CONTENT_LIST').first
 			self.menu_item_id = menu_item.nil? ? nil : menu_item.id
 		end
-
-		return true
 	end
 end

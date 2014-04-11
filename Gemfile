@@ -13,6 +13,10 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+group :development do
+	gem 'spring'
+end
+
 group :development, :test do
 	gem 'factory_girl_rails'
 	gem 'minitest'

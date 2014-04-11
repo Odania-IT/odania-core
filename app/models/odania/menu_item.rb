@@ -31,7 +31,5 @@ class Odania::MenuItem < ActiveRecord::Base
 		# Find next position
 		menu_item = self.menu.menu_items.where(parent_id: self.parent_id).order('position DESC').first
 		self.position = menu_item.nil? ? 1 : menu_item.position + 1
-
-		return true
 	end
 end
