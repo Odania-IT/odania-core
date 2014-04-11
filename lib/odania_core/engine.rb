@@ -16,7 +16,7 @@ require 'viewable'
 
 module OdaniaCore
 	class Engine < ::Rails::Engine
-		initializer "odania_core.url_helpers" do
+		initializer 'odania_core.url_helpers' do
 			::Odania.include_helpers(::Odania::Controllers)
 		end
 
