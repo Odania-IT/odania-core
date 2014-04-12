@@ -9,8 +9,10 @@ module Odania
 				# Add nofollow to links
 				doc = Nokogiri::HTML.fragment(html)
 				doc.css('a').each do |link|
-					link.attributes['href'].value = get_click_counter_url(obj, link.attributes['href'].value)
-					link['rel'] = 'nofollow'
+					unless link.attributes['href'].nil?
+						link.attributes['href'].value = get_click_counter_url(obj, link.attributes['href'].value)
+						link['rel'] = 'nofollow'
+					end
 				end
 
 				# Retrieve tags
