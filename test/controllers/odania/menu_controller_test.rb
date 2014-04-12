@@ -87,4 +87,30 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		assert_response :success
 		assert_template 'odania/contents/_show'
 	end
+
+	test 'test should render content list for tag' do
+		create(:content, site: @site)
+		create(:content, site: @site)
+		menu_item = create(:menu_item, menu: @menu)
+		menu_item.target_type = 'CONTENT_LIST_FOR_TAG'
+		menu_item.target_data = {'tag' => 'T1'}
+		menu_item.save!
+
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path}
+		assert_response :success
+		assert_template 'odania/contents/_index'
+	end
+
+	test 'test should render item under content list for tag' do
+		content = create(:content, site: @site)
+		create(:content, site: @site)
+		menu_item = create(:menu_item, menu: @menu)
+		menu_item.target_type = 'CONTENT_LIST_FOR_TAG'
+		menu_item.target_data = {'tag' => 'T1'}
+		menu_item.save!
+
+		get :show_page, {locale: @menu.language.iso_639_1, path: menu_item.full_path+'/'+content.to_param}
+		assert_response :success
+		assert_template 'odania/contents/_show'
+	end
 end

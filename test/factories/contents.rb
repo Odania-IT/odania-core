@@ -3,7 +3,7 @@
 FactoryGirl.define do
 	factory :content, :class => 'Odania::Content' do
 		sequence(:title) { |n| "Site #{n}" }
-		sequence(:body) { |n| "Site Long Text #{n}" }
+		sequence(:body) { |n| "Site Long Text #{n} #T1" }
 		sequence(:body_short) { |n| "Site Short Text #{n}" }
 		clicks 1
 		views 1

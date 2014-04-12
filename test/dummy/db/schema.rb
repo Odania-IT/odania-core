@@ -116,7 +116,10 @@ ActiveRecord::Schema.define(version: 20140323201249) do
 
   create_table "odania_users", force: true do |t|
     t.string   "name"
+    t.string   "email"
     t.string   "admin_layout"
+    t.string   "ip"
+    t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
