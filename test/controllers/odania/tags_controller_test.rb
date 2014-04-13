@@ -34,4 +34,13 @@ class Odania::TagsControllerTest < ActionController::TestCase
 		assert_response :not_found
 		assert_template 'odania/common/not_found_error'
 	end
+
+	test 'test should set the current_menu_item_id' do
+		@content.body = 'This is a #ABC-Tag test'
+		@content.menu_item_id = nil
+		@content.save!
+
+		get :show, {tag: 'ABC-Tag'}
+		assert_response :success
+	end
 end

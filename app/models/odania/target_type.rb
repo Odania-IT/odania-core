@@ -40,6 +40,8 @@ module Odania
 
 			def get_link_for_obj(obj)
 				menu_item = obj.menu_item
+				return if menu_item.nil?
+
 				target_info = self.targets[menu_item.target_type]
 				return if target_info.nil?
 

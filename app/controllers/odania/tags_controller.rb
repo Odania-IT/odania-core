@@ -8,6 +8,6 @@ class Odania::TagsController < ApplicationController
 		return render_not_found if @tag.nil?
 
 		@tag_xrefs = @tag.tag_xrefs
-		return render_not_found  if @tag_xrefs.empty?
+		return render_not_found if @tag_xrefs.empty?
 	end
 end
