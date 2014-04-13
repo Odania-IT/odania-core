@@ -1,4 +1,6 @@
 class Odania::TagsController < ApplicationController
+	before_filter :valid_site!
+	
 	def index
 		@odania_tags = current_site.tag_counts_on(:tags)
 	end
