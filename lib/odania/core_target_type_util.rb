@@ -62,7 +62,7 @@ module Odania
 
 			def render_content_list_for_tag(menu_item, site, subpart)
 				odania_tag = Odania::Tag.where(name: menu_item.target_data['tag']).first
-				return [] if odania_tag.nil?
+				return {} if odania_tag.nil?
 
 				unless subpart.nil?
 					odania_content = site.contents.joins(:tags).where(odania_tag_xrefs: {tag_id: odania_tag.id}).where(id: subpart.to_i).first

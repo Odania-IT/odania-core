@@ -53,6 +53,6 @@ class Odania::MenuController < ApplicationController
 		end
 		return redirect_to data[:redirect] unless data[:redirect].nil?
 
-		not_found
+		render_not_found
 	end
 end
