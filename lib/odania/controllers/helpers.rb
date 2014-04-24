@@ -78,7 +78,8 @@ module Odania
 
 			# Set layout depending on the current site
 			def set_layout
-				current_site.template || 'odania_core/application'
+				tpl = current_site.nil? ? nil : current_site.template
+				tpl || 'odania_core/application'
 			end
 		end
 	end
