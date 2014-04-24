@@ -7,7 +7,6 @@
 		<th>Host</th>
 		<th>Is active</th>
 		<th>Is default</th>
-		<th>Tracking code</th>
 		<th>Template</th>
 		<th>Default Language</th>
 		<th>Language</th>
@@ -25,7 +24,6 @@
 			<td><%= admin_site.host %></td>
 			<td><%= icon_for_bool(admin_site.is_active) %></td>
 			<td><%= icon_for_bool(admin_site.is_default) %></td>
-			<td><%= admin_site.tracking_code %></td>
 			<td><%= admin_site.get_template_name %></td>
 			<td><%= admin_site.default_language.iso_639_1 %></td>
 			<td><%= list_languages(admin_site.get_languages) %></td>
