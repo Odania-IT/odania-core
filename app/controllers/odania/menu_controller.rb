@@ -24,23 +24,14 @@ class Odania::MenuController < ApplicationController
 	def show_page
 		# Try to find the correct menu_item
 		menu_item = current_menu.menu_items.where(full_path: params[:path]).first
-
-		# Try to find out if we have a subpart
-		if menu_item.nil?
-			path_exception_last_part = params[:path].gsub(/\/[a-z0-9-]*$/i, '')
-			last_part_of_path = params[:path].gsub(path_exception_last_part, '')
-			last_part_of_path = last_part_of_path[1, last_part_of_path.length]
-			menu_item = current_menu.menu_items.where(full_path: path_exception_last_part).first
-		end
-
-		display_menu_item(menu_item, last_part_of_path)
+		display_menu_item(menu_item)
 	end
 
 	private
 
-	def display_menu_item(menu_item, last_part_of_path=nil)
+	def display_menu_item(menu_item)
 		return render_not_found if menu_item.nil?
-		data = Odania::TargetType.get_target(menu_item, current_site, last_part_of_path)
+		data = Odania::TargetType.get_target(menu_item)
 
 		return render_not_found if data.nil?
 		return render_error(data[:error]) if data[:error]

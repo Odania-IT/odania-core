@@ -3,22 +3,19 @@ module Odania
 		mattr_reader :targets
 		@@targets = Hash.new
 		@@targets['CONTENT'] = {type: 'CONTENT', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_id',
-										render_func: 'render_content', selector: 'admin/odania/contents/choose_content',
-										add_id_to_url: false}
+										render_func: 'render_content', selector: 'admin/odania/contents/choose_content'}
 		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
-											  render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list',
-											  add_id_to_url: true}
+											  render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list'}
 		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
-								  render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url',
-								  add_id_to_url: false}
+								  render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url'}
 
 		class << self
-			def get_target(menu_item, site, subpart)
+			def get_target(menu_item)
 				target_info = self.targets[menu_item.target_type]
 				return nil if target_info.nil?
 
 				m = target_info[:module].constantize
-				return m.send(target_info[:render_func], menu_item, site, subpart) if m.respond_to?(target_info[:render_func])
+				return m.send(target_info[:render_func], menu_item) if m.respond_to?(target_info[:render_func])
 				return nil
 			end
 
@@ -41,9 +38,7 @@ module Odania
 				target_info = self.targets[menu_item.target_type]
 				return if target_info.nil?
 
-				url = "#{menu_item.get_target_path}"
-				url += "/#{obj.to_param}" if target_info[:add_id_to_url]
-				return url
+				return menu_item.get_target_path
 			end
 		end
 	end

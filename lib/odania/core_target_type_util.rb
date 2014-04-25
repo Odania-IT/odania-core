@@ -17,7 +17,7 @@ module Odania
 				return nil
 			end
 
-			def render_url(menu_item, site, subpart)
+			def render_url(menu_item)
 				{redirect: menu_item.target_data['url']}
 			end
 
