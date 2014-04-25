@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 	s.version = OdaniaCore::VERSION
 	s.authors = ['Mike Petersen']
 	s.email = ['mike@odania-it.de']
-	s.homepage = 'http://www.odania.de'
+	s.homepage = 'http://www.odania.com'
 	s.summary = 'Core Module of the Odania Portal'
 	s.description = 'The Odania Portal is an open source portal system with strong focus on the usage on different domains with different layout/setup.'
 
