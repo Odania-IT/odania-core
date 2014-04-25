@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-	before_filter :authenticate_user!, :choose_site
+	before_action :authenticate_user!, :choose_site, :require_admin_role!
 	skip_before_filter :valid_site!
 	layout :set_admin_layout
 

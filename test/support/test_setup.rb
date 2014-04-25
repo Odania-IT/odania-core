@@ -6,6 +6,12 @@ module OdaniaTestMock
 
 	def self.current_user
 		@@mock_current_user ||= Odania::User.find_or_create_by(name: 'Admin', email: 'mail@example.com')
+
+		if @@mock_current_user.roles.count == 0
+			@@mock_current_user.roles.create(role: Odania::UserRole.roles[:admin])
+		end
+
+		return @@mock_current_user
 	end
 
 	mattr_accessor :user_authenticated
