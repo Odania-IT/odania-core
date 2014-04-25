@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-	get 'tags' => 'odania/tags#index'
-	get 'tags/:tag' => 'odania/tags#show', as: 'tag'
 	mount Ckeditor::Engine => '/ckeditor'
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
@@ -36,6 +34,8 @@ Rails.application.routes.draw do
 
 	scope '/:locale', constraints: {locale: /[a-z][a-z]/} do
 		resources :contents, only: [:index, :show], controller: 'odania/contents', as: 'odania_content'
+		get 'tags' => 'odania/tags#index'
+		get 'tags/:tag' => 'odania/tags#show', as: :tag
 
 		get '/*path' => 'odania/menu#show_page'
 		root to: 'odania/menu#menu_index', as: :locale_root
