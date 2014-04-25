@@ -2,7 +2,6 @@ class CreateContent < ActiveRecord::Migration
 	def change
 		create_table :odania_contents do |t|
 			t.string :title, null: false
-			t.integer :menu_item_id
 			t.text :body, null: false
 			t.text :body_filtered, null: false
 			t.text :body_short, null: false

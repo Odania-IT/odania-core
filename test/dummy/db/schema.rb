@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140425190306) do
+ActiveRecord::Schema.define(version: 20140323201249) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20140425190306) do
     t.integer "language_id"
   end
 
-  add_index "odania_tags", ["site_id", "name"], name: "index_odania_tags_on_site_id_and_name", unique: true
+  add_index "odania_tags", ["site_id", "language_id", "name"], name: "index_odania_tags_on_site_id_and_language_id_and_name", unique: true
 
   create_table "odania_users", force: true do |t|
     t.string   "name"

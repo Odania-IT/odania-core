@@ -16,7 +16,7 @@ class Odania::ContentsControllerTest < ActionController::TestCase
 	end
 
 	test 'test should render content list for tag' do
-		content = create(:content, site: @site, language: @site.default_language)
+		content = build(:content, site: @site, language: @site.default_language)
 		content.body = 'This is a new tag #TZ2'
 		content.save!
 

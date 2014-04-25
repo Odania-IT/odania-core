@@ -5,7 +5,7 @@ class Odania::ContentsController < ApplicationController
 		@odania_contents = current_site.contents
 
 		unless params[:tag].nil?
-			odania_tag = Odania::Tag.where(name: params[:tag]).first
+			odania_tag = Odania::Tag.where(name: params[:tag], language_id: current_menu.language_id).first
 			@odania_contents = @odania_contents.joins(:tags).where(odania_tag_xrefs: {tag_id: odania_tag.id}) unless odania_tag.nil?
 		end
 

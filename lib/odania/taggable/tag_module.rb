@@ -8,7 +8,7 @@ module Odania
 					# Remove old tags
 					removed = prev_tags - cur_tags
 					removed.each do |tag|
-						tag = Odania::Tag.where(name: tag, site_id: self.site_id).first
+						tag = Odania::Tag.where(name: tag, site_id: self.site_id, language_id: self.language_id).first
 						unless tag.nil?
 							xref = Odania::TagXref.where(tag_id: tag.id, ref: self, context: context).first
 							xref.destroy unless xref.nil?
@@ -18,8 +18,8 @@ module Odania
 					# Add new tags
 					new_tags = cur_tags - prev_tags
 					new_tags.each do |tag|
-						odania_tag = Odania::Tag.where(name: tag, site_id: self.site_id).first
-						odania_tag = Odania::Tag.create(name: tag, site_id: self.site_id) if odania_tag.nil?
+						odania_tag = Odania::Tag.where(name: tag, site_id: self.site_id, language_id: self.language_id).first
+						odania_tag = Odania::Tag.create(name: tag, site_id: self.site_id, language_id: self.language_id) if odania_tag.nil?
 						Odania::TagXref.create(tag_id: odania_tag.id, ref: self, context: context)
 					end
 				end
