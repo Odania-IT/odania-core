@@ -20,7 +20,7 @@ module Odania
 				tags = []
 				html.gsub(/#[a-z0-9\-]*[^< ]/i) do |match|
 					tag = match[1, match.length]
-					filtered_html.gsub!(match, "<a href=\"/tags/#{tag.parameterize}\">#{tag}</a>")
+					filtered_html.gsub!(match, "<a href=\"/#{obj.language.iso_639_1}/tags/#{tag.parameterize}\">#{tag}</a>")
 					tags << tag
 				end
 

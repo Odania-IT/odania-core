@@ -7,6 +7,10 @@ class TestObj
 	def initialize(id)
 		self.id = id
 	end
+
+	def language
+		return Odania::Language.new(iso_639_1: 'mp')
+	end
 end
 
 class Odania::FilterTest < ActiveSupport::TestCase
@@ -29,11 +33,12 @@ class Odania::FilterTest < ActiveSupport::TestCase
 	end
 
 	test 'test tags are replaces' do
-		obj = {id: '123'}
+		obj = TestObj.new(id: '123')
 		input = '<p>Test #Tag1 #Tag2  asdsda #Tgf-4</p>'
 		tags, result = Odania::Filter.filter_html(obj, input)
+		short_code = obj.language.iso_639_1
 
 		assert_equal 'Tag1,Tag2,Tgf-4', tags
-		assert_equal "<p>Test <a href=\"/tags/tag1\">Tag1</a> <a href=\"/tags/tag2\">Tag2</a>  asdsda <a href=\"/tags/tgf-4\">Tgf-4</a></p>", result
+		assert_equal "<p>Test <a href=\"/#{short_code}/tags/tag1\">Tag1</a> <a href=\"/#{short_code}/tags/tag2\">Tag2</a>  asdsda <a href=\"/#{short_code}/tags/tgf-4\">Tgf-4</a></p>", result
 	end
 end

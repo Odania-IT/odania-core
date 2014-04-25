@@ -17,6 +17,8 @@ class Odania::MenuController < ApplicationController
 		menu_item = current_menu.default_menu_item unless current_menu.default_menu_item_id.nil?
 		menu_item = current_menu.menu_items.where(parent_id: nil).first if menu_item.nil?
 
+		return render_error(t('No content defined')) if menu_item.nil?
+
 		return redirect_to menu_item.target_data['url'] if 'URL'.eql? menu_item.target_type
 		redirect_to menu_item.get_target_path
 	end
