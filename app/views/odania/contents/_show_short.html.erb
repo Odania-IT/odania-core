@@ -1,5 +1,5 @@
 <% cache(:expires_in => 1.hour) do
-	path = "#{@current_menu_item.get_target_path}/#{odania_content.to_param}"
+	path = content_path(id: odania_content.to_param)
 	%>
 	<div class="entry hentry">
 		<h2 class="entry-title"><%= link_to odania_content.title, path, {:class => 'bookmark', :rel => 'tag'} %></h2>

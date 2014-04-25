@@ -8,10 +8,6 @@ module Odania
 		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
 											  render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list',
 											  add_id_to_url: true}
-		@@targets['CONTENT_LIST_FOR_TAG'] = {type: 'CONTENT_LIST_FOR_TAG', module: 'Odania::CoreTargetTypeUtil',
-														 validator_func: 'validate_content_list_for_tag', render_func: 'render_content_list_for_tag',
-														 selector: 'admin/odania/contents/choose_content_list_for_tag',
-											  add_id_to_url: true}
 		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
 								  render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url',
 								  add_id_to_url: false}

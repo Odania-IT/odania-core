@@ -4,5 +4,5 @@
 		<%= options_for_select Odania::Content.where(site_id: session[:site_id], language_id: @odania_menu.language.id).
 										  order('title ASC').map { |c| [c.title, c.id] } %>
 	</select>
-	<br>
+	<br/>
 </div>

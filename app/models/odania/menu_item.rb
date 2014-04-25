@@ -22,12 +22,7 @@ class Odania::MenuItem < ActiveRecord::Base
 		"#{self.menu.get_target_path}/#{self.full_path}"
 	end
 
-	before_save do
-		# Build the full_path
-		self.full_path = ''
-		self.full_path = self.parent.full_path+'/' unless self.parent_id.nil?
-		self.full_path += self.title.parameterize
-
+	before_create do
 		# Find next position
 		menu_item = self.menu.menu_items.where(parent_id: self.parent_id).order('position DESC').first
 		self.position = menu_item.nil? ? 1 : menu_item.position + 1

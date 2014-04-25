@@ -5,7 +5,7 @@ module OdaniaTestMock
 	mattr_accessor :mock_current_user
 
 	def self.current_user
-		@@mock_current_user ||= Odania::User.find_or_create_by(name: 'Admin')
+		@@mock_current_user ||= Odania::User.find_or_create_by(name: 'Admin', email: 'mail@example.com')
 	end
 
 	mattr_accessor :user_authenticated

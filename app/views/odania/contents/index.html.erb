@@ -1,0 +1,10 @@
+<%= render :partial => 'odania/shared/page_links', :locals => {tmp_pages: @odania_contents} %>
+
+<div class="posts">
+	<% @odania_contents.each do |odania_content| %>
+		<%= render :partial => 'odania/contents/show_short', :locals => {odania_content: odania_content} %>
+		<hr/>
+	<% end %>
+</div>
+
+<%= render :partial => 'odania/shared/page_links', :locals => {tmp_pages: @odania_contents} %>
