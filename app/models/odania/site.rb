@@ -16,6 +16,8 @@ module Odania
 		validate :validate_template_exists, :validate_language_is_present
 		validates_presence_of :host, :name
 
+		has_many :users, class_name: 'Odania::User'
+
 		def self.get_site(host)
 			Odania::Site.active.where(host: host).first
 		end
