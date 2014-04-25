@@ -22,7 +22,6 @@ class Odania::TagsControllerTest < ActionController::TestCase
 		menu_item.save!
 
 		@content.body = 'This is a #ABC-Tag test'
-		@content.menu_item_id = menu_item.id
 		@content.save!
 
 		get :show, {tag: 'ABC-Tag'}
@@ -33,14 +32,5 @@ class Odania::TagsControllerTest < ActionController::TestCase
 		get :show, {tag: 'ABC'}
 		assert_response :not_found
 		assert_template 'odania/common/not_found_error'
-	end
-
-	test 'test should set the current_menu_item_id' do
-		@content.body = 'This is a #ABC-Tag test'
-		@content.menu_item_id = nil
-		@content.save!
-
-		get :show, {tag: 'ABC-Tag'}
-		assert_response :success
 	end
 end
