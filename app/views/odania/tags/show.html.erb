@@ -2,6 +2,6 @@
 
 <p>
 	<% @tag_xrefs.each do |tag_xref| %>
-		<%= link_to tag_xref.ref.title, Odania::TargetType.get_link_for_obj(tag_xref.ref) %>
+		<%= link_to tag_xref.ref.title, polymorphic_url([tag_xref.ref], {locale: tag_xref.ref.language.iso_639_1}) %>
 	<% end %>
 </p>

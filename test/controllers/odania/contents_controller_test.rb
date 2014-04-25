@@ -35,7 +35,7 @@ class Odania::ContentsControllerTest < ActionController::TestCase
 	test 'test should redirect to correct url content' do
 		get :show, {id: @content.id, locale: @site.default_language.iso_639_1}
 		assert_response :redirect
-		assert_redirected_to content_path(id: @content.to_param)
+		assert_redirected_to odania_content_path(id: @content.to_param)
 	end
 
 	test 'test should render not found for invalid id' do
