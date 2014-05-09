@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 	layout :set_admin_layout
 
 	def set_admin_layout
-		current_user.admin_layout || Odania.admin.admin_templates.keys.first || 'odania_core/admin'
+		current_user.admin_layout || Odania.admin.templates.keys.first || 'odania_core/admin'
 	end
 
 	def choose_site

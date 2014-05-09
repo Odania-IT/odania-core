@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OdaniaCore</title>
+	<%= stylesheet_link_tag 'odania_core_protected/application', media: 'all' %>
+	<%= javascript_include_tag 'odania_core_protected/application' %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-3" style="margin-top: 60px;">
+			<div class="well sidebar-nav">
+				<%= render partial: 'protected/odania/shared/menu' %>
+			</div>
+		</div>
+
+		<div class="col-md-9 hfeed" style="margin-top: 60px;">
+			<%= render :partial => 'odania/shared/flashes' %>
+			<%= yield %>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

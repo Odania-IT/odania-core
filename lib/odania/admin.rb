@@ -2,16 +2,16 @@
 module Odania
 	module Admin
 		# Registered Templates for the admin pages
-		mattr_reader :admin_templates
-		@@admin_templates = Hash.new
+		mattr_reader :templates
+		@@templates = Hash.new
 
 		# Registered Admin Pages
-		mattr_accessor :admin_pages
-		@@admin_pages = Set.new
-		@@admin_pages << {name: 'Sites', path: '/admin/odania/sites'}
-		@@admin_pages << {name: 'Contents', path: '/admin/odania/contents'}
-		@@admin_pages << {name: 'Languages', path: '/admin/odania/languages'}
-		@@admin_pages << {name: 'Menus', path: '/admin/odania/menus'}
-		@@admin_pages << {name: 'Menu Items', path: '/admin/odania/menu_items'}
+		mattr_accessor :pages
+		@@pages = Set.new
+		@@pages << {name: 'Sites', path: '/admin/odania/sites'}
+		@@pages << {name: 'Contents', path: '/admin/odania/contents'}
+		@@pages << {name: 'Languages', path: '/admin/odania/languages'}
+		@@pages << {name: 'Menus', path: '/admin/odania/menus'}
+		@@pages << {name: 'Menu Items', path: '/admin/odania/menu_items'}
 	end
 end

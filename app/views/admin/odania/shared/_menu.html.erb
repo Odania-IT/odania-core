@@ -13,7 +13,7 @@
 
 	<div class="nav-collapse">
 		<ul class="nav nav-list">
-			<% Odania.admin.admin_pages.each do |admin_page| %>
+			<% Odania.admin.pages.each do |admin_page| %>
 				<li><%= link_to admin_page[:name], admin_page[:path] %></li>
 			<% end %>
 		</ul>

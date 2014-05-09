@@ -29,6 +29,10 @@ Rails.application.routes.draw do
 		get '/' => 'dashboard#index'
 	end
 
+	namespace :protected do
+		get '/' => 'dashboard#index'
+	end
+
 	# Track views
 	match 'track_view/:type/:id' => 'odania/statistics#track_view', :as => :update_views, via: [:get, :post, :put]
 

@@ -10,6 +10,7 @@ module Odania
 
 	autoload :Configuration, 'odania/configuration'
 	autoload :Admin, 'odania/admin'
+	autoload :Protected, 'odania/protected'
 	autoload :CoreTargetTypeUtil, 'odania/core_target_type_util'
 	autoload :TextHelper, 'odania/text_helper'
 	autoload :Taggable, 'odania/taggable'
@@ -95,5 +96,9 @@ module Odania
 
 	def self.admin
 		Odania::Admin
+	end
+
+	def self.protected
+		Odania::Protected
 	end
 end
