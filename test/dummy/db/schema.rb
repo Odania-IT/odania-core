@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140425202800) do
+ActiveRecord::Schema.define(version: 20140425195051) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20140425202800) do
   add_index "odania_user_roles", ["user_id"], name: "index_odania_user_roles_on_user_id"
 
   create_table "odania_users", force: true do |t|
+    t.integer  "site_id"
     t.string   "name"
     t.string   "email"
     t.string   "admin_layout"
@@ -129,7 +130,6 @@ ActiveRecord::Schema.define(version: 20140425202800) do
     t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "site_id"
   end
 
 end

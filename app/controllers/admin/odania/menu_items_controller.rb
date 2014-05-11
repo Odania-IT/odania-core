@@ -85,6 +85,6 @@ class Admin::Odania::MenuItemsController < AdminController
 
 	# Parameter for target data
 	def odania_target_data_params
-		params.require(:target_data)
+		params[:target_data].nil? ? {} : params[:target_data]
 	end
 end
