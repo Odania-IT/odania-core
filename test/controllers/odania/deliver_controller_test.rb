@@ -23,6 +23,7 @@ class Odania::DeliverControllerTest < ActionController::TestCase
 		Odania.setup do |config|
 			config.background_enqueue = 'TestBackgroundWorker.enqueue'
 		end
+		Odania.setup_enqueue
 
 		get :click, {target: URI.escape(target), id: 'myid', type: 'test-type'}
 		assert_response :redirect

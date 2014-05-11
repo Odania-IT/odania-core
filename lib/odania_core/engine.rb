@@ -9,6 +9,7 @@ require 'sass-rails'
 require 'coffee-rails'
 require 'jquery-rails'
 require 'bootstrap-sass'
+require 'rails-i18n'
 
 # Require internals
 require 'odania'

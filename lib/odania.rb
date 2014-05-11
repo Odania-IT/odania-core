@@ -15,6 +15,7 @@ module Odania
 	autoload :TextHelper, 'odania/text_helper'
 	autoload :Taggable, 'odania/taggable'
 	autoload :Filter, 'odania/filter'
+	autoload :DisabledBackgroundJob, 'odania/disabled_background_job'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers
@@ -31,14 +32,16 @@ module Odania
 	def self.setup
 		yield Odania::Configuration
 		@@helpers.each { |h| h.define_helpers(self.config) }
+	end
 
+	def self.setup_enqueue
 		# Enqueue for background processing
 		if Odania.config.background_enqueue.blank?
 			Rails.logger.error 'No background_enqueue defined!'
 			Odania.config.background_enqueue = 'puts \'FallbackEnqueue\';puts'
 		end
 		module_eval <<-METHODS, __FILE__, __LINE__ + 1
-			def self.enqueue(background_type, opts)
+			def self.enqueue(background_type, *opts)
 				#{Odania.config.background_enqueue}(background_type, opts)
 			end
 		METHODS

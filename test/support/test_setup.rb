@@ -38,3 +38,4 @@ Odania.setup do |config|
 	config.authenticate_user_function = 'user_auth'
 	config.background_enqueue = 'OdaniaTestMock.enqueue'
 end
+Odania.setup_enqueue

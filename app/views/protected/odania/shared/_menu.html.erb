@@ -1,6 +1,7 @@
 <div class="container-fluid">
 	<div class="nav-collapse">
 		<ul class="nav nav-list">
+			<li><%= link_to t('Dashboard'), protected_path %></li>
 			<% Odania.protected.pages.each do |protected_page| %>
 				<li><%= link_to protected_page[:name], protected_page[:path] %></li>
 			<% end %>

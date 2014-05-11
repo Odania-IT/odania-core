@@ -1,7 +1,7 @@
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require "odania_core/version"
+require 'odania_core/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
 	s.add_dependency 'will_paginate', '~> 3.0'
 	s.add_dependency 'sanitize'
 	s.add_dependency 'http_accept_language'
+	s.add_dependency 'rails-i18n'
 
 
 	s.add_development_dependency 'minitest'
