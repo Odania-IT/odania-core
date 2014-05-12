@@ -28,7 +28,10 @@
 		<%= f.select :target_type, Odania::TargetType.targets.keys %>
 	</div>
 
-	<%= render partial: Odania::TargetType.targets[@odania_menu_item.target_type][:selector], locals: {menu_item: @odania_menu_item} %>
+
+	<% unless Odania::TargetType.targets[@odania_menu_item.target_type][:selector].blank? %>
+		<%= render partial: Odania::TargetType.targets[@odania_menu_item.target_type][:selector], locals: {menu_item: @odania_menu_item} %>
+	<% end %>
 
 	<div class="field">
 		<%= f.label :parent_id %>

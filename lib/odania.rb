@@ -16,6 +16,7 @@ module Odania
 	autoload :Taggable, 'odania/taggable'
 	autoload :Filter, 'odania/filter'
 	autoload :DisabledBackgroundJob, 'odania/disabled_background_job'
+	autoload :TargetType, 'odania/target_type'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers
