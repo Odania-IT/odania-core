@@ -27,11 +27,14 @@ Gem::Specification.new do |s|
 	s.add_dependency 'will_paginate', '~> 3.0'
 	s.add_dependency 'sanitize'
 	s.add_dependency 'http_accept_language'
+	s.add_dependency 'redcarpet', '>= 3.1.1'
 	s.add_dependency 'rails-i18n'
 
 
+=begin
 	s.add_development_dependency 'minitest'
 	s.add_development_dependency 'minitest-reporters'
 	s.add_development_dependency 'factory_girl_rails'
 	s.add_development_dependency 'database_cleaner'
+=end
 end
