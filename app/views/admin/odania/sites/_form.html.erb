@@ -22,11 +22,6 @@
 		<%= f.check_box :is_default %>
 	</div>
 	<div class="field">
-		<%= f.label :tracking_code %>
-		<br/>
-		<%= f.text_area :tracking_code %>
-	</div>
-	<div class="field">
 		<%= f.label :description %>
 		<br/>
 		<%= f.text_area :description %>
@@ -55,6 +50,21 @@
 		<%= f.label :template %>
 		<br/>
 		<%= f.select :template, Odania.templates_for_select, {include_blank: true} %>
+	</div>
+	<div class="field">
+		<%= f.label :tracking_code %>
+		<br/>
+		<%= f.text_area :tracking_code %>
+	</div>
+	<div class="field">
+		<%= f.label :imprint %>
+		<br/>
+		<%= f.text_area :imprint %>
+	</div>
+	<div class="field">
+		<%= f.label :terms_and_conditions %>
+		<br/>
+		<%= f.text_area :terms_and_conditions %>
 	</div>
 	<div class="actions">
 		<%= f.submit %>

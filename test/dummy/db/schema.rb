@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140512153554) do
+ActiveRecord::Schema.define(version: 20140512161811) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -114,6 +114,8 @@ ActiveRecord::Schema.define(version: 20140512153554) do
     t.integer "redirect_to_id"
     t.string  "default_from_email"
     t.string  "notify_email_address"
+    t.text    "imprint"
+    t.text    "terms_and_conditions"
   end
 
   add_index "odania_sites", ["host"], name: "index_odania_sites_on_host", unique: true, using: :btree
