@@ -1,59 +1,59 @@
 <%= form_for([:admin, @admin_site]) do |f| %>
-	<% if @admin_site.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@admin_site.errors.count, "error") %> prohibited this admin_site from being saved:</h2>
-
-			<ul>
-				<% @admin_site.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
+	<%= render partial: 'odania/shared/errors', locals: {obj: @admin_site} %>
 
 	<div class="field">
 		<%= f.label :name %>
-		<br>
+		<br/>
 		<%= f.text_field :name %>
 	</div>
 	<div class="field">
 		<%= f.label :host %>
-		<br>
+		<br/>
 		<%= f.text_field :host %>
 	</div>
 	<div class="field">
 		<%= f.label :is_active %>
-		<br>
+		<br/>
 		<%= f.check_box :is_active %>
 	</div>
 	<div class="field">
 		<%= f.label :is_default %>
-		<br>
+		<br/>
 		<%= f.check_box :is_default %>
 	</div>
 	<div class="field">
 		<%= f.label :tracking_code %>
-		<br>
+		<br/>
 		<%= f.text_area :tracking_code %>
 	</div>
 	<div class="field">
 		<%= f.label :description %>
-		<br>
+		<br/>
 		<%= f.text_area :description %>
 	</div>
 	<div class="field">
 		<%= f.label :default_language_id %>
-		<br>
+		<br/>
 		<%= f.collection_select :default_language_id, Odania::Language.order('name ASC'), :id, :name %>
 	</div>
 	<div class="field">
+		<%= f.label :default_from_email %>
+		<br/>
+		<%= f.text_field :default_from_email %>
+	</div>
+	<div class="field">
+		<%= f.label :notify_email_address %>
+		<br/>
+		<%= f.text_field :notify_email_address %>
+	</div>
+	<div class="field">
 		<%= f.label :redirect_to_id %>
-		<br>
+		<br/>
 		<%= f.collection_select :redirect_to_id, Odania::Site.order('name ASC'), :id, :name, {include_blank: true} %>
 	</div>
 	<div class="field">
 		<%= f.label :template %>
-		<br>
+		<br/>
 		<%= f.select :template, Odania.templates_for_select, {include_blank: true} %>
 	</div>
 	<div class="actions">

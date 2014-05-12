@@ -3,9 +3,10 @@ Rails.application.routes.draw do
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 
-	get '/imprint' => 'info#imprint'
-	get '/contact' => 'info#contact'
-	post '/contact' => 'info#contact_send'
+	get 'imprint' => 'odania/info#imprint'
+	get 'terms_and_conditions' => 'odania/info#terms_and_conditions'
+	get 'contact' => 'odania/info#contact'
+	post 'contact' => 'odania/info#contact_send'
 
 	namespace :admin do
 		namespace :odania do

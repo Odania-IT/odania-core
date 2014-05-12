@@ -1,0 +1,23 @@
+<h1><%= t('odania.Contact') %></h1>
+
+<p>
+<%= form_tag '/contact' do %>
+	<p>
+		<%= t('odania.name') %>:
+		<input type="text" name="<%= @contact_post_name %>[contact_name]" value=""/>
+	</p>
+
+	<p>
+		<%= t('odania.email') %>:
+		<input type="text" name="<%= @contact_post_name %>[email]" value=""/>
+	</p>
+
+	<p>
+		<%= t('odania.ContactText') %>
+		<textarea name="<%= @contact_post_name %>[body]" cols="50" rows="10"></textarea>
+	</p>
+	<p>
+		<input type="submit" name="submit" value="<%= t('odania.send') %>"/>
+	</p>
+<% end %>
+</p>

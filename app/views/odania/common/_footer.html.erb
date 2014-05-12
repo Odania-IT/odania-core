@@ -1,0 +1,15 @@
+<footer>
+	<p>
+		<span style="text-align:left;float:left">&copy; <%= Time.now.year %>
+			<a href="http://www.odania-it.com" target="_blank">Mike Petersen Odania IT</a>
+		</span>
+
+		<span style="text-align:right;float:right">
+			<%= link_to t('odania.Imprint'), imprint_path(locale: I18n.locale.to_s) %>
+			&nbsp;|&nbsp;
+			<%= link_to t('odania.Contact'), contact_path(locale: I18n.locale.to_s) %>
+			&nbsp;|&nbsp;
+			<%= link_to t('odania.Terms and Conditions'), terms_and_conditions_path(locale: I18n.locale.to_s) %>
+		</span>
+	</p>
+</footer>

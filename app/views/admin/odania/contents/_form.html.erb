@@ -1,15 +1,5 @@
 <%= form_for([:admin, @odania_menu, @admin_content]) do |f| %>
-	<% if @admin_content.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@admin_content.errors.count, "error") %> prohibited this admin_content from being saved:</h2>
-
-			<ul>
-				<% @admin_content.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
+	<%= render partial: 'odania/shared/errors', locals: {obj: @admin_content} %>
 
 	<div class="field">
 		<%= f.label :site_id %>

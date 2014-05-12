@@ -1,34 +1,24 @@
 <%= form_for([:admin, @admin_menu]) do |f| %>
-	<% if @admin_menu.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@admin_menu.errors.count, "error") %> prohibited this admin_menu from being saved:</h2>
-
-			<ul>
-				<% @admin_menu.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
+	<%= render partial: 'odania/shared/errors', locals: {obj: @admin_menu} %>
 
 	<div class="field">
 		<%= f.label :title %>
-		<br>
+		<br/>
 		<%= f.text_field :title %>
 	</div>
 	<div class="field">
 		<%= f.label :published %>
-		<br>
+		<br/>
 		<%= f.check_box :published %>
 	</div>
 	<div class="field">
 		<%= f.label :site %>
-		<br>
+		<br/>
 		<%= f.collection_select :site_id, Odania::Site.order('name ASC'), :id, :name %>
 	</div>
 	<div class="field">
 		<%= f.label :language_id %>
-		<br>
+		<br/>
 		<%= f.collection_select :language_id, Odania::Language.order('name ASC'), :id, :name %>
 	</div>
 	<div class="actions">
