@@ -27,7 +27,7 @@ class Odania::InfoController < ApplicationController
 
 	def set_post_name
 		if cookies[:contact_post_name].nil? or cookies[:contact_post_name].empty?
-			cookies[:contact_post_name] = "contact"+rand(100000).to_s
+			cookies[:contact_post_name] = 'contact'+rand(100000).to_s
 		end
 
 		@contact_post_name = cookies[:contact_post_name]

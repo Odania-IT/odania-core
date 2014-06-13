@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 	scope '/:locale', constraints: {locale: /[a-z][a-z]/} do
 		resources :contents, only: [:index, :show], controller: 'odania/contents', as: 'odania_content'
 		get 'tags' => 'odania/tags#index'
+		get 'tags/auto_complete' => 'odania/tags#auto_complete'
 		get 'tags/:tag' => 'odania/tags#show', as: :tag
 
 		get '/*path' => 'odania/menu#show_page'

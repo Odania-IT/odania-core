@@ -33,4 +33,9 @@ class Odania::TagsControllerTest < ActionController::TestCase
 		assert_response :not_found
 		assert_template 'odania/common/not_found_error'
 	end
+
+	test 'test auto_complete' do
+		get :auto_complete, {term: 'a', locale: @content.language.iso_639_1}
+		assert_response :success
+	end
 end
