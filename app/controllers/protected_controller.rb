@@ -1,6 +1,6 @@
 class ProtectedController < ApplicationController
 	before_action :authenticate_user!, :require_admin_role!
-	skip_before_filter :valid_site!
+	before_action :valid_site!
 	layout :set_protected_layout
 
 	def set_protected_layout
