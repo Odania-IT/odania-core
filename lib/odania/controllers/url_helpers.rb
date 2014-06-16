@@ -14,8 +14,12 @@ module Odania
 				end
 
 				@current_menu ||= current_site.get_current_menu(cur_locale)
-				I18n.locale = @current_menu.language.iso_639_1 unless @current_menu.nil?
-				return @current_menu
+				unless @current_menu.nil?
+					I18n.locale = @current_menu.language.iso_639_1
+					return @current_menu
+				end
+
+				Odania::Menu.new(language_id: current_site.default_language.id)
 			end
 
 			# Thanks to https://github.com/mbleigh/acts-as-taggable-on
