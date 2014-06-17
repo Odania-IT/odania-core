@@ -33,9 +33,7 @@ module Odania
 
 			def require_admin_role!
 				return false unless user_signed_in?
-
-				role = current_user.roles.where(role: Odania::UserRole.roles[:admin]).first
-				return redirect_to root_path, notice: t('Not allowed') if role.nil?
+				return redirect_to root_path, notice: t('Not allowed') unless current_user.admin?
 			end
 
 			# Define authentication filters and accessor helpers.
