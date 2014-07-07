@@ -28,7 +28,7 @@ module Odania
 			end
 
 			def get_click_counter_url(obj, target_url)
-				deliver_click_url(type: obj.class.to_s, id: obj.id.to_s, target: Rack::Utils.escape(target_url))
+				deliver_click_path(type: obj.class.to_s, id: obj.id.to_s, target: Rack::Utils.escape(target_url))
 			end
 		end
 	end

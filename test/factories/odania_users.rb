@@ -8,5 +8,11 @@ FactoryGirl.define do
 		after(:create) do |user, evaluator|
 			create_list(:user_role, 1, user: user)
 		end
+
+		factory :default_user do
+			id 1
+			name 'Admin'
+			email 'mail@example.com'
+		end
 	end
 end
