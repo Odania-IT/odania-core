@@ -43,6 +43,28 @@ namespace :odania do
 		end
 	end
 
+	desc 'Add a language'
+	task :add_language => :environment do
+		name = ENV['name']
+		iso_639_1 = ENV['iso_639_1']
+
+		if name.blank? or iso_639_1.blank?
+			puts 'Please specify iso_639_1 and name, e.g. iso_639_1=de name=German'
+		else
+			language = Odania::Language.where(iso_639_1: iso_639_1).first
+			if language.nil?
+				language = Odania::Language.where(name: name).first
+				if language.nil?
+					Odania::Language.create!(name: name, iso_639_1: iso_639_1)
+				else
+					puts 'name already exists'
+				end
+			else
+				puts 'iso_639_1 already exists'
+			end
+		end
+	end
+
 	namespace :db do
 		desc 'Seed engine data'
 		task :seed_core => :environment do
