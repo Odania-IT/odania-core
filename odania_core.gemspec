@@ -27,8 +27,8 @@ Gem::Specification.new do |s|
 	s.add_dependency 'will_paginate', '~> 3.0'
 	s.add_dependency 'sanitize'
 	s.add_dependency 'http_accept_language'
-	s.add_dependency 'redcarpet', '>= 3.1.1'
 	s.add_dependency 'rails-i18n'
+	s.add_dependency 'autoprefixer-rails'
 
 
 =begin

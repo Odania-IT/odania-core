@@ -47,11 +47,15 @@
 			<%= render :partial => 'odania/shared/flashes' %>
 			<%= yield %>
 		</div>
+		<div class="col-md-3">
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<%= content_for?(:secondary_column) ? yield(:secondary_column) : render(:partial => 'odania/widgets/default') %>
+			</div>
+		</div>
 	</div>
 </div>
 
 <%= render :partial => 'odania/common/footer' %>
-
-<%= current_site.tracking_code.html_safe %>
 </body>
 </html>

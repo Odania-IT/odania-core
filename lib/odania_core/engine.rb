@@ -10,6 +10,7 @@ require 'coffee-rails'
 require 'jquery-rails'
 require 'bootstrap-sass'
 require 'rails-i18n'
+require 'autoprefixer-rails'
 
 # Require internals
 require 'odania'
