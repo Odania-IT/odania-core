@@ -84,19 +84,65 @@ module Odania
 		result
 	end
 
-	# Registered Components
-	# Components are available for display in side bar
-	mattr_accessor :components
-	@@components = Set.new
-	@@components << {template: 'odania/components/display_sites', description: 'Display specified sites',
-						  parameters: [['set', 'sites']]}
-	@@components << {template: 'odania/components/display_links', description: 'Display specified links',
-						  parameters: [['target', 'links']]}
-
 	# Trackable classes. Only these classes are accepted in deliver/click and will increase the counter
-	mattr_reader :trackable_classes
+	mattr_accessor :trackable_classes
 	@@trackable_classes = Set.new
 	@@trackable_classes << 'Odania::Content'
+
+	# Registered Widgets
+	# Widgets are available for display in side bar
+	mattr_accessor :widget_includes
+	@@widget_includes = Set.new
+	@@widget_includes << 'admin/odania/widgets/content'
+
+	mattr_accessor :widgets
+	@@widgets = Set.new
+	@@widgets << {
+		template: 'odania/widgets/plain_html',
+		description: 'HTML content',
+		is_array: false,
+		parameters: [
+			{name: 'HTML Content', key: 'content', type: 'wysiwyg'}
+		]
+	}
+	@@widgets << {
+		template: 'odania/widgets/newsletter',
+		description: 'Perfect Reach Newsletter',
+		is_array: false,
+		parameters: [
+			{name: 'Contact list id', key: 'contact_list_id', type: 'text'}
+		]
+	}
+	@@widgets << {
+		template: 'odania/components/display_sites',
+		description: 'Display specified sites',
+		is_array: true,
+		parameters: [
+			{name: 'Sites', key: 'sites', type: 'array', fields: [
+				{name: 'Site', key: 'site', type: 'site'}
+			]}
+		]
+	}
+	@@widgets << {
+		template: 'odania/components/display_links',
+		description: 'Display specified links',
+		is_array: true,
+		parameters: [
+			{name: 'Links', key: 'links', type: 'array', fields: [
+				{name: 'Name', key: 'name', type: 'text'},
+				{name: 'Url', key: 'url', type: 'text'}
+			]}
+		]
+	}
+
+	def self.widgets_for_select
+		result = []
+
+		self.widgets.each_value do |widget|
+			result << [widget[:description], widget[:template]]
+		end
+		result
+	end
 
 	def self.admin
 		Odania::Admin

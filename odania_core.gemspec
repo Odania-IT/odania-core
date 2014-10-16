@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 	s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
 	s.test_files = Dir['test/**/*']
 
-	s.add_dependency 'rails', '~> 4.1.5'
+	s.add_dependency 'rails', '~> 4.1.6'
 	s.add_dependency 'nokogiri'
 	s.add_dependency 'paperclip', '~> 3'
 	s.add_dependency 'ckeditor'
@@ -29,6 +29,9 @@ Gem::Specification.new do |s|
 	s.add_dependency 'http_accept_language'
 	s.add_dependency 'rails-i18n'
 	s.add_dependency 'autoprefixer-rails'
+	s.add_dependency 'angularjs-rails'
+	s.add_dependency 'angular-ui-bootstrap-rails'
+	s.add_dependency 'jbuilder'
 
 
 =begin

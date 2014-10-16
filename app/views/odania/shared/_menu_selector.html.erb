@@ -1,5 +1,5 @@
 <% cache do %>
 	<% current_site.menus.each do |menu| %>
-		<li><%= link_to menu.title, menu.get_target_path %></li>
+		<li><%= link_to menu.language.iso_639_1, menu.get_target_path %></li>
 	<% end %>
 <% end %>

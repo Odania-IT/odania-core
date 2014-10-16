@@ -26,7 +26,32 @@ Rails.application.routes.draw do
 			get 'contents' => 'contents#overview'
 			resources :sites
 			resources :languages
+			resources :widgets
 		end
+
+		namespace :api, defaults: {format: :json} do
+			get 'bootstrap' => 'bootstrap#index'
+
+			resources :sites, except: [:new, :edit] do
+				resources :menus, except: [:new, :edit] do
+					resources :contents, except: [:new, :edit]
+					resources :menu_items, except: [:new, :edit] do
+						collection do
+							get :initial_data
+						end
+
+						member do
+							post :set_default
+						end
+					end
+				end
+				resources :widgets, except: [:new, :edit]
+			end
+
+			resources :languages, except: [:new, :edit]
+		end
+		get '/templates/*template' => 'template#index'
+
 		get '/' => 'dashboard#index'
 	end
 

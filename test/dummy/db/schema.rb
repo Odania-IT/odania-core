@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140512161811) do
+ActiveRecord::Schema.define(version: 20141003183746) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -28,6 +28,80 @@ ActiveRecord::Schema.define(version: 20140512161811) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "odania_advanced_todo_categories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "parent_category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "odania_advanced_todo_categories", ["parent_category_id"], name: "index_odania_advanced_todo_categories_on_parent_category_id", using: :btree
+  add_index "odania_advanced_todo_categories", ["site_id"], name: "index_odania_advanced_todo_categories_on_site_id", using: :btree
+  add_index "odania_advanced_todo_categories", ["user_id"], name: "index_odania_advanced_todo_categories_on_user_id", using: :btree
+
+  create_table "odania_advanced_todo_clippings", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.integer  "language_id"
+    t.string   "title"
+    t.text     "description"
+    t.string   "url"
+    t.string   "image_url"
+    t.boolean  "public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "odania_advanced_todo_clippings", ["language_id"], name: "index_odania_advanced_todo_clippings_on_language_id", using: :btree
+  add_index "odania_advanced_todo_clippings", ["site_id"], name: "index_odania_advanced_todo_clippings_on_site_id", using: :btree
+  add_index "odania_advanced_todo_clippings", ["user_id"], name: "index_odania_advanced_todo_clippings_on_user_id", using: :btree
+
+  create_table "odania_advanced_todo_todo_logs", force: true do |t|
+    t.integer  "todo_id"
+    t.integer  "user_id"
+    t.integer  "change_type"
+    t.string   "old_state"
+    t.string   "new_state"
+    t.integer  "category_id"
+    t.string   "name"
+    t.text     "description"
+    t.date     "due_date"
+    t.integer  "interval"
+    t.integer  "interval_type"
+    t.integer  "priority"
+    t.integer  "state"
+    t.text     "links"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "odania_advanced_todo_todo_logs", ["category_id"], name: "index_odania_advanced_todo_todo_logs_on_category_id", using: :btree
+  add_index "odania_advanced_todo_todo_logs", ["todo_id"], name: "index_odania_advanced_todo_todo_logs_on_todo_id", using: :btree
+  add_index "odania_advanced_todo_todo_logs", ["user_id"], name: "index_odania_advanced_todo_todo_logs_on_user_id", using: :btree
+
+  create_table "odania_advanced_todo_todos", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "category_id"
+    t.integer  "site_id"
+    t.string   "name"
+    t.text     "description"
+    t.date     "due_date"
+    t.integer  "interval"
+    t.integer  "interval_type"
+    t.integer  "priority"
+    t.integer  "state"
+    t.text     "links"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "odania_advanced_todo_todos", ["category_id"], name: "index_odania_advanced_todo_todos_on_category_id", using: :btree
+  add_index "odania_advanced_todo_todos", ["site_id"], name: "index_odania_advanced_todo_todos_on_site_id", using: :btree
+  add_index "odania_advanced_todo_todos", ["user_id"], name: "index_odania_advanced_todo_todos_on_user_id", using: :btree
 
   create_table "odania_contents", force: true do |t|
     t.string   "title",                         null: false
@@ -69,7 +143,6 @@ ActiveRecord::Schema.define(version: 20140512161811) do
   add_index "odania_menu_items", ["menu_id", "full_path"], name: "index_odania_menu_items_on_menu_id_and_full_path", using: :btree
 
   create_table "odania_menus", force: true do |t|
-    t.string   "title"
     t.boolean  "published"
     t.integer  "default_menu_item_id"
     t.integer  "site_id"
@@ -155,6 +228,17 @@ ActiveRecord::Schema.define(version: 20140512161811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "site_id"
+  end
+
+  create_table "odania_widgets", force: true do |t|
+    t.integer  "site_id",     null: false
+    t.integer  "user_id",     null: false
+    t.integer  "language_id", null: false
+    t.string   "template"
+    t.string   "name"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

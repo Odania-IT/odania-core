@@ -1,0 +1,114 @@
+<h1>Editing admin_site</h1>
+
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="site_name">Name</label>
+
+		<div class="col-sm-10">
+			<input type="text" id="site_name" data-ng-model="site.name" placeholder="Site Name"/>
+			<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="site_host">Host</label>
+
+		<div class="col-sm-10">
+			<input type="text" id="site_host" data-ng-model="site.host" placeholder="www.odania-it.com"/>
+			<span data-ng-if="errors.host" style="color: red;">{{ printErrors(errors.host) }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">is Active</label>
+
+		<div class="col-sm-10">
+			<input type="checkbox" data-ng-model="site.is_active">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">is Default</label>
+
+		<div class="col-sm-10">
+			<input type="checkbox" data-ng-model="site.is_default">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Description</label>
+
+		<div class="col-sm-10">
+			<textarea class="form-control" rows="3" data-ng-model="site.description"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Default Language</label>
+
+		<div class="col-sm-10">
+			<select data-ng-model="site.default_language_id">
+				<option data-ng-repeat="language in languages" value="{{ language.id }}">{{ language.iso_639_1 }}</option>
+			</select>
+			<span data-ng-if="errors.default_language_id" style="color: red;">{{ printErrors(errors.default_language_id) }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Default from email</label>
+
+		<div class="col-sm-10">
+			<input type="text" data-ng-model="site.default_from_email" placeholder="mail@example.com"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Notify email</label>
+
+		<div class="col-sm-10">
+			<input type="text" data-ng-model="site.notify_email_address" placeholder="inform-me@example.com"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Redirect to</label>
+
+		<div class="col-sm-10">
+			<select data-ng-model="site.redirect_to_id">
+				<option data-ng-repeat="site in sites" value="{{ site.id }}">{{ site.name }}</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Template</label>
+
+		<div class="col-sm-10">
+			<select data-ng-model="site.template">
+				<option data-ng-repeat="template in admin.templates" value="{{ template.template }}">{{ template.name }}</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Tracking code</label>
+
+		<div class="col-sm-10">
+			<textarea class="form-control" rows="3" data-ng-model="site.tracking_code"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Imprint</label>
+
+		<div class="col-sm-10">
+			<textarea class="form-control" rows="3" data-ng-model="site.imprint"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Terms & Conditions</label>
+
+		<div class="col-sm-10">
+			<textarea class="form-control" rows="3" data-ng-model="site.terms_and_conditions"></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button data-ng-click="saveSite()" class="btn btn-primary">Save</button>
+
+			<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+		</div>
+	</div>
+</form>
+
+<a data-ng-href="#/sites">Back</a>

@@ -3,6 +3,8 @@ class AdminController < ApplicationController
 	skip_before_filter :valid_site!
 	layout :set_admin_layout
 
+	protected
+
 	def set_admin_layout
 		current_user.admin_layout || Odania.admin.templates.keys.first || 'odania_core/admin'
 	end

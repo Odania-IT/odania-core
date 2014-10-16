@@ -1,0 +1,26 @@
+<p>
+	<strong>Title:</strong>
+	{{ menu_item.title }}
+</p>
+
+<p>
+	<strong>Published:</strong>
+	{{ menu_item.published }}
+</p>
+
+<p>
+	<strong>Target type:</strong>
+	{{ menu_item.target_type }}
+</p>
+
+<p>
+	<strong>Target date:</strong>
+	{{ menu_item.target_data }}
+</p>
+
+<p>
+	<strong>Parent:</strong>
+	{{ menu_item.parent_id }}
+</p>
+
+<a data-ng-href="#/menu/{{ menu_item.menu_id }}/menu_items/{{ menu_item.id }}/edit">Edit</a> | <a data-ng-href="#/menu/{{ menu_item.menu_id }}/menu_items">Back</a>

@@ -4,7 +4,6 @@ FactoryGirl.define do
 	factory :menu, :class => 'Odania::Menu' do
 		site
 		language
-		title 'MyString'
 		published true
 
 		factory :menu_with_items do

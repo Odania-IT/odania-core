@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OdaniaCoreTest < ActiveSupport::TestCase
-	test "OdaniaCore is a module" do
+	test 'OdaniaCore is a module' do
 		assert_kind_of Module, Odania
 	end
 

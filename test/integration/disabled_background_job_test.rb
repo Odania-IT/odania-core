@@ -2,7 +2,6 @@ require 'test_helper'
 
 class SimpleTestWorker
 	def perform(param1, param2)
-		puts "params: #{param1} | #{param2}"
 		@@result = "params: #{param1} | #{param2}"
 	end
 

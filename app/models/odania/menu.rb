@@ -4,7 +4,7 @@ class Odania::Menu < ActiveRecord::Base
 	belongs_to :language, class_name: 'Odania::Language'
 	has_many :menu_items, class_name: 'Odania::MenuItem'
 
-	validates_length_of :title, minimum: 2
+	validates_presence_of :language_id
 	validates_uniqueness_of :site_id, scope: :language_id
 
 	def get_locale

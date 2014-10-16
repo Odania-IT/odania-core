@@ -3,11 +3,14 @@ module Odania
 		mattr_reader :targets
 		@@targets = Hash.new
 		@@targets['CONTENT'] = {type: 'CONTENT', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_id',
-										render_func: 'render_content', selector: 'admin/odania/contents/choose_content'}
+										render_func: 'render_content', selector: 'admin/odania/contents/choose_content',
+										initial_data: 'admin/api/menu_items/inital_data'}
 		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
-											  render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list'}
+										render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list',
+										initial_data: 'admin/api/menu_items/empty_inital_data'}
 		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
-								  render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url'}
+								render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url',
+								initial_data: 'admin/api/menu_items/empty_inital_data'}
 
 		class << self
 			def get_target(menu_item)

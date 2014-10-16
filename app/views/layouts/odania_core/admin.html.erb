@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="odaniaPortalAdmin">
 <head>
 	<title>OdaniaCore</title>
 	<%= stylesheet_link_tag 'odania_core_admin/application', media: 'all' %>
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-9 hfeed" style="margin-top: 60px;">
+		<div class="col-md-9 hfeed" style="margin-top: 60px;" ng-view>
 			<%= render :partial => 'odania/shared/flashes' %>
 			<%= yield %>
 		</div>

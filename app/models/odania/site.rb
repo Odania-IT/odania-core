@@ -8,11 +8,13 @@ module Odania
 		has_many :contents, :class_name => 'Odania::Content'
 
 		has_many :tags, class_name: 'Odania::Tag'
+		has_many :widgets, class_name: 'Odania::Widget'
 
 		scope :active, -> { where(is_active: true) }
 
 		validates_uniqueness_of :host, :name
 		validates_length_of :host, minimum: 4
+		validates_length_of :name, minimum: 1
 		validate :validate_template_exists, :validate_language_is_present
 		validates_presence_of :host, :name
 

@@ -28,15 +28,44 @@ end
 DatabaseCleaner.strategy = :transaction
 module DatabaseCleanerModule
 	def before_setup
+		super
 		DatabaseCleaner.start
 	end
 
 	def after_teardown
 		DatabaseCleaner.clean
 		Odania::Controllers::UrlHelpers.instance_variable_set(:@current_site, nil)
+		super
 	end
 end
 
 class MiniTest::Unit::TestCase
 	include DatabaseCleanerModule
+end
+
+# Resetting the setup (otherwise there are some weird side effects)
+class ActionController::TestCase
+	setup do
+		Odania.setup do |config|
+			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
+			config.current_user_function = 'OdaniaTestMock.current_user'
+			config.authenticate_user_function = 'user_auth'
+			config.background_enqueue = 'OdaniaTestMock.enqueue'
+		end
+		Odania.setup_enqueue
+		OdaniaTestMock.user_authenticated = true
+	end
+end
+
+class ActionDispatch::IntegrationTest
+	setup do
+		Odania.setup do |config|
+			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
+			config.current_user_function = 'OdaniaTestMock.current_user'
+			config.authenticate_user_function = 'user_auth'
+			config.background_enqueue = 'OdaniaTestMock.enqueue'
+		end
+		Odania.setup_enqueue
+		OdaniaTestMock.user_authenticated = true
+	end
 end

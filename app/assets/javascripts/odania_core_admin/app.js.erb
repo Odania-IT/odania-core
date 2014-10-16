@@ -1,0 +1,81 @@
+var app = angular.module('odaniaPortalAdmin', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+
+app.config(['$routeProvider', function ($routeProvider) {
+	console.log('config :: init');
+	var resolved = false;
+
+	var resolve = {
+			'bootstrap': ['$rootScope', 'resolveService', 'eventTypeProvider', function ($rootScope, resolveService, eventTypeProvider) {
+				return resolveService.resolveBootstrap().then(function (data) {
+					console.log("bootstrap-data", data);
+					$rootScope.sites = data.sites;
+					$rootScope.languages = data.languages;
+					$rootScope.admin = data.admin;
+
+					if (!resolved) {
+						console.log("INIT SITE & MENU");
+						$rootScope.currentSite = data.sites[0];
+						$rootScope.currentMenu = data.sites[0].menus[0];
+						resolved = true;
+					}
+					$rootScope.$broadcast(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED);
+					console.log("bootstrap :: done");
+				});
+			}]
+		};
+
+	$routeProvider
+			.when('/dashboard', {
+				'controller': 'DashboardController',
+				'templateUrl': config.getTemplatePath('dashboard/index'),
+				'resolve': resolve
+			})
+		<% Odania::Admin::pages.each do |page| %>
+			.when('<%= page[:path] %>', {
+				'controller': '<%= page[:controller] %>',
+				'templateUrl': config.getTemplatePath('<%= page[:template] %>'),
+				'resolve': resolve
+			})
+		<% end %>
+		.otherwise({ 'redirectTo': '/dashboard' });
+}]);
+
+app.run(['$rootScope', 'BootstrapResource', function ($rootScope, BootstrapResource) {
+	console.log("bootstrap :: init");
+
+	function on_bootstrap_success(data) {
+		console.log("bootstrap :: success", data);
+	}
+
+	BootstrapResource.get({}, on_bootstrap_success);
+
+	$rootScope.getLanguage = function (id) {
+		var language;
+		for (var i = 0; i < $rootScope.languages.length; i++) {
+			language = $rootScope.languages[i];
+
+			if (language.id === id) {
+				return language;
+			}
+		}
+
+		return null;
+	};
+
+	$rootScope.getSite = function (id) {
+		var site;
+		for (var i = 0; i < $rootScope.sites.length; i++) {
+			site = $rootScope.sites[i];
+
+			if (site.id === id) {
+				return site;
+			}
+		}
+
+		return null;
+	};
+
+	$rootScope.printErrors = function(errors) {
+		return errors.join(', ');
+	};
+}]);

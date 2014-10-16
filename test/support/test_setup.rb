@@ -5,13 +5,17 @@ module OdaniaTestMock
 	mattr_accessor :mock_current_user
 
 	def self.current_user
-		@@mock_current_user ||= Odania::User.find_or_create_by(name: 'Admin', email: 'mail@example.com')
+		user = Odania::User.where(name: 'Admin', email: 'mail@example.com').first_or_create
 
-		if @@mock_current_user.roles.count == 0
-			@@mock_current_user.roles.create(role: Odania::UserRole.roles[:admin])
+		if user.id.nil?
+			user.save!
 		end
 
-		return @@mock_current_user
+		if user.roles.count == 0
+			user.roles.create(role: Odania::UserRole.roles[:admin])
+		end
+
+		return user
 	end
 
 	mattr_accessor :user_authenticated

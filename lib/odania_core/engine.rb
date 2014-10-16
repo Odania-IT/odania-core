@@ -11,6 +11,9 @@ require 'jquery-rails'
 require 'bootstrap-sass'
 require 'rails-i18n'
 require 'autoprefixer-rails'
+require 'angularjs-rails'
+require 'angular-ui-bootstrap-rails'
+require 'jbuilder'
 
 # Require internals
 require 'odania'

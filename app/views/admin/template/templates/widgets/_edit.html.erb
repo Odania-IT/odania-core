@@ -1,0 +1,55 @@
+<h1>Editing widget</h1>
+
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Name</label>
+
+		<div class="col-sm-10">
+			<input type="text" data-ng-model="widget.name" placeholder="Site Name"/>
+			<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Template</label>
+
+		<div class="col-sm-10">
+			<select data-ng-model="widget.template" data-ng-change="selectWidget()">
+				<option data-ng-repeat="widget in admin.widgets" value="{{ widget.template }}">{{ widget.description }}</option>
+			</select>
+			<span data-ng-if="errors.template" style="color: red;">{{ printErrors(errors.template) }}</span>
+		</div>
+	</div>
+
+	<div data-ng-repeat="parameter in selectedWidget.parameters">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ parameter.name }}</label>
+
+			<div class="col-sm-10">
+				<% Odania::widget_includes.each do |include| %>
+					<%= render partial: include %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Language</label>
+
+		<div class="col-sm-10">
+			<select data-ng-model="widget.language_id">
+				<option data-ng-repeat="language in languages" value="{{ language.id }}">{{ language.iso_639_1 }}</option>
+			</select>
+			<span data-ng-if="errors.language_id" style="color: red;">{{ printErrors(errors.language_id) }}</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button data-ng-click="saveWidget()" class="btn btn-primary">Save</button>
+
+			<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+		</div>
+	</div>
+</form>
+
+<a data-ng-href="#/widgets">Back</a>

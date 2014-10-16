@@ -1,0 +1,27 @@
+<h1>Widgets</h1>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Template</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+		<tr data-ng-repeat="widget in widgets">
+			<td>{{ widget.name }}</td>
+			<td>{{ widget.template }}</td>
+			<td><a data-ng-href="#/widgets/{{ widget.id }}">Show</a></td>
+			<td><a data-ng-href="#/widgets/{{ widget.id }}/edit">Edit</a></td>
+			<td><a ng-confirm-click="deleteWidget(widget.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<br/>
+
+<%= link_to 'New Widget', '#/widgets/new' %>

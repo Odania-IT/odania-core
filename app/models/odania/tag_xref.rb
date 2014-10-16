@@ -7,11 +7,13 @@ class Odania::TagXref < ActiveRecord::Base
 	validates_uniqueness_of :tag_id, :scope => [:ref_type, :ref_id, :context]
 
 	after_destroy do
-		tag.count = tag.tag_xrefs.count
-		if tag.count.zero?
-			tag.destroy
-		else
-			tag.save!
+		unless self.tag.nil?
+			tag.count = tag.tag_xrefs.count
+			if tag.count.zero?
+				tag.destroy
+			else
+				tag.save!
+			end
 		end
 	end
 

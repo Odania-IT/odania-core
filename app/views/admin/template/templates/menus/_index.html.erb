@@ -1,0 +1,31 @@
+<h1>Menus for {{ currentSite.name }}</h1>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Language</th>
+		<th>Published</th>
+		<th>Site</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<tr data-ng-repeat="menu in menus">
+		<td>{{ getLanguage(menu.language_id).iso_639_1 }}</td>
+		<td>{{ menu.published }}</td>
+		<td>{{ getSite(menu.site_id).name }}</td>
+		<td><a data-ng-href="#/menus/{{ menu.id }}/contents">Contents</a></td>
+		<td><a data-ng-href="#/menus/{{ menu.id }}">Show</a></td>
+		<td><a data-ng-href="#/menus/{{ menu.id }}/edit">Edit</a></td>
+		<td><a ng-confirm-click="deleteMenu(menu.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
+	</tr>
+	</tbody>
+</table>
+
+<br/>
+
+<%= link_to 'New Menu', '#/menus/new' %>
