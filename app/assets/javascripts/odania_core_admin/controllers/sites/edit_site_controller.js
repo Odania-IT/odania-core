@@ -4,7 +4,8 @@ app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$r
 
 	function loadSite(id) {
 		SiteResource.get({id: id}).$promise.then(function (data) {
-			$scope.site = data;
+			$scope.site = data.site;
+			$scope.data = data.data;
 		});
 	}
 

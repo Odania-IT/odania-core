@@ -7,6 +7,7 @@ class Admin::Api::ContentsController < Admin::ApiController
 	end
 
 	def show
+		@widgets = Odania::Widget.where(site_id: @site.id)
 	end
 
 	def create
@@ -54,6 +55,6 @@ class Admin::Api::ContentsController < Admin::ApiController
 	end
 
 	def content_params
-		params.require(:content).permit(:title, :body, :body_short, :published_at, :language_id)
+		params.require(:content).permit(:title, :body, :body_short, :published_at, :language_id, :widget_id)
 	end
 end

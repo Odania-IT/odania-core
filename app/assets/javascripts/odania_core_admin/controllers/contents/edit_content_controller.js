@@ -4,7 +4,8 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 
 	function loadContent(id) {
 		ContentResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
-			$scope.content = data;
+			$scope.content = data.content;
+			$scope.data = data.data;
 		});
 	}
 

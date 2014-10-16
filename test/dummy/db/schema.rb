@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003183746) do
+ActiveRecord::Schema.define(version: 20141016214225) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20141003183746) do
     t.integer  "user_id",                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "widget_id"
   end
 
   add_index "odania_contents", ["site_id", "language_id", "is_active"], name: "index_odania_contents_on_site_id_and_language_id_and_is_active", using: :btree
@@ -189,6 +190,7 @@ ActiveRecord::Schema.define(version: 20141003183746) do
     t.string  "notify_email_address"
     t.text    "imprint"
     t.text    "terms_and_conditions"
+    t.integer "default_widget_id"
   end
 
   add_index "odania_sites", ["host"], name: "index_odania_sites_on_host", unique: true, using: :btree

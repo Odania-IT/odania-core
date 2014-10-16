@@ -3,7 +3,7 @@ app.controller('SiteController', ['$rootScope', '$scope', 'SiteResource', '$rout
 
 	function loadSite(id) {
 		SiteResource.get({id: id}).$promise.then(function (data) {
-			$scope.site = data;
+			$scope.site = data.site;
 		});
 	}
 

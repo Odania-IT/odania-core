@@ -6,15 +6,23 @@ class Odania::Content < ActiveRecord::Base
 	belongs_to :user, :class_name => 'Odania::User'
 	belongs_to :menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :current_menu_item, class_name: 'Odania::MenuItem'
+	belongs_to :widget, class_name: 'Odania::Widget'
 
 	scope :active, -> { where(is_active: true) }
 
 	validates_length_of :title, minimum: 1
 	validates_length_of :body, minimum: 10
 	validates_presence_of :language_id, :site_id, :user_id
+	validate :validate_widget
 
 	def to_param
 		"#{self.id}-#{self.title.parameterize}"
+	end
+
+	def validate_widget
+		if !self.widget_id.nil? and !self.site_id.eql?(self.widget.site_id)
+			errors.add(:widget_id, 'invalid widget')
+		end
 	end
 
 	before_save do

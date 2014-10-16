@@ -3,7 +3,7 @@ app.controller('ContentController', ['$rootScope', '$scope', 'ContentResource', 
 
 	function loadContent(id) {
 		ContentResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
-			$scope.content = data;
+			$scope.content = data.content;
 		});
 	}
 

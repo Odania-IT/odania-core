@@ -6,6 +6,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	end
 
 	def show
+		@widgets = Odania::Widget.where(site_id: @site.id)
 	end
 
 	def create
@@ -45,6 +46,6 @@ class Admin::Api::SitesController < Admin::ApiController
 	def site_params
 		params.require(:site).permit(:name, :host, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
 														:default_from_email, :notify_email_address, :imprint, :terms_and_conditions,
-														:redirect_to_id, :template, :default_language_id, :language_ids => [])
+														:default_widget_id, :redirect_to_id, :template, :default_language_id, :language_ids => [])
 	end
 end
