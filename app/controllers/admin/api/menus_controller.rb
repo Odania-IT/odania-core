@@ -7,6 +7,7 @@ class Admin::Api::MenusController < Admin::ApiController
 	end
 
 	def show
+		@widgets = Odania::Widget.where(site_id: @menu.site_id, language_id: @menu.language_id)
 	end
 
 	def create
@@ -50,6 +51,6 @@ class Admin::Api::MenusController < Admin::ApiController
 	end
 
 	def content_params
-		params.require(:menu).permit(:published, :is_default_menu, :menu_type, :language_id)
+		params.require(:menu).permit(:published, :is_default_menu, :menu_type, :language_id, :widget_id)
 	end
 end

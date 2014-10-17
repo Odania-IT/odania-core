@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016214225) do
+ActiveRecord::Schema.define(version: 20141017123813) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20141016214225) do
     t.integer  "language_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "widget_id"
   end
 
   add_index "odania_menus", ["site_id", "language_id"], name: "index_odania_menus_on_site_id_and_language_id", unique: true, using: :btree

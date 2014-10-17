@@ -4,7 +4,8 @@ app.controller('EditMenuController', ['$location', '$scope', '$rootScope', 'Menu
 
 	function loadMenu(id) {
 		MenuResource.get({siteId: $rootScope.currentSite.id, id: id}).$promise.then(function (data) {
-			$scope.menu = data;
+			$scope.menu = data.menu;
+			$scope.data = data.data;
 		});
 	}
 

@@ -3,7 +3,7 @@ app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', '$rout
 
 	function loadMenu(id) {
 		MenuResource.get({siteId: $rootScope.currentSite.id, id: id}).$promise.then(function (data) {
-			$scope.menu = data;
+			$scope.menu = data.menu;
 		});
 	}
 
