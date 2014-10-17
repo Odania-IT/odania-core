@@ -21,11 +21,11 @@ app.controller('ContentsController', ['$rootScope', '$scope', 'ContentResource',
 		});
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		loadContents();
 	});
 
-	$scope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
 		loadContents();
 	});
 

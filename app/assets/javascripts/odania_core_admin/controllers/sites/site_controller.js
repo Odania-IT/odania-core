@@ -7,7 +7,7 @@ app.controller('SiteController', ['$rootScope', '$scope', 'SiteResource', '$rout
 		});
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		loadSite($rootScope.currentSite.id);
 	});
 

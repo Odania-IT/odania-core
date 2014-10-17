@@ -15,7 +15,7 @@ app.controller('MenuItemsController', ['$rootScope', '$scope', 'MenuItemResource
 		});
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		loadMenuItems();
 	});
 

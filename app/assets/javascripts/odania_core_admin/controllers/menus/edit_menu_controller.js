@@ -20,6 +20,10 @@ app.controller('EditMenuController', ['$location', '$scope', '$rootScope', 'Menu
 		$location.path('/menus/'+data.id);
 	}
 
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+		$location.path('/menus');
+	});
+
 	function onSaveError(data) {
 		console.log("errors", data);
 		$scope.errors = data.data.errors;

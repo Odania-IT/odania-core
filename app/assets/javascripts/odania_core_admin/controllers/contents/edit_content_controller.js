@@ -27,11 +27,11 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 		$scope.errors = data.data.errors;
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		$location.path('/contents');
 	});
 
-	$scope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
 		$location.path('/contents');
 	});
 

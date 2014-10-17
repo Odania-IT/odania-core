@@ -13,7 +13,7 @@ app.controller('MenusController', ['$rootScope', '$scope', 'MenuResource', 'even
 		});
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		loadMenus();
 	});
 

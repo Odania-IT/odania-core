@@ -13,7 +13,7 @@ app.controller('WidgetsController', ['$rootScope', '$scope', 'WidgetResource', '
 		});
 	}
 
-	$scope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
 		loadWidgets();
 	});
 
