@@ -110,7 +110,8 @@ module Odania
 		description: 'Perfect Reach Newsletter',
 		is_array: false,
 		parameters: [
-			{name: 'Contact list id', key: 'contact_list_id', type: 'text'}
+			{name: 'Header', key: 'header', type: 'text'},
+			{name: 'URL', key: 'url', type: 'text'}
 		]
 	}
 	@@widgets << {

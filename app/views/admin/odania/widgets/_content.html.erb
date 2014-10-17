@@ -1,7 +1,11 @@
-
-		<div data-ng-repeat="adminWidget in admin.widgets" data-ng-show="adminWidget.template == widget.template">
-			{{ adminWidget }}
-			<div data-ng-repeat="parameter in adminWidget.parameters">
-				{{ parameter }}
-			</div>
-		</div>
+<div data-ng-repeat="adminWidget in admin.widgets" data-ng-show="adminWidget.template == widget.template">
+	<div data-ng-if="parameter.type == 'text'">
+		<input type="text" data-ng-model="widget.content[parameter.key]"/>
+	</div>
+	<div data-ng-if="parameter.type == 'number'">
+		<input type="number" data-ng-model="widget.content[parameter.key]"/>
+	</div>
+	<div data-ng-if="parameter.type == 'wysiwyg'">
+		<textarea data-ng-model="widget.content[parameter.key]" class="editor" cols="80" rows="10"></textarea>
+	</div>
+</div>

@@ -36,8 +36,7 @@
 		<label class="col-sm-2 control-label">Language</label>
 
 		<div class="col-sm-10">
-			<select data-ng-model="widget.language_id">
-				<option data-ng-repeat="language in languages" value="{{ language.id }}">{{ language.iso_639_1 }}</option>
+			<select data-ng-model="widget.language_id" data-ng-options="language.id as language.iso_639_1 for language in languages">
 			</select>
 			<span data-ng-if="errors.language_id" style="color: red;">{{ printErrors(errors.language_id) }}</span>
 		</div>
@@ -53,3 +52,4 @@
 </form>
 
 <a data-ng-href="#/widgets">Back</a>
+<%= render partial: 'odania/shared/enable_editor' %>

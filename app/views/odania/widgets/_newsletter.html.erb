@@ -1,11 +1,16 @@
 <div class="widget">
-	<h4><%= t('Newsletter') %></h4>
+	<h4><%= t('odania.Newsletter') %></h4>
 
-	<form action="<%= current_site.newsletter_url %>" method="post">
-		<%= current_site.newsletter_header %>
+	<form action="<%= content[:url] %>" method="post">
+		<p>
+			<%= content[:header] %>
+		</p>
 
-		<label for="ui_email"><%= t('odania.email') %></label> <input type="text" name="contact_list_contact[email]" id="ui_email"/><br/>
-		<input type="submit" name="ui_submit" value="<%= t('odania.Sign up') %>" id="ui_submit"/>
+		<p>
+			<label for="ui_email"><%= t('odania.email') %></label>
+			<input type="text" name="contact_list_contact[email]" id="ui_email"/><br/>
+			<input type="submit" name="ui_submit" value="<%= t('odania.Sign up') %>" id="ui_submit"/>
+		</p>
 
 		<p>
 			<small>
