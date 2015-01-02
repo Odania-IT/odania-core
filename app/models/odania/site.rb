@@ -81,5 +81,11 @@ module Odania
 
 			true
 		end
+
+		before_create do
+			self.description = '' if self.description.nil?
+
+			true
+		end
 	end
 end

@@ -35,7 +35,7 @@ namespace :odania do
 				puts 'Create a language first'
 			elsif site.nil?
 				site = Odania::Site.create!(default_language_id: language.id, :name => host_name, :host => host_name, :is_default => (Odania::Site.count == 0), tracking_code: '')
-				site.menus.create!(language_id: language.id, title: language.iso_639_1)
+				site.menus.create!(language_id: language.id)
 				puts "Site #{site.host} created!"
 			else
 				puts "Site #{site.host} already exists!"
