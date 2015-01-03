@@ -28,7 +28,7 @@ class Odania::Content < ActiveRecord::Base
 	before_save do
 		self.published_at = Time.now if self.published_at.nil?
 		self.is_active = (self.published_at <= Time.now)
-		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body)
+		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body, self.site.host)
 		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil? or self.body_short.blank?
 
 		true

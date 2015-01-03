@@ -17,16 +17,15 @@ class Odania::FilterTest < ActiveSupport::TestCase
 	test 'test only links are changed' do
 		obj = {id: '123'}
 		input = '<p>Test</p>'
-		tags, result = Odania::Filter.filter_html(obj, input)
+		tags, result = Odania::Filter.filter_html(obj, input, 'http://test.host')
 
 		assert_equal input, result
 	end
 
 	test 'test link is changed' do
-		Rails.application.routes.default_url_options[:host] = 'test.host'
 		obj = TestObj.new(id: '123')
 		input = '<p><a href="http://target.de">Test</a></p>'
-		tags, result = Odania::Filter.filter_html(obj, input)
+		tags, result = Odania::Filter.filter_html(obj, input, 'http://test.host')
 
 		assert_match /http:\/\/test.host\/deliver\/click/, result
 		assert_match /target\.de/, result
@@ -35,7 +34,7 @@ class Odania::FilterTest < ActiveSupport::TestCase
 	test 'test tags are replaces' do
 		obj = TestObj.new(id: '123')
 		input = '<p>Test #Tag1 #Tag2  asdsda #Tgf-4</p>'
-		tags, result = Odania::Filter.filter_html(obj, input)
+		tags, result = Odania::Filter.filter_html(obj, input, 'http://test.host')
 		short_code = obj.language.iso_639_1
 
 		assert_equal 'Tag1,Tag2,Tgf-4', tags
