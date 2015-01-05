@@ -1,3 +1,5 @@
+require 'odania/worker'
+
 class ClickWorker
 	include Odania::Worker
 
