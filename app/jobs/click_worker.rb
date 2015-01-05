@@ -1,5 +1,7 @@
+# TODO: Find a way around the include to also allow other background processing
+require 'sidekiq'
+
 class ClickWorker
-	# TODO: Find a way around the include to also allow other baclground processing
 	include Sidekiq::Worker
 
 	def perform(data)
