@@ -1,8 +1,5 @@
-# TODO: Find a way around the include to also allow other background processing
-require 'sidekiq'
-
 class ClickWorker
-	include Sidekiq::Worker
+	include Odania::Worker
 
 	def perform(data)
 		puts "obj_type: #{data[:obj_type]}"
