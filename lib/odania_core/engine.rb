@@ -14,6 +14,7 @@ require 'autoprefixer-rails'
 require 'angularjs-rails'
 require 'angular-ui-bootstrap-rails'
 require 'jbuilder'
+require 'responders'
 
 # Require internals
 require 'odania'
