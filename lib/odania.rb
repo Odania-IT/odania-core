@@ -16,6 +16,7 @@ module Odania
 	autoload :Taggable, 'odania/taggable'
 	autoload :Filter, 'odania/filter'
 	autoload :TargetType, 'odania/target_type'
+	autoload :AdminConstraint, 'odania/admin_constraint'
 
 	# Define a set of helpers that are called on setup.
 	mattr_reader :helpers
