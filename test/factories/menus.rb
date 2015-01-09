@@ -8,7 +8,7 @@ FactoryGirl.define do
 
 		factory :menu_with_items do
 			# Default value for amount of items
-			ignore do
+			transient do
 				amount 5
 			end
 
