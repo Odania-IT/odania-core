@@ -1,5 +1,3 @@
-require 'odania/worker'
-
 class ClickWorker < ActiveJob::Base
 	queue_as :default
 
