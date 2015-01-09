@@ -7,7 +7,7 @@ class CreateUser < ActiveRecord::Migration
 			t.string :admin_layout
 			t.string :ip
 			t.datetime :last_login
-			t.timestamps
+			t.timestamps null: false
 		end
 	end
 end

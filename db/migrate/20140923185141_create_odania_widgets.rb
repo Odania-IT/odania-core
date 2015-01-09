@@ -7,7 +7,7 @@ class CreateOdaniaWidgets < ActiveRecord::Migration
 			t.string :template
 			t.string :name
 			t.text :content
-			t.timestamps
+			t.timestamps null: false
 		end
 	end
 end

@@ -12,7 +12,7 @@ class CreateContent < ActiveRecord::Migration
 			t.integer :site_id, null: false
 			t.integer :language_id, null: false
 			t.integer :user_id, null: false
-			t.timestamps
+			t.timestamps null: false
 		end
 
 		add_index :odania_contents, [:site_id, :language_id, :is_active]

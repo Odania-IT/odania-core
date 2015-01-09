@@ -6,7 +6,7 @@ class CreateMenu < ActiveRecord::Migration
 			t.integer :default_menu_item_id
 			t.integer :site_id
 			t.integer :language_id
-			t.timestamps
+			t.timestamps null: false
 		end
 
 		add_index :odania_menus, [:site_id, :language_id], unique: true
