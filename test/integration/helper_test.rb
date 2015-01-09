@@ -24,7 +24,6 @@ class HelperTest < ActionDispatch::IntegrationTest
 	test 'authentication before_filter' do
 		Odania.setup do |config|
 			config.authenticate_user_function = "return redirect_to '/'#"
-			config.background_enqueue = "return redirect_to '/'#"
 		end
 
 		get '/test/test_authorized'

@@ -8,8 +8,5 @@ module Odania
 
 		# Before filter checking if a user is authenticated
 		mattr_accessor :authenticate_user_function
-
-		# Background processing of jobs. Arguments are processing type and hash of arguments
-		mattr_accessor :background_enqueue
 	end
 end

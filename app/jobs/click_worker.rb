@@ -1,12 +1,14 @@
 require 'odania/worker'
 
-class ClickWorker
-	include Odania::Worker
+class ClickWorker < ActiveJob::Base
+	queue_as :default
 
 	def perform(data)
-		puts "obj_type: #{data[:obj_type]}"
-		puts "id: #{data[:id]}"
-		puts "view_date: #{data[:view_date]}"
-		puts "referer: #{data[:referer]}"
+		tracking = Odania::ClickTracking.new
+		tracking.obj_type = data[:obj_type]
+		tracking.obj_id = data[:id]
+		tracking.view_date = Time.at(data[:view_date])
+		tracking.referer = data[:referer]
+		tracking.save!
 	end
 end

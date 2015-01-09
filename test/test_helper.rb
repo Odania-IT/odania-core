@@ -50,9 +50,7 @@ class ActionController::TestCase
 			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
 			config.current_user_function = 'OdaniaTestMock.current_user'
 			config.authenticate_user_function = 'user_auth'
-			config.background_enqueue = 'OdaniaTestMock.enqueue'
 		end
-		Odania.setup_enqueue
 		OdaniaTestMock.user_authenticated = true
 	end
 end
@@ -63,9 +61,7 @@ class ActionDispatch::IntegrationTest
 			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
 			config.current_user_function = 'OdaniaTestMock.current_user'
 			config.authenticate_user_function = 'user_auth'
-			config.background_enqueue = 'OdaniaTestMock.enqueue'
 		end
-		Odania.setup_enqueue
 		OdaniaTestMock.user_authenticated = true
 	end
 end
