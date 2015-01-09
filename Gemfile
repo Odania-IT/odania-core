@@ -26,6 +26,7 @@ group :development, :test do
 	gem 'paperclip', '~> 3'
 	gem 'will_paginate', '~> 3.0'
 	gem 'http_accept_language'
+	gem 'responders', '~> 2.0'
 
 	gem 'libv8', '~> 3.11.8.12', :platforms => :ruby
 	gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'

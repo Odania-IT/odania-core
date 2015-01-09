@@ -174,6 +174,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     ref (1.0.5)
+    responders (2.0.2)
+      railties (>= 4.2.0.alpha, < 5)
     ruby-progressbar (1.7.1)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
@@ -231,6 +233,7 @@ DEPENDENCIES
   odania_core!
   paperclip (~> 3)
   pg
+  responders (~> 2.0)
   spring
   sqlite3
   therubyracer (>= 0.11.4)
