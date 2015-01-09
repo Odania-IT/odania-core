@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.string   "type",              limit: 30
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.integer  "site_id",                       null: false
     t.integer  "language_id",                   null: false
     t.integer  "user_id",                       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "widget_id"
   end
 
@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.integer  "default_menu_item_id"
     t.integer  "site_id"
     t.integer  "language_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "widget_id"
   end
 
@@ -143,8 +143,8 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.string   "admin_layout"
     t.string   "ip"
     t.datetime "last_login"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "odania_widgets", force: :cascade do |t|
@@ -154,8 +154,8 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.string   "template"
     t.string   "name"
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "odania_widgets", ["language_id"], name: "index_odania_widgets_on_language_id"
