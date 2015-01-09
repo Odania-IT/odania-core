@@ -15,6 +15,7 @@ PATH
       paperclip (~> 3)
       rails (~> 4.2.0)
       rails-i18n
+      responders (~> 2.0)
       sanitize (~> 2.1)
       sass-rails (~> 5.0.1)
       will_paginate (~> 3.0)
@@ -233,7 +234,6 @@ DEPENDENCIES
   odania_core!
   paperclip (~> 3)
   pg
-  responders (~> 2.0)
   spring
   sqlite3
   therubyracer (>= 0.11.4)

@@ -34,4 +34,5 @@ Gem::Specification.new do |s|
 	s.add_dependency 'angularjs-rails'
 	s.add_dependency 'angular-ui-bootstrap-rails'
 	s.add_dependency 'jbuilder'
+	s.add_dependency 'responders', '~> 2.0'
 end
