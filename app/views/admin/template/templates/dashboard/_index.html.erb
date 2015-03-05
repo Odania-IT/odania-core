@@ -1,2 +1,21 @@
-<h1>Admin::Dashboard#index</h1>
-<p>Find me in app/views/admin/dashboard/index.html.erb</p>
+<div class="row">
+	<div class="col-md-12">
+		<h1><%= t('admin.views.dashboard.title') %></h1>
+
+		<p><%= t('admin.views.dashboard.welcome_text') %></p>
+	</div>
+
+	<div class="col-md-3">
+		<h2><%= t('admin.views.dashboard.manage_sites.title') %></h2>
+		<%= link_to t('admin.views.dashboard.manage_sites.manage_site_link'), '#/sites' %>
+	</div>
+
+	<div class="col-md-3">
+		<h2><%= t('admin.views.dashboard.create_content.title') %></h2>
+		<%= link_to t('admin.views.dashboard.create_content.create_content_link'), '#/contents/new' %>
+	</div>
+
+	<div class="col-md-3">
+		<h2><%= t('admin.views.dashboard.additional_links.title') %></h2>
+	</div>
+</div>

@@ -8,6 +8,8 @@ module Odania
 		# Registered Admin Pages
 		mattr_accessor :pages
 		@@pages = Set.new
+		@@pages << {name: 'Dashboard', in_menu: true, path: '/dashboard', controller: 'DashboardController', template: 'dashboard/index'}
+
 		@@pages << {name: 'Sites', in_menu: true, path: '/sites', controller: 'SitesController', template: 'sites/index'}
 		@@pages << {name: 'New Site', in_menu: false, path: '/sites/new', controller: 'EditSiteController', template: 'sites/edit'}
 		@@pages << {name: 'Show Site', in_menu: false, path: '/sites/:id', controller: 'SiteController', template: 'sites/show'}

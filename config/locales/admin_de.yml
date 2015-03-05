@@ -1,0 +1,40 @@
+de:
+  admin:
+    menu:
+      Dashboard: 'Dashboard'
+      Sites: 'Seiten'
+      New Site: 'Neue Seite'
+      Show Site: 'Seiten Details'
+      Edit Site: 'Seite editieren'
+      Contents: 'Beiträge'
+      New Content: 'Neuer Beitrage'
+      Show Content: 'Beitrage anzeigen'
+      Edit Content: 'Beitrage bearbeiten'
+      Languages: 'Sprachen'
+      New Language: 'Neue Sprache'
+      Show Language: 'Sprache anzeigen'
+      Edit Language: 'Sprache bearbeiten'
+      Menus: 'Menus'
+      New Menu: 'New Menu'
+      Show Menu: 'Show Menu'
+      Edit Menu: 'Edit Menu'
+      Menu Items: 'Menu Items'
+      New Menu Item: 'New Menu Item'
+      Show Menu Item: 'Show Menu Item'
+      Edit Menu Item: 'Edit Menu Item'
+      Widgets: 'Widgets'
+      New Widget: 'New Widget'
+      Show Widget: 'Show Widget'
+      Edit Widget: 'Edit Widget'
+    views:
+      dashboard:
+        title: 'Willkommen bei Odania'
+        welcome_text: 'Wir haben einige Links zusammengestellt, um dir den Start zu erleichtern:'
+        manage_sites:
+          title: 'Seiten'
+          manage_site_link: 'Seiten verwalten'
+        create_content:
+          title: 'Beiträge'
+          create_content_link: 'Beitrag erstellen'
+        additional_links:
+          title: 'Weitere Links'
