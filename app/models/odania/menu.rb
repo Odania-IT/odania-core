@@ -2,7 +2,7 @@ class Odania::Menu < ActiveRecord::Base
 	has_one :default_menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :site, class_name: 'Odania::Site'
 	belongs_to :language, class_name: 'Odania::Language'
-	has_many :menu_items, class_name: 'Odania::MenuItem'
+	has_many :menu_items, class_name: 'Odania::MenuItem', dependent: :destroy
 
 	validates_presence_of :language_id
 	validates_uniqueness_of :site_id, scope: :language_id

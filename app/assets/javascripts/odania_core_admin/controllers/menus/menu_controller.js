@@ -1,8 +1,15 @@
-app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', '$routeParams', 'eventTypeProvider', '$location', function ($rootScope, $scope, MenuResource, $routeParams, eventTypeProvider, $location) {
+app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', 'MenuItemResource', '$routeParams', 'eventTypeProvider', '$location', function ($rootScope, $scope, MenuResource, MenuItemResource, $routeParams, eventTypeProvider, $location) {
 	console.log("controller :: MenuController");
 
-	function loadMenu(id) {
-		MenuResource.get({siteId: $rootScope.currentSite.id, id: id}).$promise.then(function (data) {
+	function loadMenu() {
+		MenuItemResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id}).$promise.then(function (data) {
+			$scope.menuItems = data.menu_items;
+			$scope.menu = data.menu;
+		});
+	}
+
+	function saveMenu() {
+		MenuResource.update({siteId: $rootScope.currentSite.id, id: $rootScope.currentMenu.id, menu: $scope.menu}).$promise.then(function (data) {
 			$scope.menu = data.menu;
 		});
 	}
@@ -11,5 +18,18 @@ app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', '$rout
 		$location.path('/menus');
 	});
 
-	loadMenu($routeParams.id);
+	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
+		loadMenu();
+	});
+
+	$rootScope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
+		loadMenu();
+	});
+
+	$scope.saveMenu = saveMenu;
+	$scope.menu = {
+		'language_id': null
+	};
+
+	loadMenu();
 }]);

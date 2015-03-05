@@ -25,12 +25,7 @@ module Odania
 		@@pages << {name: 'Show Languages', in_menu: false, path: '/languages/:id', controller: 'LanguageController', template: 'languages/show'}
 		@@pages << {name: 'Edit Languages', in_menu: false, path: '/languages/:id/edit', controller: 'EditLanguageController', template: 'languages/edit'}
 
-		@@pages << {name: 'Menus', in_menu: true, path: '/menus', controller: 'MenusController', template: 'menus/index'}
-		@@pages << {name: 'New Menus', in_menu: false, path: '/menus/new', controller: 'EditMenuController', template: 'menus/edit'}
-		@@pages << {name: 'Show Menus', in_menu: false, path: '/menus/:id', controller: 'MenuController', template: 'menus/show'}
-		@@pages << {name: 'Edit Menus', in_menu: false, path: '/menus/:id/edit', controller: 'EditMenuController', template: 'menus/edit'}
-
-		@@pages << {name: 'Menu Items', in_menu: false, path: '/menus/:menuId/menu_items', controller: 'MenuItemsController', template: 'menu_items/index'}
+		@@pages << {name: 'Menu', in_menu: true, path: '/menus', controller: 'MenuController', template: 'menus/index'}
 		@@pages << {name: 'New Menu Items', in_menu: false, path: '/menus/:menuId/menu_items/new', controller: 'EditMenuItemController', template: 'menu_items/edit'}
 		@@pages << {name: 'Show Menu Items', in_menu: false, path: '/menus/:menuId/menu_items/:id', controller: 'MenuItemController', template: 'menu_items/show'}
 		@@pages << {name: 'Edit Menu Items', in_menu: false, path: '/menus/:menuId/menu_items/:id/edit', controller: 'EditMenuItemController', template: 'menu_items/edit'}

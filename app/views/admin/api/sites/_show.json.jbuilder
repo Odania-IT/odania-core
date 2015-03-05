@@ -16,3 +16,4 @@ json.terms_and_conditions site.terms_and_conditions
 json.default_widget_id site.default_widget_id
 
 json.menus site.menus, partial: 'admin/api/menus/show', as: :menu
+json.languages site.menus.pluck(:language_id)

@@ -26,6 +26,20 @@ app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$r
 		$scope.errors = data.data.errors;
 	}
 
+	$scope.toggleLanguageSelection = function toggleSelection(languageId) {
+		var idx = $scope.site.languages.indexOf(languageId);
+
+		// is currently selected
+		if (idx > -1) {
+			$scope.site.languages.splice(idx, 1);
+		}
+
+		// is newly selected
+		else {
+			$scope.site.languages.push(languageId);
+		}
+	};
+
 	$scope.saveSite = saveSite;
 	$scope.site = {
 		'name': ''

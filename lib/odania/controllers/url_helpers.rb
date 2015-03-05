@@ -9,9 +9,7 @@ module Odania
 
 			def current_menu
 				cur_locale = params[:locale]
-				if cur_locale.nil?
-					cur_locale = current_site.default_language.iso_639_1
-				end
+				cur_locale = current_site.default_language.iso_639_1 if cur_locale.nil?
 
 				@current_menu ||= current_site.get_current_menu(cur_locale)
 				unless @current_menu.nil?

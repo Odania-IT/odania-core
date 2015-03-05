@@ -1,12 +1,42 @@
-<h1>Menus for {{ currentSite.name }}</h1>
+<h1>Menu Language: {{ getLanguage(menu.language_id).iso_639_1 }} Site: {{ getSite(menu.site_id).name }}</h1>
+
+<table class="table">
+	<tbody>
+	<tr>
+		<th>Language</th>
+		<td>{{ getLanguage(menu.language_id).iso_639_1 }}</td>
+	</tr>
+	<tr>
+		<th>Published</th>
+		<td>
+			<input type="checkbox" data-ng-model="menu.published">
+		</td>
+	</tr>
+	<tr>
+		<th>Default Widget</th>
+		<td>
+			<select data-ng-model="menu.widget_id" ng-options="widget.id as widget.name for widget in data.widgets"></select>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="2">
+			<button class="btn btn-primary" data-ng-click="saveMenu()">Save</button>
+		</th>
+	</tr>
+	</tbody>
+</table>
+
+<h1>Menu Items</h1>
 
 <table class="table">
 	<thead>
 	<tr>
-		<th>Language</th>
-		<th>Published</th>
-		<th>Site</th>
 		<th></th>
+		<th>Title</th>
+		<th>Published</th>
+		<th>Target type</th>
+		<th>Target date</th>
+		<th>Parent</th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -14,18 +44,25 @@
 	</thead>
 
 	<tbody>
-	<tr data-ng-repeat="menu in menus">
-		<td>{{ getLanguage(menu.language_id).iso_639_1 }}</td>
-		<td>{{ menu.published }}</td>
-		<td>{{ getSite(menu.site_id).name }}</td>
-		<td><a data-ng-href="#/menus/{{ menu.id }}/contents">Contents</a></td>
-		<td><a data-ng-href="#/menus/{{ menu.id }}">Show</a></td>
-		<td><a data-ng-href="#/menus/{{ menu.id }}/edit">Edit</a></td>
-		<td><a ng-confirm-click="deleteMenu(menu.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
+	<tr data-ng-repeat="menu_item in menuItems">
+		<td>
+			<span data-ng-if="menu.default_menu_item_id == menu_item.id" class="glyphicon glyphicon-star" data-ng-click="setDefault(menu_item)"></span>
+			<span data-ng-if="menu.default_menu_item_id != menu_item.id" class="glyphicon glyphicon-star-empty" data-ng-click="setDefault(menu_item)"></span>
+		</td>
+		<td>{{ menu_item.title }}</td>
+		<td>{{ menu_item.published }}</td>
+		<td>{{ menu_item.target_type }}</td>
+		<td>{{ menu_item.published }}</td>
+		<td>{{ menu_item.parent_id == null ? '-' : getSite(menu_item.parent_id).name }}</td>
+		<td><a data-ng-href="#/menu_items/{{ menu_item.id }}">Show</a></td>
+		<td><a data-ng-href="#/menu_items/{{ menu_item.id }}/edit">Edit</a></td>
+		<td><a ng-confirm-click="deleteMenuItem(menu_item.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 	</tr>
 	</tbody>
 </table>
 
 <br/>
 
-<%= link_to 'New Menu', '#/menus/new' %>
+<a data-ng-href="#/menus/{{ menu.id }}/menu_items/new">New Menu item</a>
+| <a data-ng-href="#/menus/{{ menu.id }}/edit">Edit</a> | <a data-ng-href="#/menus">Back</a>
+

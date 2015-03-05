@@ -35,6 +35,6 @@ de:
           manage_site_link: 'Seiten verwalten'
         create_content:
           title: 'Beiträge'
-          create_content_link: 'Beitrag erstellen'
+          create_content_link: 'Deinen ersten Beitrag erstellen'
         additional_links:
           title: 'Weitere Links'
