@@ -33,11 +33,10 @@ en:
       dashboard:
         title: 'Welcome to Odania'
         welcome_text: 'We have collected some links to help you get started:'
-        manage_sites:
-          title: 'Sites'
+        get_started:
+          title: 'Get started'
           manage_site_link: 'Manage site'
-        create_content:
-          title: 'Content'
+          create_site_link: 'Create you first site'
           create_content_link: 'Create your first content'
         additional_links:
           title: 'Additional Links'

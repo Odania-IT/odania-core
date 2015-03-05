@@ -5,17 +5,20 @@
 		<p><%= t('admin.views.dashboard.welcome_text') %></p>
 	</div>
 
-	<div class="col-md-3">
-		<h2><%= t('admin.views.dashboard.manage_sites.title') %></h2>
-		<%= link_to t('admin.views.dashboard.manage_sites.manage_site_link'), '#/sites' %>
+	<div class="col-md-6">
+		<h2><%= t('admin.views.dashboard.get_started.title') %></h2>
+
+		<ol>
+			<li><%= link_to t('admin.views.dashboard.get_started.create_site_link'), '#/sites' %></li>
+			<li><%= link_to t('admin.views.dashboard.get_started.create_content_link'), '#/contents/new' %></li>
+		</ol>
 	</div>
 
-	<div class="col-md-3">
-		<h2><%= t('admin.views.dashboard.create_content.title') %></h2>
-		<%= link_to t('admin.views.dashboard.create_content.create_content_link'), '#/contents/new' %>
-	</div>
-
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<h2><%= t('admin.views.dashboard.additional_links.title') %></h2>
+
+		<ul>
+			<li><%= link_to t('admin.views.dashboard.get_started.manage_site_link'), '#/sites' %></li>
+		</ul>
 	</div>
 </div>
