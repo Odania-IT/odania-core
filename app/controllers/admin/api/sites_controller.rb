@@ -11,6 +11,7 @@ class Admin::Api::SitesController < Admin::ApiController
 
 	def create
 		@site = Odania::Site.new(site_params)
+		@site.is_default = true if Odania::Site.where(is_default: true).count == 0
 
 		if @site.save
 			update_languages
@@ -55,10 +56,20 @@ class Admin::Api::SitesController < Admin::ApiController
 
 	def update_languages
 		menus = []
-		params[:site][:languages].each do |language_id|
-			menu = @site.menus.where(language_id: language_id).first
-			menu = @site.menus.create(language_id: language_id) if menu.nil?
-			menus << menu.id
+		default_language_exists = false
+		unless params[:site][:languages].nil?
+			params[:site][:languages].each do |language_id|
+				menu = @site.menus.where(language_id: language_id).first
+				menu = @site.menus.create(language_id: language_id) if menu.nil?
+				menus << menu.id
+
+				default_language_exists = true if language_id.eql? @site.default_language_id
+			end
+		end
+
+		unless default_language_exists
+			menu = @site.menus.create(language_id: @site.default_language_id)
+			menus << menu
 		end
 
 		@site.menus.where('id NOT IN (?)', menus).destroy_all

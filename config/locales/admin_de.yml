@@ -26,6 +26,9 @@ de:
       New Widget: 'New Widget'
       Show Widget: 'Show Widget'
       Edit Widget: 'Edit Widget'
+      categories:
+        global: 'Global'
+        site: 'Für die Seite'
     views:
       dashboard:
         title: 'Willkommen bei Odania'

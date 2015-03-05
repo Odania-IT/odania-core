@@ -25,7 +25,12 @@ app.factory('resolveService', ['BootstrapResource', '$q', function (BootstrapRes
 		return deferred.promise;
 	}
 
+	function resetResolved() {
+		resolved.bootstrap.resolved = false;
+	}
+
 	return {
-		'resolveBootstrap': resolveBootstrap
+		'resolveBootstrap': resolveBootstrap,
+		'resetResolved': resetResolved
 	};
 }]);

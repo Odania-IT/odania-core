@@ -33,7 +33,7 @@ app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider
 	}
 
 	$scope.$on(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED, function processEvent() {
-		if (resolved) {
+		if (resolved || !$rootScope.currentSite) {
 			return;
 		}
 

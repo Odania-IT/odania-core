@@ -30,7 +30,7 @@
 				<span data-ng-if="!site.is_default"><span class="glyphicon glyphicon-remove"></span></span>
 			</td>
 			<td>{{ site.template }}</td>
-			<td>{{ site.default_language_id }}</td>
+			<td>{{ getLanguage(site.default_language_id).iso_639_1 }}</td>
 			<td>{{ getLanguages(site) }}</td>
 			<td>{{ site.redirect_to_id == null ? '-' : site.redirect_to_id }}</td>
 			<td><a data-ng-href="#/sites/{{ site.id }}">Show</a></td>

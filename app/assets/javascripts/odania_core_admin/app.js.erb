@@ -13,10 +13,12 @@ app.config(['$routeProvider', function ($routeProvider) {
 					$rootScope.admin = data.admin;
 
 					if (!resolved) {
-						console.log("INIT SITE & MENU");
-						$rootScope.currentSite = data.sites[0];
-						$rootScope.currentMenu = data.sites[0].menus[0];
-						resolved = true;
+						if (data.sites[0]) {
+							console.log("INIT SITE & MENU", data.sites[0]);
+							$rootScope.currentSite = data.sites[0];
+							$rootScope.currentMenu = data.sites[0].menus[0];
+							resolved = true;
+						}
 					}
 					$rootScope.$broadcast(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED);
 					console.log("bootstrap :: done");
@@ -30,12 +32,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 				'templateUrl': config.getTemplatePath('dashboard/index'),
 				'resolve': resolve
 			})
-		<% Odania::Admin::pages.each do |page| %>
+		<% Odania::Admin.pages.each_pair do |category, pages| %>
+			<% pages.each do |page| %>
 			.when('<%= page[:path] %>', {
 				'controller': '<%= page[:controller] %>',
 				'templateUrl': config.getTemplatePath('<%= page[:template] %>'),
 				'resolve': resolve
 			})
+			<% end %>
 		<% end %>
 		.otherwise({ 'redirectTo': '/dashboard' });
 }]);

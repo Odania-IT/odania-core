@@ -1,4 +1,4 @@
-app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$routeParams', 'eventTypeProvider', function ($location, $scope, SiteResource, $routeParams, eventTypeProvider) {
+app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$routeParams', 'resolveService', function ($location, $scope, SiteResource, $routeParams, resolveService) {
 	console.log("controller :: EditSiteController");
 	var siteId = null;
 
@@ -18,6 +18,7 @@ app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$r
 	}
 
 	function onSaveSuccess() {
+		resolveService.resetResolved();
 		$location.path('/sites');
 	}
 
@@ -42,7 +43,8 @@ app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$r
 
 	$scope.saveSite = saveSite;
 	$scope.site = {
-		'name': ''
+		'name': '',
+		'languages': []
 	};
 
 	if ($routeParams.id) {

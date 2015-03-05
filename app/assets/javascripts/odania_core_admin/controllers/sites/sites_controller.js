@@ -1,4 +1,4 @@
-app.controller('SitesController', ['$rootScope', '$scope', 'SiteResource', function ($rootScope, $scope, SiteResource) {
+app.controller('SitesController', ['$rootScope', '$scope', 'SiteResource', 'resolveService', function ($rootScope, $scope, SiteResource, resolveService) {
 	console.log("controller :: SitesController");
 
 	function loadSites() {
@@ -26,6 +26,7 @@ app.controller('SitesController', ['$rootScope', '$scope', 'SiteResource', funct
 
 	function deleteSite(id) {
 		SiteResource.delete({id: id}).$promise.then(function () {
+			resolveService.resetResolved();
 			loadSites();
 		});
 	}
