@@ -3,11 +3,6 @@ Rails.application.routes.draw do
 
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 
-	get 'imprint' => 'odania/info#imprint'
-	get 'terms_and_conditions' => 'odania/info#terms_and_conditions'
-	get 'contact' => 'odania/info#contact'
-	post 'contact' => 'odania/info#contact_send'
-
 	namespace :admin do
 		namespace :odania do
 			resources :menus do
@@ -68,6 +63,11 @@ Rails.application.routes.draw do
 		get 'tags' => 'odania/tags#index'
 		get 'tags/auto_complete' => 'odania/tags#auto_complete'
 		get 'tags/:tag' => 'odania/tags#show', as: :tag
+
+		get 'imprint' => 'odania/info#imprint'
+		get 'terms_and_conditions' => 'odania/info#terms_and_conditions'
+		get 'contact' => 'odania/info#contact'
+		post 'contact' => 'odania/info#contact_send'
 
 		get '/*path' => 'odania/menu#show_page'
 		root to: 'odania/menu#menu_index', as: :locale_root

@@ -1,23 +1,22 @@
 <h1><%= t('odania.Contact') %></h1>
 
 <p>
-<%= form_tag '/contact' do %>
-	<p>
-		<%= t('odania.name') %>:
-		<input type="text" name="<%= @contact_post_name %>[contact_name]" value=""/>
-	</p>
+	<%= form_tag contact_path(locale: I18n.locale.to_s) do %>
+	<div class="form-group">
+		<label for="inputName"><%= t('odania.name') %>:</label>
+		<input type="text" class="form-control" id="inputName" placeholder="Name" name="<%= @contact_post_name %>[contact_name]"/>
+	</div>
 
-	<p>
-		<%= t('odania.email') %>:
-		<input type="text" name="<%= @contact_post_name %>[email]" value=""/>
-	</p>
+	<div class="form-group">
+		<label for="inputEmail"><%= t('odania.email') %>:</label>
+		<input type="email" class="form-control" id="inputEmail" placeholder="Email" name="<%= @contact_post_name %>[email]"/>
+	</div>
 
-	<p>
-		<%= t('odania.ContactText') %>
-		<textarea name="<%= @contact_post_name %>[body]" cols="50" rows="10"></textarea>
-	</p>
-	<p>
-		<input type="submit" name="submit" value="<%= t('odania.send') %>"/>
-	</p>
+	<div class="form-group">
+		<label for="inputMessage"><%= t('odania.ContactText') %>:</label>
+		<textarea class="form-control" rows="10" id="inputMessage" placeholder="Message" name="<%= @contact_post_name %>[body]"></textarea>
+	</div>
+
+	<button type="submit" class="btn btn-default"><%= t('odania.send') %></button>
 <% end %>
 </p>
