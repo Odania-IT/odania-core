@@ -25,5 +25,9 @@ module Odania
 			return '<span class="glyphicon glyphicon-star"></span>'.html_safe if b
 			'<span class="glyphicon glyphicon-star-empty"></span>'.html_safe
 		end
+
+		def language_flag(language)
+			(image_tag("flags/#{language.flag_image}", alt: language.iso_639_1, height: 20) + " #{language.name}").html_safe
+		end
 	end
 end

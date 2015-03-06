@@ -44,7 +44,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 		.otherwise({ 'redirectTo': '/dashboard' });
 }]);
 
-app.run(['$rootScope', 'BootstrapResource', function ($rootScope, BootstrapResource) {
+app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, BootstrapResource, $window) {
 	console.log("bootstrap :: init");
 
 	function on_bootstrap_success(data) {
@@ -81,5 +81,12 @@ app.run(['$rootScope', 'BootstrapResource', function ($rootScope, BootstrapResou
 
 	$rootScope.printErrors = function(errors) {
 		return errors.join(', ');
+	};
+
+	$rootScope.changeLanguage = function(language_id) {
+		console.info("Changing language", language_id);
+		BootstrapResource.changeLanguage({language_id: language_id}).$promise.then(function () {
+			$window.location.reload();
+		});
 	};
 }]);

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109200234) do
+ActiveRecord::Schema.define(version: 20150306152017) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -59,8 +59,9 @@ ActiveRecord::Schema.define(version: 20150109200234) do
   add_index "odania_contents", ["user_id"], name: "index_odania_contents_on_user_id", using: :btree
 
   create_table "odania_languages", force: :cascade do |t|
-    t.string "name",      limit: 255
-    t.string "iso_639_1", limit: 255
+    t.string "name",       limit: 255
+    t.string "iso_639_1",  limit: 255
+    t.string "flag_image", limit: 255
   end
 
   add_index "odania_languages", ["iso_639_1"], name: "index_odania_languages_on_iso_639_1", unique: true, using: :btree
@@ -145,6 +146,7 @@ ActiveRecord::Schema.define(version: 20150109200234) do
     t.datetime "last_login"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "language_id",  limit: 4
   end
 
   create_table "odania_widgets", force: :cascade do |t|

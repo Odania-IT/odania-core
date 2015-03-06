@@ -3,6 +3,7 @@ json.admin do
 	json.templates Odania::Admin::templates
 	json.widgets Odania::widgets
 	json.targets Odania::TargetType.targets
+	json.language_id current_user.language_id.nil? ? @languages.first.id : current_user.language_id
 end
 
 json.sites @sites, partial: 'admin/api/sites/show', as: :site

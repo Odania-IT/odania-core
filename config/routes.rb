@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
 		namespace :api, defaults: {format: :json} do
 			get 'bootstrap' => 'bootstrap#index'
+			post 'bootstrap/change_language' => 'bootstrap#change_language'
 
 			resources :sites, except: [:new, :edit] do
 				resources :menus, except: [:new, :edit] do

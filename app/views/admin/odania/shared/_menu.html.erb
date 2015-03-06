@@ -1,5 +1,6 @@
 <div class="container-fluid" data-ng-controller="SideMenuController">
 	<div data-ng-if="currentSite">
+		<%= t('admin.menu.selected_site') %>:
 		<select data-ng-model="current.siteId" data-ng-change="changedSite()">
 			<option data-ng-repeat="site in sites" value="{{ site.id }}">{{ site.name }}</option>
 		</select>
@@ -11,7 +12,7 @@
 		</select>
 	</div>
 	<div data-ng-if="!currentSite">
-		No Site
+		<%= t('admin.menu.no_site_defined') %>
 	</div>
 	<br/>
 	<%= content_for?(:admin_selection) ? yield(:admin_selection) : '' %>
@@ -20,7 +21,6 @@
 		<% Odania.admin.pages.each_pair do |category, pages| %>
 			<% unless :global.eql? category %>
 			<div data-ng-if="currentSite">
-			<% end %>
 			<h3><%= t("admin.menu.categories.#{category}") %></h3>
 			<ul class="nav nav-list">
 				<% pages.each do |admin_page| %>
@@ -29,7 +29,6 @@
 					<% end %>
 				<% end %>
 			</ul>
-			<% unless :global.eql? category %>
 			</div>
 			<% end %>
 		<% end %>

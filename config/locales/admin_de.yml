@@ -26,6 +26,10 @@ de:
       New Widget: 'New Widget'
       Show Widget: 'Show Widget'
       Edit Widget: 'Edit Widget'
+
+      selected_site: 'Seite'
+      no_site_defined: 'Keine Seite erstellt'
+
       categories:
         global: 'Global'
         site: 'Für die Seite'

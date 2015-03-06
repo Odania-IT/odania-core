@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-	before_action :authenticate_user!, :choose_site, :require_admin_role!
+	before_action :authenticate_user!, :choose_site, :require_admin_role!, :set_language
 	skip_before_filter :valid_site!
 	layout :set_admin_layout
 
@@ -26,5 +26,9 @@ class AdminController < ApplicationController
 		@odania_menu = @admin_site.menus.first if @odania_menu.nil?
 		@odania_menu = Odania::Menu.first if @odania_menu.nil?
 		session[:menu_id] = @odania_menu.id unless @odania_menu.nil?
+	end
+
+	def set_language
+		I18n.locale = current_user.language.iso_639_1 unless current_user.language.nil?
 	end
 end
