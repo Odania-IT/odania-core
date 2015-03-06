@@ -10,6 +10,8 @@
 				getLanguage(menu.language_id).iso_639_1 }}
 			</option>
 		</select>
+
+		&nbsp;&nbsp;<a href="#/sites/{{ current.siteId }}/edit">Edit</a>
 	</div>
 	<div data-ng-if="!currentSite">
 		<%= t('admin.menu.no_site_defined') %>

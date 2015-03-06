@@ -54,3 +54,6 @@ en:
       create_widget:
         wysiwyg:
           placeholder: 'HTML content'
+      edit_site:
+        description:
+          placeholder: 'Description'
