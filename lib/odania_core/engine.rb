@@ -1,6 +1,5 @@
 # Require dependent gems
 require 'rubygems'
-require 'ckeditor'
 require 'paperclip'
 require 'sanitize'
 require 'http_accept_language'
@@ -15,6 +14,7 @@ require 'angularjs-rails'
 require 'angular-ui-bootstrap-rails'
 require 'jbuilder'
 require 'responders'
+require 'font-awesome-rails'
 
 # Require internals
 require 'odania'

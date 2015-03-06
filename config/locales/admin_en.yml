@@ -44,3 +44,13 @@ en:
           create_content_link: 'Create your first content'
         additional_links:
           title: 'Additional Links'
+      create_content:
+        published_at:
+          title: 'Publish'
+        body:
+          placeholder: 'Content'
+        body_short:
+          placeholder: 'Short description'
+      create_widget:
+        wysiwyg:
+          placeholder: 'HTML content'

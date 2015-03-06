@@ -23,11 +23,22 @@
 	<div data-ng-repeat="parameter in selectedWidget.parameters">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">{{ parameter.name }}</label>
+			{{ parameter }}
 
-			<div class="col-sm-10">
+			<div class="col-sm-10" data-ng-init="param = widget.content[parameter.key];">
 				<% Odania::widget_includes.each do |include| %>
 					<%= render partial: include %>
 				<% end %>
+
+				<div data-ng-if="parameter.type == 'array'">
+					<div data-ng-repeat="parameter in parameter.fields" data-ng-if="prepareKey(parameter)">
+						<div data-ng-repeat="row in widget.content[parameter.key]" data-ng-init="param = row[parameter.key];">
+							<% Odania::widget_includes.each do |include| %>
+								<%= render partial: include %>
+							<% end %>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -52,4 +63,3 @@
 </form>
 
 <a data-ng-href="#/widgets">Back</a>
-<%= render partial: 'odania/shared/enable_editor' %>

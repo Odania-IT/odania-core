@@ -2,7 +2,7 @@ app.controller('WidgetsController', ['$rootScope', '$scope', 'WidgetResource', '
 	console.log("controller :: WidgetsController");
 
 	function loadWidgets() {
-		WidgetResource.get({siteId: $rootScope.currentSite.id}).$promise.then(function (data) {
+		WidgetResource.get({siteId: $rootScope.currentSite.id, language_id: $rootScope.currentMenu.language_id}).$promise.then(function (data) {
 			$rootScope.widgets = data.widgets;
 		});
 	}

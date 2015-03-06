@@ -44,3 +44,13 @@ de:
           create_content_link: 'Deinen ersten Beitrag erstellen'
         additional_links:
           title: 'Weitere Links'
+      create_content:
+        published_at:
+          title: 'Veröffentlichen'
+        body:
+          placeholder: 'Inhalt'
+        body_short:
+          placeholder: 'Kurzbeschreibung'
+      create_widget:
+        wysiwyg:
+          placeholder: 'HTML Inhalt'

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-	mount Ckeditor::Engine => '/ckeditor'
-
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 
 	namespace :admin do

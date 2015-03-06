@@ -1,5 +1,6 @@
 class Odania::InfoController < ApplicationController
 	before_action :valid_site!
+	before_filter :valid_menu!
 
 	def imprint
 	end

@@ -55,6 +55,28 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 		$scope.widget.contents.push({});
 		console.log($scope.widget);
 	};
+	$scope.prepareKey = function (parameter) {
+		console.warn('parameter', parameter, $scope.widget.content[parameter.key]);
+
+		if (!$scope.widget.content[parameter.key]) {
+			$scope.widget.content[parameter.key] = [];
+		}
+
+		var lastIdx = $scope.widget.content[parameter.key].length - 1;
+		if (lastIdx < 0) {
+			$scope.widget.content[parameter.key].push({});
+			return true;
+		}
+
+		console.warn('lastIdx', lastIdx, $scope.widget.content[parameter.key][lastIdx],
+			"K", Object.keys($scope.widget.content[parameter.key][lastIdx]),
+			"L", Object.keys($scope.widget.content[parameter.key][lastIdx]).length);
+		if (Object.keys($scope.widget.content[parameter.key][lastIdx]).length > 1) {
+			$scope.widget.content[parameter.key].push({});
+		}
+
+		return true;
+	};
 	$scope.widget = {
 		'name': '',
 		'template': '',

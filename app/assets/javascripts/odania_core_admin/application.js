@@ -17,7 +17,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require ckeditor/init
 //= require ./config
 //= require ./app
+//= require ../textangular/textAngular-sanitize.min
+//= require ../textangular/textAngular.min
+//= require ../textangular/textAngular-rangy.min
 //= require_tree .
