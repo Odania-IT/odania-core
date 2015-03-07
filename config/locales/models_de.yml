@@ -1,0 +1,7 @@
+de:
+  models:
+    site:
+      domain:
+        description: 'Es kann je Domain eine bevorzugte Subdomain geben. Falls man zu einer nicht definierten Subdomain für die Domain kommt wird der bevorzugte gewählt.'
+      subdomain:
+        description: 'Die Subdomain unter der Domain'

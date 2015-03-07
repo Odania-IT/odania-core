@@ -4,7 +4,8 @@
 	<thead>
 	<tr>
 		<th>Name</th>
-		<th>Host</th>
+		<th>Domain</th>
+		<th>Subdomain</th>
 		<th>Is active</th>
 		<th>Is default</th>
 		<th>Template</th>
@@ -20,7 +21,8 @@
 	<tbody>
 		<tr data-ng-repeat="site in sites">
 			<td>{{ site.name }}</td>
-			<td>{{ site.host }}</td>
+			<td>{{ site.domain }}</td>
+			<td>{{ site.subdomain }}</td>
 			<td>
 				<span data-ng-if="site.is_active"><span class="fa fa-check"></span></span>
 				<span data-ng-if="!site.is_active"><span class="fa fa-close"></span></span>

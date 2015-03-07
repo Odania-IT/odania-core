@@ -2,7 +2,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	before_action :verify_site, except: [:index, :create]
 
 	def index
-		@sites = Odania::Site.order('name ASC')
+		@sites = Odania::Site.order('domain ASC, subdomain ASC')
 	end
 
 	def show
@@ -49,7 +49,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	end
 
 	def site_params
-		params.require(:site).permit(:name, :host, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
+		params.require(:site).permit(:name, :domain, :subdomain, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
 														:default_from_email, :notify_email_address, :imprint, :terms_and_conditions,
 														:default_widget_id, :redirect_to_id, :template, :default_language_id, social: [:linked_in, :facebook, :google_plus, :twitter])
 	end

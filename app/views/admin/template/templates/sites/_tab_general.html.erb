@@ -7,11 +7,30 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-sm-2 control-label" for="site_host">Host</label>
+	<label class="col-sm-2 control-label" for="site_domain">Host</label>
 
 	<div class="col-sm-10">
-		<input type="text" id="site_host" class="form-control" data-ng-model="site.host" placeholder="www.odania-it.com"/>
-		<span data-ng-if="errors.host" style="color: red;">{{ printErrors(errors.host) }}</span>
+		http://{{ site.subdomain }}.{{ site.domain }}
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-2 control-label" for="site_domain">Domain</label>
+
+	<div class="col-sm-10">
+		<input type="text" id="site_domain" class="form-control" data-ng-model="site.domain" placeholder="odania-it.com"/>
+		<span data-ng-if="errors.domain" style="color: red;">{{ printErrors(errors.domain) }}</span>
+
+		<p class="help-block"><%= t('models.site.domain.description') %></p>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-2 control-label" for="site_subdomain">Subdomain</label>
+
+	<div class="col-sm-10">
+		<input type="text" id="site_subdomain" class="form-control" data-ng-model="site.subdomain" placeholder="www"/>
+		<span data-ng-if="errors.subdomain" style="color: red;">{{ printErrors(errors.subdomain) }}</span>
+
+		<p class="help-block"><%= t('models.site.subdomain.description') %></p>
 	</div>
 </div>
 
