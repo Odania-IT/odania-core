@@ -9,7 +9,7 @@ class Odania::ContentsController < ApplicationController
 			@odania_contents = @odania_contents.joins(:tags).where(odania_tag_xrefs: {tag_id: odania_tag.id}) unless odania_tag.nil?
 		end
 
-		@odania_contents = @odania_contents.where(language_id: current_menu.language_id).order('created_at DESC')
+		@odania_contents = @odania_contents.where(language_id: current_menu.language_id).order('created_at DESC').page(params[:page])
 	end
 
 	def show

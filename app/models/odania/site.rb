@@ -2,6 +2,8 @@ module Odania
 	class Site < ActiveRecord::Base
 		include Odania::Taggable::TagCount
 
+		serialize :social, JSON
+
 		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
 		has_many :menus, :class_name => 'Odania::Menu'

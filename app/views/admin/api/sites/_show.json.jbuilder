@@ -14,6 +14,7 @@ json.notify_email_address site.notify_email_address
 json.imprint site.imprint
 json.terms_and_conditions site.terms_and_conditions
 json.default_widget_id site.default_widget_id
+json.social site.social
 
 json.menus site.menus, partial: 'admin/api/menus/show', as: :menu
 json.languages site.menus.pluck(:language_id)

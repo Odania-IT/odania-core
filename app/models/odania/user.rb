@@ -11,4 +11,12 @@ class Odania::User < ActiveRecord::Base
 		role = self.roles.where(role: Odania::UserRole.roles[:admin]).first
 		role.nil? ? false : true
 	end
+
+	before_create do
+		language = Odania::Language.where(iso_639_1: I18n.locale.to_s).first
+		language = Odania::Language.first if language.nil?
+		self.language_id = language.id
+
+		true
+	end
 end
