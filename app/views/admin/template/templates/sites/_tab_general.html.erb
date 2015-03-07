@@ -2,7 +2,7 @@
 	<label class="col-sm-2 control-label" for="site_name">Name</label>
 
 	<div class="col-sm-10">
-		<input type="text" id="site_name" data-ng-model="site.name" placeholder="Site Name"/>
+		<input type="text" id="site_name" class="form-control" data-ng-model="site.name" placeholder="Site Name"/>
 		<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
 	</div>
 </div>
@@ -10,7 +10,7 @@
 	<label class="col-sm-2 control-label" for="site_host">Host</label>
 
 	<div class="col-sm-10">
-		<input type="text" id="site_host" data-ng-model="site.host" placeholder="www.odania-it.com"/>
+		<input type="text" id="site_host" class="form-control" data-ng-model="site.host" placeholder="www.odania-it.com"/>
 		<span data-ng-if="errors.host" style="color: red;">{{ printErrors(errors.host) }}</span>
 	</div>
 </div>
@@ -19,7 +19,7 @@
 	<label class="col-sm-2 control-label">Languages / Menus</label>
 
 	<div class="col-sm-10">
-		<div data-ng-repeat="language in languages">
+		<div data-ng-repeat="language in languages" class="form-control">
 			<input type="checkbox" name="selectedLanguages[]" value="{{language.id}}" ng-checked="site.languages.indexOf(language.id) > -1"
 					 data-ng-click="toggleLanguageSelection(language.id)"> {{language.name}}
 		</div>
@@ -30,7 +30,7 @@
 	<label class="col-sm-2 control-label">Redirect to</label>
 
 	<div class="col-sm-10">
-		<select data-ng-model="site.redirect_to_id">
+		<select data-ng-model="site.redirect_to_id" class="form-control">
 			<option data-ng-repeat="site in sites" value="{{ site.id }}">{{ site.name }}</option>
 		</select>
 	</div>
@@ -39,7 +39,7 @@
 	<label class="col-sm-2 control-label">Template</label>
 
 	<div class="col-sm-10">
-		<select data-ng-model="site.template">
+		<select data-ng-model="site.template" class="form-control">
 			<option data-ng-repeat="template in admin.templates" value="{{ template.template }}">{{ template.name
 				}}
 			</option>
@@ -64,7 +64,7 @@
 	<label class="col-sm-2 control-label">Default Widget</label>
 
 	<div class="col-sm-10">
-		<select data-ng-model="site.default_widget_id" ng-options="widget.id as widget.name for widget in data.widgets"></select>
+		<select data-ng-model="site.default_widget_id" class="form-control" ng-options="widget.id as widget.name for widget in data.widgets"></select>
 		<span data-ng-if="errors.default_widget_id" style="color: red;">{{ printErrors(errors.default_widget_id) }}</span>
 	</div>
 </div>

@@ -1,5 +1,18 @@
 @import "bootstrap";
+@import "font-awesome";
 
 .navbar-static-top {
 	margin-bottom: 19px;
+}
+
+.social {
+	text-align: center;
+
+	a {
+		margin-right: 20px;
+
+		i {
+			font-size: 1.6em;
+		}
+	}
 }
