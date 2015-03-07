@@ -1,6 +1,6 @@
 class CreateStaticPages < ActiveRecord::Migration
 	def change
-		create_table :static_pages do |t|
+		create_table :odania_static_pages do |t|
 			t.string :title
 			t.text :body
 			t.integer :clicks
