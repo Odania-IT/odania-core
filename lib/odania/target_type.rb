@@ -4,7 +4,7 @@ module Odania
 		@@targets = Hash.new
 		@@targets['CONTENT'] = {type: 'CONTENT', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_id',
 										render_func: 'render_content', selector: 'admin/odania/contents/choose_content',
-										initial_data: 'admin/api/menu_items/inital_data'}
+										initial_data: 'admin/api/menu_items/initial_data'}
 		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
 										render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list',
 										initial_data: 'admin/api/menu_items/empty_inital_data'}
