@@ -5,7 +5,7 @@
 		<label class="col-sm-2 control-label">Name</label>
 
 		<div class="col-sm-10">
-			<input type="text" data-ng-model="widget.name" placeholder="Site Name"/>
+			<input type="text" data-ng-model="widget.name" class="form-control" placeholder="Widget Name"/>
 			<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
 		</div>
 	</div>
@@ -13,7 +13,7 @@
 		<label class="col-sm-2 control-label">Template</label>
 
 		<div class="col-sm-10">
-			<select data-ng-model="widget.template" data-ng-change="selectWidget()">
+			<select data-ng-model="widget.template" data-ng-change="selectWidget()" class="form-control">
 				<option data-ng-repeat="widget in admin.widgets" value="{{ widget.template }}">{{ widget.description }}</option>
 			</select>
 			<span data-ng-if="errors.template" style="color: red;">{{ printErrors(errors.template) }}</span>
@@ -25,7 +25,7 @@
 			<label class="col-sm-2 control-label">{{ parameter.name }}</label>
 			{{ parameter }}
 
-			<div class="col-sm-10" data-ng-init="param = widget.content[parameter.key];">
+			<div class="col-sm-10" data-ng-init="param = widget.content[parameter.key];" class="form-control">
 				<% Odania::widget_includes.each do |include| %>
 					<%= render partial: include %>
 				<% end %>
@@ -47,8 +47,7 @@
 		<label class="col-sm-2 control-label">Language</label>
 
 		<div class="col-sm-10">
-			<select data-ng-model="widget.language_id" data-ng-options="language.id as language.iso_639_1 for language in languages">
-			</select>
+			<select data-ng-model="widget.language_id" data-ng-options="language.id as language.iso_639_1 for language in languages" class="form-control">			</select>
 			<span data-ng-if="errors.language_id" style="color: red;">{{ printErrors(errors.language_id) }}</span>
 		</div>
 	</div>
