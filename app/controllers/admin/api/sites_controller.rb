@@ -7,6 +7,7 @@ class Admin::Api::SitesController < Admin::ApiController
 
 	def show
 		@widgets = Odania::Widget.where(site_id: @site.id)
+		@static_pages = Odania::StaticPage.where('site_id = ? OR is_global = ?', @site.id, true)
 	end
 
 	def create

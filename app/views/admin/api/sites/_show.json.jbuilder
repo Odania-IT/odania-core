@@ -13,8 +13,8 @@ json.default_language_id site.default_language_id
 json.redirect_to_id site.redirect_to_id
 json.default_from_email site.default_from_email
 json.notify_email_address site.notify_email_address
-json.imprint site.imprint
-json.terms_and_conditions site.terms_and_conditions
+json.imprint_id site.imprint_id
+json.terms_and_conditions_id site.terms_and_conditions_id
 json.default_widget_id site.default_widget_id
 json.social site.social
 

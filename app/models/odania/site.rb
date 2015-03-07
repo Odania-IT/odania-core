@@ -15,6 +15,9 @@ module Odania
 		has_many :tags, class_name: 'Odania::Tag'
 		has_many :widgets, class_name: 'Odania::Widget'
 
+		belongs_to :imprint, class_name: 'Odania::StaticPage'
+		belongs_to :terms_and_conditions, class_name: 'Odania::StaticPage'
+
 		scope :active, -> { where(is_active: true) }
 
 		validates_uniqueness_of :host, :name
