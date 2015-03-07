@@ -3,6 +3,8 @@ class Odania::Widget < ActiveRecord::Base
 
 	serialize :content, Hash
 
+	validates_length_of :name, minimum: 1
+
 	before_create do
 		self.is_global = false if self.is_global.nil?
 

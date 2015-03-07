@@ -79,8 +79,9 @@ module Odania
 	# Registered Widgets
 	# Widgets are available for display in side bar
 	mattr_accessor :widget_includes
-	@@widget_includes = Set.new
-	@@widget_includes << 'admin/odania/widgets/content'
+	@@widget_includes = {simple: Set.new, array: Set.new}
+	@@widget_includes[:simple] << 'admin/odania/widgets/content_simple'
+	@@widget_includes[:array] << 'admin/odania/widgets/content_array'
 
 	mattr_accessor :widgets
 	@@widgets = Set.new
@@ -102,7 +103,7 @@ module Odania
 		]
 	}
 	@@widgets << {
-		template: 'odania/components/display_sites',
+		template: 'odania/widgets/display_sites',
 		description: 'Display specified sites',
 		is_array: true,
 		parameters: [
@@ -112,7 +113,7 @@ module Odania
 		]
 	}
 	@@widgets << {
-		template: 'odania/components/display_links',
+		template: 'odania/widgets/display_links',
 		description: 'Display specified links',
 		is_array: true,
 		parameters: [

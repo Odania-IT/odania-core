@@ -1,6 +1,5 @@
 <div class="container-fluid" data-ng-controller="SideMenuController">
 	<div data-ng-if="currentSite">
-		{{ current }}
 		<%= t('admin.menu.selected_site') %>:
 		<select data-ng-model="current.siteId" data-ng-change="changedSite()" data-ng-options="site.id as site.name for site in sites"></select>
 

@@ -14,4 +14,4 @@ This project rocks and uses MIT-LICENSE.
 - Template & Widget Registry
 - Templates as simple folder (manage via upload, pull from registry)
 - Add documentation
-
+- Loading indicator

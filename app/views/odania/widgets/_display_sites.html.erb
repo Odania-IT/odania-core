@@ -1,0 +1,10 @@
+<div class="widget">
+	<ul>
+	<% content[:sites].each do |site_data|
+		site = Odania::Site.where(id: site_data['site']).first
+		unless site.nil? %>
+			<li><%= link_to site.name, "http://#{site.host}" %></li>
+		<% end %>
+	<% end %>
+	</ul>
+</div>

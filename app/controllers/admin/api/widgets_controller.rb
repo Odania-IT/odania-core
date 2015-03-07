@@ -2,7 +2,7 @@ class Admin::Api::WidgetsController < Admin::ApiController
 	before_action :verify_widget, except: [:index, :create]
 	
 	def index
-		@widgets = Odania::Widget.where(site_id: params[:site_id]).order('created_at DESC')
+		@widgets = Odania::Widget.where('(site_id = ? OR is_global = ?) AND language_id = ?', params[:site_id], true, params[:language_id]).order('created_at DESC')
 	end
 
 	def show
@@ -47,16 +47,14 @@ class Admin::Api::WidgetsController < Admin::ApiController
 	end
 
 	def widget_params
-		params.require(:widget).permit(:site_id, :template, :name, :content, :language_id)
+		params.require(:widget).permit(:site_id, :template, :name, :content, :language_id, :is_global)
 	end
 
 	def set_content
 		Odania::widgets.each do |widget|
 			if widget[:template].eql? params[:widget][:template]
 				if widget[:is_array]
-					@widget.content = {
-						data: params[:widget][:contents]
-					}
+					@widget.content = params[:widget][:content]
 				else
 					@widget.content = params[:widget][:content]
 				end

@@ -7,14 +7,9 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 			$scope.widget.name = data.name;
 			$scope.widget.template = data.template;
 			$scope.widget.content = data.content;
-			$scope.widget.contents = {};
+			$scope.widget.is_global = data.is_global;
 
 			selectWidget();
-
-			if ($scope.selectedWidget.is_array) {
-				$scope.widget.contents = data.content.data;
-				$scope.widget.content.data = null;
-			}
 		});
 	}
 
@@ -51,10 +46,6 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 
 	$scope.saveWidget = saveWidget;
 	$scope.selectWidget = selectWidget;
-	$scope.addContents = function () {
-		$scope.widget.contents.push({});
-		console.log($scope.widget);
-	};
 	$scope.prepareKey = function (parameter) {
 		console.warn('parameter', parameter, $scope.widget.content[parameter.key]);
 
@@ -68,9 +59,6 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 			return true;
 		}
 
-		console.warn('lastIdx', lastIdx, $scope.widget.content[parameter.key][lastIdx],
-			"K", Object.keys($scope.widget.content[parameter.key][lastIdx]),
-			"L", Object.keys($scope.widget.content[parameter.key][lastIdx]).length);
 		if (Object.keys($scope.widget.content[parameter.key][lastIdx]).length > 1) {
 			$scope.widget.content[parameter.key].push({});
 		}
@@ -80,10 +68,9 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 	$scope.widget = {
 		'name': '',
 		'template': '',
+		'language_id': $rootScope.currentMenu.language_id,
 		'content': {},
-		'contents': [
-			{}
-		]
+		'is_global': false
 	};
 
 	if ($routeParams.id) {

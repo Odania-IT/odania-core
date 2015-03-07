@@ -1,0 +1,7 @@
+<div class="widget">
+	<ul>
+	<% content[:links].each do |link_data| %>
+		<li><%= link_to link_data['name'], link_data['url'], {target: '_blank'} %></li>
+	<% end %>
+	</ul>
+</div>

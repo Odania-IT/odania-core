@@ -1,64 +1,79 @@
-<h1>Editing widget</h1>
-
 <form class="form-horizontal" role="form">
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Name</label>
+	<div class="row-fluid">
+		<div class="col-md-9">
+			<h1>Editing widget</h1>
 
-		<div class="col-sm-10">
-			<input type="text" data-ng-model="widget.name" class="form-control" placeholder="Widget Name"/>
-			<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Template</label>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Name</label>
 
-		<div class="col-sm-10">
-			<select data-ng-model="widget.template" data-ng-change="selectWidget()" class="form-control">
-				<option data-ng-repeat="widget in admin.widgets" value="{{ widget.template }}">{{ widget.description }}</option>
-			</select>
-			<span data-ng-if="errors.template" style="color: red;">{{ printErrors(errors.template) }}</span>
-		</div>
-	</div>
+				<div class="col-sm-10">
+					<input type="text" data-ng-model="widget.name" class="form-control" placeholder="Widget Name"/>
+					<span data-ng-if="errors.name" style="color: red;">{{ printErrors(errors.name) }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Template</label>
 
-	<div data-ng-repeat="parameter in selectedWidget.parameters">
-		<div class="form-group">
-			<label class="col-sm-2 control-label">{{ parameter.name }}</label>
-			{{ parameter }}
+				<div class="col-sm-10">
+					<select data-ng-model="widget.template" data-ng-change="selectWidget()" class="form-control">
+						<option data-ng-repeat="widget in admin.widgets" value="{{ widget.template }}">{{ widget.description
+							}}
+						</option>
+					</select>
+					<span data-ng-if="errors.template" style="color: red;">{{ printErrors(errors.template) }}</span>
+				</div>
+			</div>
 
-			<div class="col-sm-10" data-ng-init="param = widget.content[parameter.key];" class="form-control">
-				<% Odania::widget_includes.each do |include| %>
-					<%= render partial: include %>
-				<% end %>
+			<div data-ng-repeat="parameter in selectedWidget.parameters">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">{{ parameter.name }}</label>
 
-				<div data-ng-if="parameter.type == 'array'">
-					<div data-ng-repeat="parameter in parameter.fields" data-ng-if="prepareKey(parameter)">
-						<div data-ng-repeat="row in widget.content[parameter.key]" data-ng-init="param = row[parameter.key];">
-							<% Odania::widget_includes.each do |include| %>
-								<%= render partial: include %>
-							<% end %>
+					<div class="col-sm-10" class="form-control">
+						<% Odania.widget_includes[:simple].each do |include| %>
+							<%= render partial: include %>
+						<% end %>
+
+						<div data-ng-if="parameter.type == 'array' && prepareKey(parameter)">
+							<div data-ng-repeat="row in widget.content[parameter.key]" data-ng-init="idx = $index;">
+								<p>
+								<b>{{ idx }}</b>
+
+								<div data-ng-repeat="field in parameter.fields">
+									<% Odania.widget_includes[:array].each do |include| %>
+										<%= render partial: include %>
+									<% end %>
+								</div>
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button data-ng-click="saveWidget()" class="btn btn-primary">Save</button>
 
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Language</label>
+					<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+				</div>
+			</div>
 
-		<div class="col-sm-10">
-			<select data-ng-model="widget.language_id" data-ng-options="language.id as language.iso_639_1 for language in languages" class="form-control">			</select>
-			<span data-ng-if="errors.language_id" style="color: red;">{{ printErrors(errors.language_id) }}</span>
-		</div>
-	</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Language</label>
 
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<button data-ng-click="saveWidget()" class="btn btn-primary">Save</button>
+				<div class="col-sm-10">
+					{{ getLanguage(widget.language_id).iso_639_1 }}
+				</div>
+			</div>
 
-			<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Is Global</label>
+
+				<div class="col-sm-10">
+					<input type="checkbox" data-ng-model="widget.is_global">
+				</div>
+			</div>
 		</div>
 	</div>
 </form>
-
-<a data-ng-href="#/widgets">Back</a>
