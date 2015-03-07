@@ -5,7 +5,7 @@ module OdaniaTestMock
 	mattr_accessor :mock_current_user
 
 	def self.current_user
-		user = Odania::User.where(name: 'Admin', email: 'mail@example.com').first_or_create
+		user = Odania::User.where(name: 'Admin', email: 'mail@example.com', language_id: 1).first_or_create
 
 		if user.id.nil?
 			user.save!
