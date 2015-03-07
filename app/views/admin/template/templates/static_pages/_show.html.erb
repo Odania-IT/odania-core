@@ -1,0 +1,26 @@
+<p>
+	<strong>Title:</strong>
+	{{ staticPage.title }}
+</p>
+
+<p>
+	<strong>Body:</strong>
+	{{ staticPage.body }}
+</p>
+
+<p>
+	<strong>Body short:</strong>
+	{{ staticPage.body_short }}
+</p>
+
+<p>
+	<strong>Publish at:</strong>
+	{{ staticPage.published_at }}
+</p>
+
+<p>
+	<strong>Language:</strong>
+	{{ staticPage.language_id }}
+</p>
+
+<a data-ng-href="#/contents/{{ staticPage.id }}/edit">Edit</a> | <a data-ng-href="#/static_pages">Back</a>

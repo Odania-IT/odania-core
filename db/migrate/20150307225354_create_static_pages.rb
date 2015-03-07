@@ -9,6 +9,7 @@ class CreateStaticPages < ActiveRecord::Migration
 			t.integer :language_id
 			t.integer :user_id
 			t.integer :widget_id
+			t.boolean :is_global
 			t.timestamps null: false
 		end
 	end

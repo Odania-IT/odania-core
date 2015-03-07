@@ -35,5 +35,10 @@ module Odania
 		@@pages[:site] << {name: 'New Widgets', in_menu: false, path: '/widgets/new', controller: 'EditWidgetController', template: 'widgets/edit'}
 		@@pages[:site] << {name: 'Show Widgets', in_menu: false, path: '/widgets/:id', controller: 'WidgetController', template: 'widgets/show'}
 		@@pages[:site] << {name: 'Edit Widgets', in_menu: false, path: '/widgets/:id/edit', controller: 'EditWidgetController', template: 'widgets/edit'}
+
+		@@pages[:site] << {name: 'Static Pages', in_menu: true, path: '/static_pages', controller: 'StaticPagesController', template: 'static_pages/index'}
+		@@pages[:site] << {name: 'New Static Pages', in_menu: false, path: '/static_pages/new', controller: 'EditStaticPageController', template: 'static_pages/edit'}
+		@@pages[:site] << {name: 'Show Static Pages', in_menu: false, path: '/static_pages/:id', controller: 'StaticPageController', template: 'static_pages/show'}
+		@@pages[:site] << {name: 'Edit Static Pages', in_menu: false, path: '/static_pages/:id/edit', controller: 'EditStaticPageController', template: 'static_pages/edit'}
 	end
 end

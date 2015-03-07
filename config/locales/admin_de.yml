@@ -57,3 +57,6 @@ de:
       edit_site:
         description:
           placeholder: 'Beschreibung'
+      create_static_page:
+        body:
+          placeholder: 'Inhalt'

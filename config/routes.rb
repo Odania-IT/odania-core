@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 			resources :sites, except: [:new, :edit] do
 				resources :menus, except: [:new, :edit] do
 					resources :contents, except: [:new, :edit]
+					resources :static_pages, except: [:new, :edit]
 					resources :menu_items, except: [:new, :edit] do
 						collection do
 							get :initial_data
