@@ -18,7 +18,7 @@ app.controller('EditStaticPageController', ['$location', '$scope', '$rootScope',
 	}
 
 	function onSaveSuccess() {
-		$location.path('/contents');
+		$location.path('/static_pages');
 	}
 
 	function onSaveError(data) {
@@ -27,11 +27,11 @@ app.controller('EditStaticPageController', ['$location', '$scope', '$rootScope',
 	}
 
 	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
-		$location.path('/contents');
+		$location.path('/static_pages');
 	});
 
 	$rootScope.$on(eventTypeProvider.INTERNAL_MENU_CHANGED, function processEvent() {
-		$location.path('/contents');
+		$location.path('/static_pages');
 	});
 
 	$scope.saveStaticPage = saveStaticPage;

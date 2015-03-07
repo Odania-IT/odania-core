@@ -11,11 +11,11 @@ app.controller('StaticPagesController', ['$rootScope', '$scope', 'StaticPageReso
 				$scope.staticPages = data.static_pages;
 			});
 		} else {
-			$scope.contents = [];
+			$scope.staticPages = [];
 		}
 	}
 
-	function deleteContent(id) {
+	function deleteStaticPage(id) {
 		StaticPageResource.delete({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function () {
 			loadStaticPages();
 		});
@@ -29,8 +29,8 @@ app.controller('StaticPagesController', ['$rootScope', '$scope', 'StaticPageReso
 		loadStaticPages();
 	});
 
-	$scope.deleteContent = deleteContent;
-	$scope.contents = [];
+	$scope.deleteStaticPage = deleteStaticPage;
+	$scope.staticPages = [];
 
 	loadStaticPages();
 }]);

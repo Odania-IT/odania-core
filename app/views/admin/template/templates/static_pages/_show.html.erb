@@ -9,13 +9,8 @@
 </p>
 
 <p>
-	<strong>Body short:</strong>
-	{{ staticPage.body_short }}
-</p>
-
-<p>
-	<strong>Publish at:</strong>
-	{{ staticPage.published_at }}
+	<strong>Is global:</strong>
+	{{ staticPage.is_global }}
 </p>
 
 <p>
@@ -23,4 +18,4 @@
 	{{ staticPage.language_id }}
 </p>
 
-<a data-ng-href="#/contents/{{ staticPage.id }}/edit">Edit</a> | <a data-ng-href="#/static_pages">Back</a>
+<a data-ng-href="#/static_pages/{{ staticPage.id }}/edit">Edit</a> | <a data-ng-href="#/static_pages">Back</a>

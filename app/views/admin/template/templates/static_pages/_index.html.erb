@@ -15,10 +15,13 @@
 	<tbody>
 	<tr data-ng-repeat="staticPage in staticPages">
 		<td>{{ staticPage.title }}</td>
-		<td>{{ staticPage.is_global }}</td>
+		<td>
+			<span data-ng-if="staticPage.is_global"><span class="fa fa-check"></span></span>
+			<span data-ng-if="!staticPage.is_global"><span class="fa fa-close"></span></span>
+		</td>
 		<td>{{ getLanguage(staticPage.language_id).iso_639_1 }}</td>
-		<td><a data-ng-href="#/contents/{{ staticPage.id }}">Show</a></td>
-		<td><a data-ng-href="#/contents/{{ staticPage.id }}/edit">Edit</a></td>
+		<td><a data-ng-href="#/static_pages/{{ staticPage.id }}">Show</a></td>
+		<td><a data-ng-href="#/static_pages/{{ staticPage.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteStaticPage(staticPage.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 	</tr>
 	</tbody>
