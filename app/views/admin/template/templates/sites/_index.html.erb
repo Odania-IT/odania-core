@@ -22,12 +22,12 @@
 			<td>{{ site.name }}</td>
 			<td>{{ site.host }}</td>
 			<td>
-				<span data-ng-if="site.is_active"><span class="glyphicon glyphicon-ok"></span></span>
-				<span data-ng-if="!site.is_active"><span class="glyphicon glyphicon-remove"></span></span>
+				<span data-ng-if="site.is_active"><span class="fa fa-check"></span></span>
+				<span data-ng-if="!site.is_active"><span class="fa fa-close"></span></span>
 			</td>
 			<td>
-				<span data-ng-if="site.is_default"><span class="glyphicon glyphicon-ok"></span></span>
-				<span data-ng-if="!site.is_default"><span class="glyphicon glyphicon-remove"></span></span>
+				<span data-ng-if="site.is_default"><span class="fa fa-check"></span></span>
+				<span data-ng-if="!site.is_default"><span class="fa fa-close"></span></span>
 			</td>
 			<td>{{ site.template }}</td>
 			<td>{{ getLanguage(site.default_language_id).iso_639_1 }}</td>
