@@ -1,3 +1,5 @@
+require 'uri'
+
 module Odania
 	class Site < ActiveRecord::Base
 		include Odania::Taggable::TagCount
@@ -83,6 +85,7 @@ module Odania
 			self.tracking_code = '' if self.tracking_code.nil?
 			self.imprint = '' if self.imprint.nil?
 			self.terms_and_conditions = '' if self.terms_and_conditions.nil?
+			self.host = "#{self.subdomain}.#{self.domain}"
 
 			true
 		end

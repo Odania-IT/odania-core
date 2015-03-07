@@ -1,6 +1,8 @@
 json.id site.id
 json.name site.name
 json.host site.host
+json.domain site.domain
+json.subdomain site.subdomain
 json.is_active site.is_active
 json.is_default site.is_default
 json.tracking_code site.tracking_code
