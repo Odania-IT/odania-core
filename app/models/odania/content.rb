@@ -33,4 +33,11 @@ class Odania::Content < ActiveRecord::Base
 
 		true
 	end
+
+	before_create do
+		self.views = 0 if self.views.nil?
+		self.clicks = 0 if self.clicks.nil?
+
+		true
+	end
 end

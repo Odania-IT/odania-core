@@ -18,4 +18,11 @@ class Odania::StaticPage < ActiveRecord::Base
 			errors.add(:widget_id, 'invalid widget')
 		end
 	end
+
+	before_create do
+		self.views = 0 if self.views.nil?
+		self.clicks = 0 if self.clicks.nil?
+
+		true
+	end
 end
