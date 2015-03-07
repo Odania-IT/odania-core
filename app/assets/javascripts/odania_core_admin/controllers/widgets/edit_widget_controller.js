@@ -2,12 +2,14 @@ app.controller('EditWidgetController', ['$location', '$scope', '$rootScope', 'Wi
 	console.log("controller :: EditWidgetController");
 	var widgetId = null;
 
+	WidgetResource.get({siteId: $rootScope.currentSite.id, language_id: $rootScope.currentMenu.language_id}).$promise.then(function (data) {
+		console.warn(data);
+		$scope.widgets = data.widgets;
+	});
+
 	function loadWidget(id) {
 		WidgetResource.get({siteId: $rootScope.currentSite.id, id: id}).$promise.then(function (data) {
-			$scope.widget.name = data.name;
-			$scope.widget.template = data.template;
-			$scope.widget.content = data.content;
-			$scope.widget.is_global = data.is_global;
+			$scope.widget = data;
 
 			selectWidget();
 		});

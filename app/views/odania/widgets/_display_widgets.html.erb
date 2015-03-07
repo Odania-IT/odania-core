@@ -1,0 +1,6 @@
+<% content[:widgets].each do |widget| %>
+	<% if widget['widget_id'] %>
+		<%= render partial: 'odania/widgets/show', locals: {widget_id: widget['widget_id']} %>
+	<% end %>
+<% end %>
+

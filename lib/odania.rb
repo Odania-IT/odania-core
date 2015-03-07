@@ -123,6 +123,16 @@ module Odania
 			]}
 		]
 	}
+	@@widgets << {
+		template: 'odania/widgets/display_widgets',
+		description: 'Display specified widgets',
+		is_array: true,
+		parameters: [
+			{name: 'Widgets', key: 'widgets', type: 'array', fields: [
+				{name: 'Widget', key: 'widget_id', type: 'widget'}
+			]}
+		]
+	}
 
 	def self.widgets_for_select
 		result = []
