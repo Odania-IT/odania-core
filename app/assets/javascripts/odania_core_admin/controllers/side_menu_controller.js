@@ -1,9 +1,10 @@
-app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider', function ($rootScope, $scope, eventTypeProvider) {
+app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider', 'localStorageService', function ($rootScope, $scope, eventTypeProvider, localStorageService) {
 	console.log("controller :: SideMenuController");
 	var resolved = false;
 
 	function changedSite() {
 		console.warn("changedSite");
+		updateLocalStorageData();
 		for (var i = 0; i < $rootScope.sites.length; i++) {
 			if ($rootScope.sites[i].id == $scope.current.siteId) {
 				$rootScope.currentSite = $rootScope.sites[i];
@@ -11,6 +12,8 @@ app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider
 
 				if ($rootScope.currentMenu) {
 					$scope.current.menuId = $rootScope.currentMenu.id;
+
+					updateLocalStorageData();
 				}
 
 				$rootScope.$broadcast(eventTypeProvider.INTERNAL_SITE_CHANGED);
@@ -21,6 +24,8 @@ app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider
 	}
 
 	function changedMenu() {
+		updateLocalStorageData();
+
 		console.warn("changedMenu");
 		for (var i = 0; i < $rootScope.currentSite.menus.length; i++) {
 			if ($rootScope.currentSite.menus[i].id == $scope.current.menuId) {
@@ -40,10 +45,12 @@ app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider
 		if ($rootScope.currentSite) {
 			console.log("Setting Site", $rootScope.currentSite);
 			$scope.current.siteId = $rootScope.currentSite.id;
+			updateLocalStorageData();
 		}
 		if ($rootScope.currentMenu) {
 			console.log("Setting Menu", $rootScope.currentMenu);
 			$scope.current.menuId = $rootScope.currentMenu.id;
+			updateLocalStorageData();
 		}
 
 		resolved = true;
@@ -53,12 +60,18 @@ app.controller('SideMenuController', ['$rootScope', '$scope', 'eventTypeProvider
 		if ($rootScope.currentMenu) {
 			console.log("Setting Menu Watch", $rootScope.currentMenu);
 			$scope.current.menuId = $rootScope.currentMenu.id;
+			updateLocalStorageData();
 		}
 	});
 
+	function updateLocalStorageData() {
+		localStorageService.set('siteId', parseInt($scope.current.siteId));
+		localStorageService.set('menuId', parseInt($scope.current.menuId));
+	}
+
 	$scope.current = {
-		'siteId': null,
-		'menuId': null
+		'siteId': localStorageService.get('siteId'),
+		'menuId': localStorageService.get('menuId')
 	};
 	$scope.changedSite = changedSite;
 	$scope.changedMenu = changedMenu;

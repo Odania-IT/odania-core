@@ -1,15 +1,10 @@
 <div class="container-fluid" data-ng-controller="SideMenuController">
 	<div data-ng-if="currentSite">
+		{{ current }}
 		<%= t('admin.menu.selected_site') %>:
-		<select data-ng-model="current.siteId" data-ng-change="changedSite()">
-			<option data-ng-repeat="site in sites" value="{{ site.id }}">{{ site.name }}</option>
-		</select>
+		<select data-ng-model="current.siteId" data-ng-change="changedSite()" data-ng-options="site.id as site.name for site in sites"></select>
 
-		<select data-ng-model="current.menuId" data-ng-change="changedMenu()">
-			<option data-ng-repeat="menu in currentSite.menus" value="{{ menu.id }}">{{
-				getLanguage(menu.language_id).iso_639_1 }}
-			</option>
-		</select>
+		<select data-ng-model="current.menuId" data-ng-change="changedMenu()" data-ng-options="menu.id as getLanguage(menu.language_id).iso_639_1 for menu in currentSite.menus"></select>
 
 		&nbsp;&nbsp;<a href="#/sites/{{ current.siteId }}/edit">Edit</a>
 	</div>

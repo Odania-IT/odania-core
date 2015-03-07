@@ -7,3 +7,4 @@ json.name widget.name
 json.content widget.content
 json.created_at widget.created_at.to_i
 json.updated_at widget.updated_at.to_i
+json.is_global widget.is_global

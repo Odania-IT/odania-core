@@ -13,10 +13,39 @@ app.config(['$routeProvider', function ($routeProvider) {
 					$rootScope.admin = data.admin;
 
 					if (!resolved) {
-						if (data.sites[0]) {
-							console.log("INIT SITE & MENU", data.sites[0]);
-							$rootScope.currentSite = data.sites[0];
-							$rootScope.currentMenu = data.sites[0].menus[0];
+						if (data.sites.length > 0) {
+							console.log("INIT SITE & MENU");
+
+							var siteId = localStorage.siteId,
+								menuId = localStorage.menuId,
+								site, menu;
+
+							if (siteId) {
+								for (var i=0 ; i<data.sites.length ; i++) {
+									site = data.sites[i];
+
+									if (site.id == siteId) {
+										$rootScope.currentSite = site;
+										console.log('Switched back to site', site);
+
+										for (var j=0 ; j<site.menus.length ; j++) {
+											menu = site.menus[j];
+
+											if (menu.id == menuId) {
+												$rootScope.currentMenu = menu;
+												console.log('Switched back to menu', menu);
+											}
+										}
+									}
+								}
+							}
+
+							if (!$rootScope.currentSite) {
+								$rootScope.currentSite = data.sites[0];
+							}
+							if (!$rootScope.currentMenu) {
+								$rootScope.currentMenu = $rootScope.currentSite.menus[0];
+							}
 							resolved = true;
 						}
 					}
