@@ -42,7 +42,7 @@ class Admin::Api::StaticPagesController < Admin::ApiController
 	private
 
 	def verify_content
-		@static_page = Odania::StaticPage.where(site_id: params[:site_id], language_id: @menu.language_id, id: params[:id]).first
+		@static_page = Odania::StaticPage.where('id = ? AND (site_id = ? OR is_global = ?) AND language_id = ?', params[:id], params[:site_id], true, @menu.language_id).first
 		bad_api_request('resource_not_found') if @static_page.nil?
 	end
 

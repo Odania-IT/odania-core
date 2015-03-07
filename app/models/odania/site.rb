@@ -86,8 +86,6 @@ module Odania
 		before_save do
 			self.is_active = true if self.is_active.nil?
 			self.tracking_code = '' if self.tracking_code.nil?
-			self.imprint = '' if self.imprint.nil?
-			self.terms_and_conditions = '' if self.terms_and_conditions.nil?
 			self.host = "#{self.subdomain}.#{self.domain}"
 
 			true
