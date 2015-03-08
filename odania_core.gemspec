@@ -35,4 +35,5 @@ Gem::Specification.new do |s|
 	s.add_dependency 'jbuilder'
 	s.add_dependency 'responders', '~> 2.0'
 	s.add_dependency 'font-awesome-rails'
+	s.add_dependency 'uglifier', '>= 1.3.0'
 end

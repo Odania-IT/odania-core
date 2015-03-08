@@ -15,6 +15,7 @@ require 'angular-ui-bootstrap-rails'
 require 'jbuilder'
 require 'responders'
 require 'font-awesome-rails'
+require 'uglifier'
 
 # Require internals
 require 'odania'
