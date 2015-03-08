@@ -1,76 +1,106 @@
 var app = angular.module('odaniaPortalAdmin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'textAngular']);
 
-app.config(['$routeProvider', function ($routeProvider) {
+app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 	console.log('config :: init');
 	var resolved = false;
 
 	var resolve = {
-			'bootstrap': ['$rootScope', 'resolveService', 'eventTypeProvider', function ($rootScope, resolveService, eventTypeProvider) {
-				return resolveService.resolveBootstrap().then(function (data) {
-					console.log("bootstrap-data", data);
-					$rootScope.sites = data.sites;
-					$rootScope.languages = data.languages;
-					$rootScope.admin = data.admin;
+		'bootstrap': ['$rootScope', 'resolveService', 'eventTypeProvider', function ($rootScope, resolveService, eventTypeProvider) {
+			return resolveService.resolveBootstrap().then(function (data) {
+				console.log("bootstrap-data", data);
+				$rootScope.sites = data.sites;
+				$rootScope.languages = data.languages;
+				$rootScope.admin = data.admin;
 
-					if (!resolved) {
-						if (data.sites.length > 0) {
-							console.log("INIT SITE & MENU");
+				if (!resolved) {
+					if (data.sites.length > 0) {
+						console.log("INIT SITE & MENU");
 
-							var siteId = localStorage.siteId,
-								menuId = localStorage.menuId,
-								site, menu;
+						var siteId = localStorage.siteId,
+							menuId = localStorage.menuId,
+							site, menu;
 
-							if (siteId) {
-								for (var i=0 ; i<data.sites.length ; i++) {
-									site = data.sites[i];
+						if (siteId) {
+							for (var i = 0; i < data.sites.length; i++) {
+								site = data.sites[i];
 
-									if (site.id == siteId) {
-										$rootScope.currentSite = site;
-										console.log('Switched back to site', site);
+								if (site.id == siteId) {
+									$rootScope.currentSite = site;
+									console.log('Switched back to site', site);
 
-										for (var j=0 ; j<site.menus.length ; j++) {
-											menu = site.menus[j];
+									for (var j = 0; j < site.menus.length; j++) {
+										menu = site.menus[j];
 
-											if (menu.id == menuId) {
-												$rootScope.currentMenu = menu;
-												console.log('Switched back to menu', menu);
-											}
+										if (menu.id == menuId) {
+											$rootScope.currentMenu = menu;
+											console.log('Switched back to menu', menu);
 										}
 									}
 								}
 							}
-
-							if (!$rootScope.currentSite) {
-								$rootScope.currentSite = data.sites[0];
-							}
-							if (!$rootScope.currentMenu) {
-								$rootScope.currentMenu = $rootScope.currentSite.menus[0];
-							}
-							resolved = true;
 						}
+
+						if (!$rootScope.currentSite) {
+							$rootScope.currentSite = data.sites[0];
+						}
+						if (!$rootScope.currentMenu) {
+							$rootScope.currentMenu = $rootScope.currentSite.menus[0];
+						}
+						resolved = true;
 					}
-					$rootScope.$broadcast(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED);
-					console.log("bootstrap :: done");
+				}
+				$rootScope.$broadcast(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED);
+				console.log("bootstrap :: done");
+			});
+		}]
+	};
+
+	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', 'ImageSelectService', function (taRegisterTool, taOptions, ImageSelectService) {
+		// $delegate is the taOptions we are decorating
+		// register the tool with textAngular
+		taRegisterTool('colourRed', {
+			iconclass: "fa fa-file-image-o",
+			action: function (deferred, restoreSelection) {
+				var that = this;
+
+				ImageSelectService.selectImage().then(function (image) {
+					console.warn('Success image select', image, that.$editor());
+					restoreSelection();
+					that.$editor().wrapSelection('InsertImage', image.src);
+
+					$('img[src="'+image.src+'"]').attr('alt', image.alt).attr('title', image.title);
+
+					console.warn('after editor');
+					deferred.resolve();
+				}, function (err) {
+					console.warn('Success image select', err);
+					deferred.reject();
 				});
-			}]
-		};
+
+				return false;
+			}
+		});
+		// add the button to the default toolbar definition
+		taOptions.toolbar[3].push('colourRed');
+		return taOptions;
+	}]);
 
 	$routeProvider
-			.when('/dashboard', {
-				'controller': 'DashboardController',
-				'templateUrl': config.getTemplatePath('dashboard/index'),
-				'resolve': resolve
-			})
+		.when('/dashboard', {
+			'controller': 'DashboardController',
+			'templateUrl': config.getTemplatePath('dashboard/index'),
+			'resolve': resolve
+		})
 		<% Odania::Admin.pages.each_pair do |category, pages| %>
-			<% pages.each do |page| %>
-			.when('<%= page[:path] %>', {
-				'controller': '<%= page[:controller] %>',
-				'templateUrl': config.getTemplatePath('<%= page[:template] %>'),
-				'resolve': resolve
-			})
-			<% end %>
+		<% pages.each do |page| %>
+		.when('<%= page[:path] %>', {
+			'controller': '<%= page[:controller] %>',
+			'templateUrl': config.getTemplatePath('<%= page[:template] %>'),
+			'resolve': resolve
+		})
 		<% end %>
-		.otherwise({ 'redirectTo': '/dashboard' });
+		<% end %>
+		.otherwise({'redirectTo': '/dashboard'});
 }]);
 
 app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, BootstrapResource, $window) {
@@ -108,11 +138,11 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 		return null;
 	};
 
-	$rootScope.printErrors = function(errors) {
+	$rootScope.printErrors = function (errors) {
 		return errors.join(', ');
 	};
 
-	$rootScope.changeLanguage = function(language_id) {
+	$rootScope.changeLanguage = function (language_id) {
 		console.info("Changing language", language_id);
 		BootstrapResource.changeLanguage({language_id: language_id}).$promise.then(function () {
 			$window.location.reload();

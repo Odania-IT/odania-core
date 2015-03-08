@@ -1,0 +1,26 @@
+<p>
+	<strong>Title:</strong>
+	{{ media.title }}
+</p>
+
+<p>
+	<strong>Body:</strong>
+	{{ media.body }}
+</p>
+
+<p>
+	<strong>Body short:</strong>
+	{{ media.body_short }}
+</p>
+
+<p>
+	<strong>Publish at:</strong>
+	{{ media.published_at }}
+</p>
+
+<p>
+	<strong>Language:</strong>
+	{{ media.language_id }}
+</p>
+
+<a data-ng-href="#/medias/{{ media.id }}/edit">Edit</a> | <a data-ng-href="#/medias">Back</a>

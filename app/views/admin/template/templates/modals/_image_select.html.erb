@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<h3><%= t('modals.select_image.header') %></h3>
+</div>
+<div class="modal-body">
+	<div class="select_image" data-ng-repeat="media in medias">
+		{{ image }}
+		<img src="{{ media.src }}" alt="{{ media.title }}" title="{{ media.title }}" />
+	</div>
+
+	<br/>
+	<span><%= t('modals.select_image.alt_tag') %></span>: <input type="text" data-ng-model="selectedImage.alt" />
+	<span><%= t('modals.select_image.title_tag') %></span>: <input type="text" data-ng-model="selectedImage.title" />
+</div>
+<div class="modal-footer">
+	<div class="has-error" data-ng-show="errors.display_no_image_selected">ASDSD<%= t('modals.select_image.no_image_selected') %></div>
+
+	<button type="button" class="btn"
+			  data-ng-click="modalOptions.close()"><%= t('modals.general.close') %>
+	</button>
+	<button class="btn btn-primary" data-ng-click="modalOptions.ok();">
+		<%= t('modals.select_image.ok_button') %>
+	</button>
+</div>
