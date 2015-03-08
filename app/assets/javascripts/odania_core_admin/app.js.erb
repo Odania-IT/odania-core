@@ -64,16 +64,13 @@ app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 				var that = this;
 
 				ImageSelectService.selectImage().then(function (image) {
-					console.warn('Success image select', image, that.$editor());
 					restoreSelection();
 					that.$editor().wrapSelection('InsertImage', image.src);
-
 					$('img[src="'+image.src+'"]').attr('alt', image.alt).attr('title', image.title);
 
-					console.warn('after editor');
 					deferred.resolve();
 				}, function (err) {
-					console.warn('Success image select', err);
+					console.warn('Error image select', err);
 					deferred.reject();
 				});
 

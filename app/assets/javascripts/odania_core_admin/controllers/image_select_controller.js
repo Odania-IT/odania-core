@@ -1,4 +1,4 @@
-app.controller('ImageSelectController', ['$scope', '$modalInstance', 'MediaResource', function ($scope, $modalInstance, MediaResource) {
+app.controller('ImageSelectController', ['$rootScope', '$scope', '$modalInstance', 'MediaResource', function ($rootScope, $scope, $modalInstance, MediaResource) {
 	MediaResource.get({
 		siteId: $rootScope.currentSite.id,
 		menuId: $rootScope.currentMenu.id
@@ -9,7 +9,7 @@ app.controller('ImageSelectController', ['$scope', '$modalInstance', 'MediaResou
 	$scope.modalOptions = {};
 
 	$scope.modalOptions.ok = function () {
-		if ($scope.selectedImage.src == null) {
+		if ($scope.selectedImage.id == null) {
 			$scope.errors.display_no_image_selected = true;
 			return;
 		}
@@ -20,7 +20,15 @@ app.controller('ImageSelectController', ['$scope', '$modalInstance', 'MediaResou
 		$modalInstance.dismiss('cancel');
 	};
 
+	$scope.selectMedia = function(media) {
+		$scope.selectedImage.id = media.id;
+		$scope.selectedImage.src = media.image_medium_url;
+		$scope.selectedImage.alt = media.title;
+		$scope.selectedImage.title = media.title;
+	};
+
 	$scope.selectedImage = {
+		'id': null,
 		'src': null,
 		'alt': '',
 		'title': ''
