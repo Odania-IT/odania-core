@@ -6,9 +6,6 @@ class CreateOdaniaCategoryXrefs < ActiveRecord::Migration
 			t.timestamps null: false
 		end
 
-		add_foreign_key :odania_category_xrefs, :categories
-
-		add_index :odania_category_xrefs, [:category_id]
-		add_index :odania_category_xrefs, [:ref_type, :ref_id]
+		add_foreign_key :odania_category_xrefs, :odania_categories, column: :category_id
 	end
 end
