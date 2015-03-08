@@ -15,3 +15,4 @@ This project rocks and uses MIT-LICENSE.
 - Templates as simple folder (manage via upload, pull from registry)
 - Add documentation
 - Loading indicator
+- RSS Feeds

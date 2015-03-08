@@ -7,6 +7,7 @@ class Odania::Content < ActiveRecord::Base
 	belongs_to :menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :current_menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :widget, class_name: 'Odania::Widget'
+	belongs_to :category, class_name: 'Odania::Category'
 
 	scope :active, -> { where(is_active: true) }
 
