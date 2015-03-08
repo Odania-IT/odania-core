@@ -60,3 +60,5 @@ en:
       create_static_page:
         body:
           placeholder: 'Content'
+      edit_media:
+        current_image: 'Current image'

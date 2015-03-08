@@ -12,7 +12,7 @@ PATH
       jbuilder
       jquery-rails
       nokogiri
-      paperclip (~> 3)
+      paperclip (~> 4)
       rails (~> 4.2.0)
       rails-i18n
       responders (~> 2.0)
@@ -82,7 +82,7 @@ GEM
     builder (3.2.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
-    cocaine (0.5.5)
+    cocaine (0.5.7)
       climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -126,7 +126,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.5.0)
+    minitest (5.5.1)
     minitest-reporters (1.0.8)
       ansi
       builder
@@ -137,7 +137,7 @@ GEM
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     nokogiri (1.6.5-java)
-    paperclip (3.5.4)
+    paperclip (4.2.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -234,7 +234,7 @@ DEPENDENCIES
   minitest-reporters
   mysql2
   odania_core!
-  paperclip (~> 3)
+  paperclip (~> 4)
   pg
   spring
   sqlite3

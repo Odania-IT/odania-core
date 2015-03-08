@@ -22,7 +22,7 @@ group :development, :test do
 	gem 'minitest'
 	gem 'minitest-reporters'
 	gem 'database_cleaner'
-	gem 'paperclip', '~> 3'
+	gem 'paperclip', '~> 4'
 	gem 'will_paginate', '~> 3.0'
 	gem 'http_accept_language'
 

@@ -1,30 +1,37 @@
-app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'ContentResource', '$routeParams', 'eventTypeProvider', function ($location, $scope, $rootScope, MediaResource, $routeParams, eventTypeProvider) {
+app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'MediaResource', '$routeParams', 'eventTypeProvider', '$http', function ($location, $scope, $rootScope, MediaResource, $routeParams, eventTypeProvider, $http) {
 	console.log("controller :: EditMediaController");
-	var languageId = null;
+	var mediaId = null;
 
 	function loadMedia(id) {
 		MediaResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
 			$scope.media = data.media;
-			$scope.data = data.data;
 		});
 	}
 
-	function saveContent() {
+	function saveMedia() {
 		$scope.media.language_id = $rootScope.currentMenu.language_id;
-		if (languageId) {
-			MediaResource.update({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: languageId, media: $scope.media}).$promise.then(onSaveSuccess, onSaveError);
-		} else {
-			MediaResource.save({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, media: $scope.media}).$promise.then(onSaveSuccess, onSaveError);
+
+		// Create upload
+		var fd = new FormData(),
+			uploadUrl = config.getApiPath('sites/'+$rootScope.currentSite.id+'/menus/'+$rootScope.currentMenu.id+'/medias'+(mediaId == null ? '' : '/'+mediaId)),
+			method = (mediaId == null ? 'post' : 'put');
+
+		if ($scope.upload.file) {
+			fd.append('media[image]', $scope.upload.file);
 		}
-	}
 
-	function onSaveSuccess() {
-		$location.path('/medias');
-	}
+		angular.forEach($scope.media, function(value, key) {
+			fd.append('media['+key+']', value);
+		});
 
-	function onSaveError(data) {
-		console.log("errors", data);
-		$scope.errors = data.data.errors;
+		$http[method](uploadUrl, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).success(function () {
+			$location.path('/medias');
+		}).error(function (data) {
+			$scope.errors = data.errors;
+		});
 	}
 
 	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
@@ -35,13 +42,27 @@ app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'Con
 		$location.path('/medias');
 	});
 
-	$scope.saveContent = saveContent;
+	/**
+	 * File handling
+	 */
+	$scope.setFile = function (element) {
+		$scope.$apply(function() {
+			$scope.upload.file = element.files[0];
+		});
+	};
+	// End file handling
+
+	$scope.saveMedia = saveMedia;
 	$scope.media = {
-		'title': ''
+		'title': '',
+		'is_global': false
+	};
+	$scope.upload = {
+		'file': null
 	};
 
 	if ($routeParams.id) {
-		languageId = $routeParams.id;
+		mediaId = $routeParams.id;
 		loadMedia($routeParams.id);
 	}
 }]);

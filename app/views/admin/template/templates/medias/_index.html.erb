@@ -3,9 +3,11 @@
 <table class="table">
 	<thead>
 	<tr>
+		<th>Image</th>
 		<th>Title</th>
-		<th>Publish at</th>
+		<th>Is Global</th>
 		<th>Language</th>
+		<th>Copyright</th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -14,9 +16,11 @@
 
 	<tbody>
 	<tr data-ng-repeat="media in medias">
+		<td><img data-ng-src="{{ media.image_thumb_url }}" alt="{{ media.title }}" title="{{ media.title }}" /></td>
 		<td>{{ media.title }}</td>
-		<td>{{ media.published_at }}</td>
+		<td>{{ media.is_global }}</td>
 		<td>{{ getLanguage(media.language_id).iso_639_1 }}</td>
+		<td>{{ media.copyright }}</td>
 		<td><a data-ng-href="#/medias/{{ media.id }}">Show</a></td>
 		<td><a data-ng-href="#/medias/{{ media.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteMedia(media.id)" ng-confirm-message="Are you sure?">Destroy</a></td>

@@ -1,7 +1,8 @@
 <form class="form-horizontal" role="form">
 	<div class="row-fluid">
 		<div class="col-md-9">
-			<h1>Editing Media for {{ getLanguage(currentMenu.language_id).iso_639_1 }} - {{ getSite(currentSite.id).name }}</h1>
+			<h1>Editing Media for {{ getLanguage(currentMenu.language_id).iso_639_1 }} - {{ getSite(currentSite.id).name
+				}}</h1>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="site_name">Title</label>
@@ -12,25 +13,38 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Body short</label>
+				<label class="col-sm-2 control-label" for="site_copyright">Copyright</label>
 
 				<div class="col-sm-10">
-					<div data-text-angular data-ng-model="media.body_short" data-placeholder="<%= t('admin.views.create_media.body_short.placeholder') %>"></div>
-					<span data-ng-if="errors.body_short" style="color: red;">{{ printErrors(errors.body_short) }}</span>
+					<input type="text" id="site_copyright" data-ng-model="media.copyright" placeholder="&copy; Mike Petersen" class="form-control"/>
+					<span data-ng-if="errors.copyright" style="color: red;">{{ printErrors(errors.copyright) }}</span>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Body</label>
+				<label class="col-sm-2 control-label">Image</label>
 
 				<div class="col-sm-10">
-					<div data-text-angular data-ng-model="media.body" data-placeholder="<%= t('admin.views.create_media.body.placeholder') %>"></div>
-					<span data-ng-if="errors.body" style="color: red;">{{ printErrors(errors.body) }}</span>
+					<div data-ng-if="media.image_thumb_url">
+						<%= t('admin.views.edit_media.current_image') %>
+						<img data-ng-src="{{ media.image_thumb_url }}" alt="{{ media.title }}" title="{{ media.title }}"/>
+					</div>
+
+					<div data-ng-if="upload.file">
+						<span>{{ upload.file.webkitRelativePath || upload.file.name }}</span>
+						(
+							<span ng-switch="upload.file.size > 1024*1024">
+								<span ng-switch-when="true">{{upload.file.size / 1024 / 1024 | number:2}} MB</span>
+								<span ng-switch-default>{{upload.file.size / 1024 | number:2}} kB</span>
+							</span>
+						)
+					</div>
+
+					<input type="file" data-ng-model-instant onchange="angular.element(this).scope().setFile(this)" />
+					<span data-ng-if="errors.image" style="color: red;">{{ printErrors(errors.image) }}</span>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-3">
-			<h2><%= t('admin.views.create_media.published_at.title') %></h2>
-
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button data-ng-click="saveMedia()" class="btn btn-primary">Save</button>
@@ -40,20 +54,10 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="site_name">Published at</label>
+				<label class="col-sm-2 control-label">Is Global</label>
 
 				<div class="col-sm-10">
-					<input type="date" id="site_name" data-ng-model="media.published_at" placeholder="Release date"/>
-					<span data-ng-if="errors.published_at" style="color: red;">{{ printErrors(errors.published_at) }}</span>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Widget</label>
-
-				<div class="col-sm-10">
-					<select data-ng-model="media.widget_id" ng-options="widget.id as widget.name for widget in data.widgets"></select>
-					<span data-ng-if="errors.widget_id" style="color: red;">{{ printErrors(errors.widget_id) }}</span>
+					<input type="checkbox" data-ng-model="media.is_global">
 				</div>
 			</div>
 		</div>

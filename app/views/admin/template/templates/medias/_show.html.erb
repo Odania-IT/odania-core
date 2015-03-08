@@ -4,18 +4,18 @@
 </p>
 
 <p>
-	<strong>Body:</strong>
-	{{ media.body }}
+	<strong>Copyright:</strong>
+	{{ media.copyright }}
 </p>
 
 <p>
-	<strong>Body short:</strong>
-	{{ media.body_short }}
+	<strong>Is global:</strong>
+	{{ media.is_global }}
 </p>
 
 <p>
-	<strong>Publish at:</strong>
-	{{ media.published_at }}
+	<strong>Image:</strong>
+	<img data-ng-src="{{ media.image_medium_url }}" alt="{{ media.title }}" title="{{ media.title }}" />
 </p>
 
 <p>

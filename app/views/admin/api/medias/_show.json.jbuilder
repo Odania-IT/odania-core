@@ -1,0 +1,12 @@
+json.id media.id
+json.title media.title
+json.copyright media.copyright
+json.is_global media.is_global
+json.site_id media.site_id
+json.language_id media.language_id
+json.user_id media.user_id
+json.created_at media.created_at.to_i
+json.updated_at media.updated_at.to_i
+json.image_thumb_url media.image.url(:thumb)
+json.image_medium_url media.image.url(:medium)
+json.image_url media.image.url

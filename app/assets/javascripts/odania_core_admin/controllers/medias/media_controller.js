@@ -3,7 +3,7 @@ app.controller('MediaController', ['$rootScope', '$scope', 'MediaResource', '$ro
 
 	function loadMedia(id) {
 		MediaResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
-			$scope.content = data.content;
+			$scope.media = data.media;
 		});
 	}
 
