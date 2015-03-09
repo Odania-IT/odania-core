@@ -6,9 +6,6 @@ de:
       subdomain:
         description: 'Die Subdomain unter der Domain'
     category:
-      title: 'Kategorien'
-      add_category: 'Kategorie erstellen'
-      add_category_button: 'Erstellen'
       title:
         name: 'Titel'
       parent_id:

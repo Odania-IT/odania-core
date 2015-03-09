@@ -62,3 +62,7 @@ de:
           placeholder: 'Inhalt'
       edit_media:
         current_image: 'Momentanes Bild'
+      categories_selection:
+        title: 'Kategorien'
+        add_category: 'Kategorie erstellen'
+        add_category_button: 'Erstellen'
