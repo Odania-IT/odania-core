@@ -16,3 +16,7 @@ This project rocks and uses MIT-LICENSE.
 - Add documentation
 - Loading indicator
 - RSS Feeds
+- Categories as option in menu
+- Tag cloud as widget
+- Tags list in menu
+- Content Preview

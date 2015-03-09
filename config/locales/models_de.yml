@@ -5,3 +5,11 @@ de:
         description: 'Es kann je Domain eine bevorzugte Subdomain geben. Falls man zu einer nicht definierten Subdomain für die Domain kommt wird der bevorzugte gewählt.'
       subdomain:
         description: 'Die Subdomain unter der Domain'
+    category:
+      title: 'Kategorien'
+      add_category: 'Kategorie erstellen'
+      add_category_button: 'Erstellen'
+      title:
+        name: 'Titel'
+      parent_id:
+        name: 'Übergeordnete Kategorie'

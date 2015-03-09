@@ -1,7 +1,8 @@
 <form class="form-horizontal" role="form">
 	<div class="row-fluid">
 		<div class="col-md-9">
-			<h1>Editing Content for {{ getLanguage(currentMenu.language_id).iso_639_1 }} - {{ getSite(currentSite.id).name }}</h1>
+			<h1>Editing Content for {{ getLanguage(currentMenu.language_id).iso_639_1 }} - {{ getSite(currentSite.id).name
+				}}</h1>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="site_name">Title</label>
@@ -29,40 +30,42 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<h2><%= t('admin.views.create_content.published_at.title') %></h2>
+			<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
 
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button data-ng-click="saveContent()" class="btn btn-primary">Save</button>
+			<div class="well">
+				<h3><%= t('admin.views.create_content.published_at.title') %></h3>
 
-					<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+				<button data-ng-click="saveContent()" class="btn btn-primary">Save</button>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">State</label>
+
+					<div class="col-sm-10">
+						<select data-ng-model="content.state" data-ng-options="state for state in contentStates" class="form-control"></select>
+						<span data-ng-if="errors.state" style="color: red;">{{ printErrors(errors.state) }}</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="site_name">Published at</label>
+
+					<div class="col-sm-10">
+						<input type="date" id="site_name" data-ng-model="content.published_at" placeholder="Release date" class="form-control"/>
+						<span data-ng-if="errors.published_at" style="color: red;">{{ printErrors(errors.published_at) }}</span>
+					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="site_name">Published at</label>
+			<%= render partial: 'admin/template/templates/categories/select_category', locals: {key: 'content'} %>
 
-				<div class="col-sm-10">
-					<input type="date" id="site_name" data-ng-model="content.published_at" placeholder="Release date"/>
-					<span data-ng-if="errors.published_at" style="color: red;">{{ printErrors(errors.published_at) }}</span>
-				</div>
-			</div>
+			<div class="well">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Widget</label>
 
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Category</label>
-
-				<div class="col-sm-10">
-					<select data-ng-model="content.category_id" ng-options="category.id as category.name for category in data.categories"></select>
-					<span data-ng-if="errors.category_id" style="color: red;">{{ printErrors(errors.category_id) }}</span>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Widget</label>
-
-				<div class="col-sm-10">
-					<select data-ng-model="content.widget_id" ng-options="widget.id as widget.name for widget in data.widgets"></select>
-					<span data-ng-if="errors.widget_id" style="color: red;">{{ printErrors(errors.widget_id) }}</span>
+					<div class="col-sm-10">
+						<select data-ng-model="content.widget_id" ng-options="widget.id as widget.name for widget in data.widgets" class="form-control"></select>
+						<span data-ng-if="errors.widget_id" style="color: red;">{{ printErrors(errors.widget_id) }}</span>
+					</div>
 				</div>
 			</div>
 		</div>

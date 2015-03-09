@@ -5,3 +5,11 @@ en:
         description: 'There can be one preferred Subdomain per Domain. It will be targeted if a invalid domain is taken.'
       subdomain:
         description: 'The subdomain under the domain.'
+    category:
+      title: 'Categories'
+      add_category: 'Add category'
+      add_category_button: 'Create'
+      title:
+        name: 'Title'
+      parent_id:
+        name: 'Parent category'

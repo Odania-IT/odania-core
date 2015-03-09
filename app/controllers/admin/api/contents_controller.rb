@@ -56,6 +56,6 @@ class Admin::Api::ContentsController < Admin::ApiController
 	end
 
 	def content_params
-		params.require(:content).permit(:title, :body, :body_short, :published_at, :language_id, :widget_id, :category_id)
+		params.require(:content).permit(:title, :body, :body_short, :published_at, :language_id, :widget_id, :state, category_ids: [])
 	end
 end

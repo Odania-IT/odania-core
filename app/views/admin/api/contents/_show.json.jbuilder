@@ -12,4 +12,4 @@ json.user_id content.user_id
 json.created_at content.created_at.to_i
 json.updated_at content.updated_at.to_i
 json.widget_id content.widget_id
-json.category_id content.category_id
+json.state content.state

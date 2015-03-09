@@ -11,6 +11,8 @@ class Odania::Content < ActiveRecord::Base
 
 	scope :active, -> { where(is_active: true) }
 
+	enum state: {DRAFT: 0, PUBLISHED: 1}
+
 	validates_length_of :title, minimum: 1
 	validates_length_of :body, minimum: 10
 	validates_presence_of :language_id, :site_id, :user_id
@@ -27,8 +29,9 @@ class Odania::Content < ActiveRecord::Base
 	end
 
 	before_save do
+		self.state = 'DRAFT' if self.state.nil?
 		self.published_at = Time.now if self.published_at.nil?
-		self.is_active = (self.published_at <= Time.now)
+		self.is_active = (self.published_at <= Time.now and self.state.eql?('PUBLISHED'))
 		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body, self.site.host)
 		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil? or self.body_short.blank?
 
