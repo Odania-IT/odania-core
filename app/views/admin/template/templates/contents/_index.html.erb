@@ -19,7 +19,7 @@
 		<td>{{ content.title }}</td>
 		<td>{{ content.is_active }}</td>
 		<td>{{ content.state }}</td>
-		<td>{{ content.published_at }}</td>
+		<td>{{ content.published_at * 1000 | date }}</td>
 		<td>{{ getLanguage(content.language_id).iso_639_1 }}</td>
 		<td><a data-ng-href="#/contents/{{ content.id }}">Show</a></td>
 		<td><a data-ng-href="#/contents/{{ content.id }}/edit">Edit</a></td>

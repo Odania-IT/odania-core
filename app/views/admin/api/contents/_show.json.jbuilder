@@ -4,7 +4,7 @@ json.body content.body
 json.body_short content.body_short
 json.clicks content.clicks
 json.views content.views
-json.published_at content.published_at.to_date
+json.published_at content.published_at.strftime('%s')
 json.is_active content.is_active
 json.site_id content.site_id
 json.language_id content.language_id

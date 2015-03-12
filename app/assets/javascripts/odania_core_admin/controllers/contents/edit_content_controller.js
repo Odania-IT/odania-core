@@ -7,6 +7,7 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 			$scope.content = data.content;
 			$scope.content.category_selection = getCategoryTitles(data.content.categories);
 			$scope.content.tagSelection = getTagList(data.content.tags);
+			$scope.content.published_at = new Date($scope.content.published_at * 1000);
 			$scope.data = data.data;
 			$rootScope.categories = $scope.data.categories;
 		});
