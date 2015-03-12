@@ -4,6 +4,8 @@
 	<thead>
 	<tr>
 		<th>Title</th>
+		<th>Is active</th>
+		<th>State</th>
 		<th>Publish at</th>
 		<th>Language</th>
 		<th></th>
@@ -15,6 +17,8 @@
 	<tbody>
 	<tr data-ng-repeat="content in contents">
 		<td>{{ content.title }}</td>
+		<td>{{ content.is_active }}</td>
+		<td>{{ content.state }}</td>
 		<td>{{ content.published_at }}</td>
 		<td>{{ getLanguage(content.language_id).iso_639_1 }}</td>
 		<td><a data-ng-href="#/contents/{{ content.id }}">Show</a></td>
