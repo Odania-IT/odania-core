@@ -154,4 +154,10 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 
 		return Object.keys(obj).join(',');
 	};
+
+	$rootScope.addToArray = function (arr, val) {
+		if (arr.indexOf(val) === -1) {
+			arr.push(val);
+		}
+	};
 }]);

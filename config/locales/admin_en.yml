@@ -67,3 +67,7 @@ en:
         add_category: 'Add category'
         add_category_button: 'Create'
         no_categories: 'No categoriy exists'
+      tags_selection:
+        title: 'Tags'
+        tag_input_help: 'Add a new Tag. Separate multiple tags with a colon.'
+        add_tag_button: 'Add'

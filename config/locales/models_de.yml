@@ -11,3 +11,6 @@ de:
       parent_id:
         name: 'Übergeordnete Kategorie'
         first_option: 'Keine'
+    tag:
+      name:
+        name: 'Name'

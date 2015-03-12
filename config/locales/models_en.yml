@@ -11,3 +11,6 @@ en:
       parent_id:
         name: 'Parent category'
         first_option: 'None'
+    tag:
+      name:
+        name: 'Name'

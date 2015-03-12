@@ -6,6 +6,7 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 		ContentResource.get({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
 			$scope.content = data.content;
 			$scope.content.category_selection = getCategoryTitles(data.content.categories);
+			$scope.content.tagSelection = getTagList(data.content.tags);
 			$scope.data = data.data;
 			$rootScope.categories = $scope.data.categories;
 		});
@@ -14,7 +15,7 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 	function saveContent() {
 		$scope.content.language_id = $rootScope.currentMenu.language_id;
 		$scope.content.category_list = $rootScope.getAsStringList($scope.content.category_selection);
-		$scope.content.tag_list = $rootScope.getAsStringList($scope.content.tag_selection);
+		$scope.content.tag_list = $scope.content.tagSelection.join(',');
 		if (languageId) {
 			ContentResource.update({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: languageId, content: $scope.content}).$promise.then(onSaveSuccess, onSaveError);
 		} else {
@@ -32,13 +33,24 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 	}
 
 	function getCategoryTitles(categories) {
-		var titles = {}, category;
+		var titles = {};
 
 		for (var i=0 ; i<categories.length ; i++) {
 			titles[categories[i].title] = true;
 		}
 
 		return titles;
+	}
+
+	function getTagList(tags) {
+		var result = [];
+
+		for (var i=0 ; i<tags.length ; i++) {
+			console.warn(tags[i]);
+			result.push(tags[i].name);
+		}
+
+		return result;
 	}
 
 	$rootScope.$on(eventTypeProvider.INTERNAL_SITE_CHANGED, function processEvent() {
