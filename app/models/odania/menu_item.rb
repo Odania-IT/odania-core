@@ -5,7 +5,7 @@ class Odania::MenuItem < ActiveRecord::Base
 	belongs_to :menu, class_name: 'Odania::Menu'
 
 	validates_presence_of :title, minimum: 1
-	validates_uniqueness_of :title, scope: [:site_id, :parent_id]
+	validates_uniqueness_of :title, scope: [:menu_id, :parent_id]
 	validate :validate_target
 
 	def validate_target
