@@ -1,4 +1,4 @@
-<% cache(:expires_in => 1.hour) do
+<% cache(odania_content, :expires_in => 1.hour) do
 	path = odania_content_path(id: odania_content.to_param)
 	%>
 	<div class="entry hentry">
