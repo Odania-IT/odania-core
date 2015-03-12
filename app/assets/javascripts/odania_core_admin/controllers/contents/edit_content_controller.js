@@ -15,7 +15,10 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 	function saveContent() {
 		$scope.content.language_id = $rootScope.currentMenu.language_id;
 		$scope.content.category_list = $rootScope.getAsStringList($scope.content.category_selection);
-		$scope.content.tag_list = $scope.content.tagSelection.join(',');
+		if ($scope.content.tagSelection) {
+			$scope.content.tag_list = $scope.content.tagSelection.join(',');
+		}
+
 		if (languageId) {
 			ContentResource.update({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: languageId, content: $scope.content}).$promise.then(onSaveSuccess, onSaveError);
 		} else {
@@ -46,7 +49,6 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 		var result = [];
 
 		for (var i=0 ; i<tags.length ; i++) {
-			console.warn(tags[i]);
 			result.push(tags[i].name);
 		}
 
@@ -63,7 +65,8 @@ app.controller('EditContentController', ['$location', '$scope', '$rootScope', 'C
 
 	$scope.saveContent = saveContent;
 	$scope.content = {
-		'title': ''
+		'title': '',
+		'tagSelection': []
 	};
 
 	if ($routeParams.id) {
