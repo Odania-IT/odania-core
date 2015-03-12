@@ -8,5 +8,8 @@ module Odania
 
 		# Before filter checking if a user is authenticated
 		mattr_accessor :authenticate_user_function
+
+		mattr_accessor :page_404
+		@@page_404 = {template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error'}
 	end
 end

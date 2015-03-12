@@ -10,3 +10,4 @@ de:
         name: 'Titel'
       parent_id:
         name: 'Übergeordnete Kategorie'
+        first_option: 'Keine'

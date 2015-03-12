@@ -22,16 +22,17 @@ class Odania::TagsControllerTest < ActionController::TestCase
 		menu_item.save!
 
 		@content.body = 'This is a #ABC-Tag test'
+		@content.tag_list = 'ABC-Tag'
 		@content.save!
 
-		get :show, {locale: @content.language.iso_639_1, tag: 'ABC-Tag'}
+		get :show, {tag: 'ABC-Tag', locale: @content.language.iso_639_1}
 		assert_response :success
 	end
 
 	test 'test should render not found on invalid tag' do
 		get :show, {tag: 'ABC', locale: @content.language.iso_639_1}
 		assert_response :not_found
-		assert_template 'odania/common/not_found_error'
+		assert_template Odania.config.page_404[:template]
 	end
 
 	test 'test auto_complete' do

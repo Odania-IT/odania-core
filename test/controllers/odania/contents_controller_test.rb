@@ -18,6 +18,7 @@ class Odania::ContentsControllerTest < ActionController::TestCase
 	test 'test should render content list for tag' do
 		content = build(:content, site: @site, language: @site.default_language)
 		content.body = 'This is a new tag #TZ2'
+		content.tag_list = 'TZ2'
 		content.save!
 
 		get :index, {tag: 'TZ2', locale: @site.default_language.iso_639_1}

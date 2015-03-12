@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
 			resources :sites, except: [:new, :edit] do
 				resources :menus, except: [:new, :edit] do
+					resources :categories, except: [:new, :edit]
 					resources :contents, except: [:new, :edit]
 					resources :medias, except: [:new, :edit]
 					resources :static_pages, except: [:new, :edit]

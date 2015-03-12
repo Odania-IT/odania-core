@@ -13,3 +13,5 @@ json.created_at content.created_at.to_i
 json.updated_at content.updated_at.to_i
 json.widget_id content.widget_id
 json.state content.state
+json.categories content.categories
+json.tags content.tags

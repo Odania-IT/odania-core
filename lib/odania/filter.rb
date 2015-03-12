@@ -15,16 +15,7 @@ module Odania
 					end
 				end
 
-				# Retrieve tags
-				filtered_html = doc.to_s
-				tags = []
-				html.gsub(/#[a-z0-9\-]*[^< ]/i) do |match|
-					tag = match[1, match.length]
-					filtered_html.gsub!(match, "<a href=\"/#{obj.language.iso_639_1}/tags/#{tag.parameterize}\">#{tag}</a>")
-					tags << tag
-				end
-
-				return tags.join(','), filtered_html
+				return doc.to_s
 			end
 
 			def get_click_counter_url(obj, target_url, host)

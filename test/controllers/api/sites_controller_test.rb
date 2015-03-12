@@ -25,7 +25,7 @@ class Admin::Api::SitesControllerTest < ActionController::TestCase
 	end
 
 	test 'should create site' do
-		data = {name: 'Page1', host: 'www.test.de', is_active: true, tracking_code: 'TRACK',
+		data = {name: 'Page1', domain: 'test.de', subdomain: 'www', is_active: true, tracking_code: 'TRACK',
 				  description: 'description is here', template: 'ASDASD', default_language_id: @site.default_language_id}
 		Odania.templates['ASDASD'] = {name: 'Test Template', template: 'ASDASD'}
 		assert_difference 'Odania::Site.count' do

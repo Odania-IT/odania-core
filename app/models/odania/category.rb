@@ -5,6 +5,7 @@ class Odania::Category < ActiveRecord::Base
 	has_many :category_xrefs, :class_name => 'Odania::CategoryXref'
 
 	validates_length_of :title, minimum: 1
+	validates_uniqueness_of :title, scope: [:site_id, :language_id]
 
 	before_create do
 		self.count = 0 if self.count.nil?

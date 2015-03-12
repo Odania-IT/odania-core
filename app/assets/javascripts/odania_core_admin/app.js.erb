@@ -146,4 +146,12 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 			$window.location.reload();
 		});
 	};
+
+	$rootScope.getAsStringList = function (obj) {
+		if (!obj) {
+			return '';
+		}
+
+		return Object.keys(obj).join(',');
+	};
 }]);

@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307141348) do
+ActiveRecord::Schema.define(version: 20150309005705) do
+
+  create_table "odania_categories", force: :cascade do |t|
+    t.integer  "site_id"
+    t.integer  "user_id"
+    t.integer  "language_id"
+    t.string   "title"
+    t.integer  "count"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "parent_id"
+  end
+
+  create_table "odania_category_xrefs", force: :cascade do |t|
+    t.integer  "ref_id"
+    t.string   "ref_type"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "odania_category_xrefs", ["category_id"], name: "index_odania_category_xrefs_on_category_id"
+  add_index "odania_category_xrefs", ["ref_type", "ref_id"], name: "index_odania_category_xrefs_on_ref_type_and_ref_id"
 
   create_table "odania_click_trackings", force: :cascade do |t|
     t.integer  "obj_id"
@@ -37,6 +59,7 @@ ActiveRecord::Schema.define(version: 20150307141348) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.integer  "widget_id"
+    t.integer  "state"
   end
 
   add_index "odania_contents", ["site_id", "language_id", "is_active"], name: "index_odania_contents_on_site_id_and_language_id_and_is_active"
@@ -49,6 +72,23 @@ ActiveRecord::Schema.define(version: 20150307141348) do
   end
 
   add_index "odania_languages", ["iso_639_1"], name: "index_odania_languages_on_iso_639_1", unique: true
+
+  create_table "odania_media", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "site_id"
+    t.integer  "language_id"
+    t.integer  "user_id"
+    t.string   "copyright"
+    t.boolean  "is_global"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "odania_media", ["site_id", "language_id"], name: "index_odania_media_on_site_id_and_language_id"
 
   create_table "odania_menu_items", force: :cascade do |t|
     t.integer "menu_id"
@@ -83,18 +123,34 @@ ActiveRecord::Schema.define(version: 20150307141348) do
     t.text    "tracking_code"
     t.text    "description"
     t.string  "template"
-    t.boolean "user_signup_allowed",  default: false
+    t.boolean "user_signup_allowed",     default: false
     t.integer "default_language_id"
     t.integer "redirect_to_id"
     t.string  "default_from_email"
     t.string  "notify_email_address"
-    t.text    "imprint"
-    t.text    "terms_and_conditions"
     t.integer "default_widget_id"
     t.text    "social"
+    t.string  "domain"
+    t.string  "subdomain"
+    t.integer "imprint_id"
+    t.integer "terms_and_conditions_id"
   end
 
   add_index "odania_sites", ["host"], name: "index_odania_sites_on_host", unique: true
+
+  create_table "odania_static_pages", force: :cascade do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "clicks"
+    t.integer  "views"
+    t.integer  "site_id"
+    t.integer  "language_id"
+    t.integer  "user_id"
+    t.integer  "widget_id"
+    t.boolean  "is_global"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "odania_tag_xrefs", force: :cascade do |t|
     t.integer "tag_id"

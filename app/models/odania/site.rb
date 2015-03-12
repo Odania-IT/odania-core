@@ -20,11 +20,13 @@ module Odania
 
 		scope :active, -> { where(is_active: true) }
 
-		validates_uniqueness_of :host, :name
-		validates_length_of :host, minimum: 4
+		validates_uniqueness_of :name
+		validates_uniqueness_of :subdomain, scope: [:domain]
+		validates_length_of :domain, minimum: 4
+		validates_length_of :subdomain, minimum: 1, allow_nil: true
 		validates_length_of :name, minimum: 1
 		validate :validate_template_exists, :validate_language_is_present
-		validates_presence_of :host, :name
+		validates_presence_of :domain, :name
 		validate :validate_default_widget
 
 		has_many :users, class_name: 'Odania::User'
@@ -86,7 +88,7 @@ module Odania
 		before_save do
 			self.is_active = true if self.is_active.nil?
 			self.tracking_code = '' if self.tracking_code.nil?
-			self.host = "#{self.subdomain}.#{self.domain}"
+			self.host = self.subdomain.nil? ? self.host : "#{self.subdomain}.#{self.domain}"
 
 			true
 		end

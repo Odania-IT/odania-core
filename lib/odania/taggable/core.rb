@@ -58,7 +58,8 @@ module Odania
 
 				def tag_list_on(context)
 					variable_name = "@#{context.to_s.singularize}_list"
-					instance_variable_get(variable_name)
+					tags = instance_variable_get(variable_name)
+					tags.nil? ? '' : tags
 				end
 
 				def tag_counts_on(context)

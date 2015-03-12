@@ -1,5 +1,6 @@
 class Odania::Content < ActiveRecord::Base
 	acts_as_taggable
+	acts_as_categorizable
 
 	belongs_to :site, :class_name => 'Odania::Site'
 	belongs_to :language, :class_name => 'Odania::Language'
@@ -7,7 +8,6 @@ class Odania::Content < ActiveRecord::Base
 	belongs_to :menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :current_menu_item, class_name: 'Odania::MenuItem'
 	belongs_to :widget, class_name: 'Odania::Widget'
-	belongs_to :category, class_name: 'Odania::Category'
 
 	scope :active, -> { where(is_active: true) }
 
@@ -32,7 +32,7 @@ class Odania::Content < ActiveRecord::Base
 		self.state = 'DRAFT' if self.state.nil?
 		self.published_at = Time.now if self.published_at.nil?
 		self.is_active = (self.published_at <= Time.now and self.state.eql?('PUBLISHED'))
-		self.tag_list, self.body_filtered = Odania::Filter.filter_html(self, self.body, self.site.host)
+		self.body_filtered = Odania::Filter.filter_html(self, self.body, self.site.host)
 		self.body_short = Odania::TextHelper.truncate_words(self.body_filtered, 50) if self.body_short.nil? or self.body_short.blank?
 
 		true

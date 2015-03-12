@@ -11,7 +11,7 @@ module Odania
 		test 'adding new tags' do
 			assert_difference 'Odania::TagXref.count', 2 do
 				content = Odania::Content.new(title: 'asd123', body: 'This is a body #T1 asdasdsa #T2',
-														language_id: @lang.id, site_id: @site.id, user_id: @user.id)
+														language_id: @lang.id, site_id: @site.id, user_id: @user.id, tag_list: 'T1,T2')
 				content.save!
 				assert_all_tag_counts_match
 			end
@@ -20,10 +20,10 @@ module Odania
 
 		test 'removing tags' do
 			content = Odania::Content.create(title: 'asd123', body: 'This is a body #T1 asdasdsa #T4 dasihdaius #T7',
-														language_id: @lang.id, site_id: @site.id, user_id: @user.id)
+														language_id: @lang.id, site_id: @site.id, user_id: @user.id, tag_list: 'T1,T4,T7')
 			assert_all_tag_counts_match
 			assert_difference 'Odania::TagXref.count', -1 do
-				content.body = 'This is a body #T1 asdasdsa #T7'
+				content.tag_list = 'T1,T7'
 				content.save!
 				assert_all_tag_counts_match
 			end
@@ -31,9 +31,9 @@ module Odania
 
 		test 'adding new tags and removing old ones' do
 			content = Odania::Content.create(title: 'asd123', body: 'This is a body #T1 asdasdsa #T4 dasihdaius #T7',
-														language_id: @lang.id, site_id: @site.id, user_id: @user.id)
+														language_id: @lang.id, site_id: @site.id, user_id: @user.id, tag_list: 'T1,T4,T7')
 			assert_difference 'Odania::TagXref.count', 0 do
-				content.body = 'This is a body #T1 asdasdsa #T8 lorem #T4 #T1'
+				content.tag_list = 'T1,T8,T4,T1'
 				content.save!
 				assert_all_tag_counts_match
 			end

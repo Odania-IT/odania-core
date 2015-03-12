@@ -14,6 +14,7 @@ module Odania
 	autoload :CoreTargetTypeUtil, 'odania/core_target_type_util'
 	autoload :TextHelper, 'odania/text_helper'
 	autoload :Taggable, 'odania/taggable'
+	autoload :Categorizable, 'odania/categorizable'
 	autoload :Filter, 'odania/filter'
 	autoload :TargetType, 'odania/target_type'
 	autoload :AdminConstraint, 'odania/admin_constraint'
@@ -55,6 +56,7 @@ module Odania
 
 		ActiveSupport.on_load(:active_record) do
 			extend Odania::Taggable
+			extend Odania::Categorizable
 		end
 	end
 

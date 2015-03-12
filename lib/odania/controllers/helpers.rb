@@ -24,7 +24,7 @@ module Odania
 
 			def valid_menu!
 				if current_menu.nil?
-					render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error'
+					render template: Odania.config.page_404[:template], layout: Odania.config.page_404[:layout]
 					return false
 				end
 
@@ -72,7 +72,7 @@ module Odania
 
 			# Raise a not found exception
 			def render_not_found
-				render template: 'odania/common/not_found_error', layout: 'layouts/odania_core/error', status: :not_found
+				render template: Odania.config.page_404[:template], layout: Odania.config.page_404[:layout], status: :not_found
 			end
 
 			# Raise an error

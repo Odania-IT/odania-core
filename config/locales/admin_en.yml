@@ -66,3 +66,4 @@ en:
         title: 'Categories'
         add_category: 'Add category'
         add_category_button: 'Create'
+        no_categories: 'No categoriy exists'

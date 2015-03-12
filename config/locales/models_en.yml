@@ -10,3 +10,4 @@ en:
         name: 'Title'
       parent_id:
         name: 'Parent category'
+        first_option: 'None'
