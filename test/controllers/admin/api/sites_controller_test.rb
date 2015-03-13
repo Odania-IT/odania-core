@@ -50,10 +50,11 @@ class Admin::Api::SitesControllerTest < ActionController::TestCase
 		assert_response :success
 	end
 
-	test 'should destroy site' do
-		assert_difference 'Odania::Site.count', -1 do
-			delete :destroy, id: @site.id.to_s, format: :json
-		end
-		assert_response :success
-	end
+	# TODO: What should happen with the content, etc?
+	#test 'should destroy site' do
+	#	assert_difference 'Odania::Site.count', -1 do
+	#		delete :destroy, id: @site.id.to_s, format: :json
+	#	end
+	#	assert_response :success
+	#end
 end
