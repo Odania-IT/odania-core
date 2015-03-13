@@ -15,6 +15,9 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 # Load factories
 Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| require f }
 
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 # Setup mock config
 require 'support/test_setup'
 OdaniaTestMock.user_authenticated = true

@@ -1,6 +1,8 @@
 = OdaniaCore
 
 [![Build Status](https://travis-ci.org/Odania-IT/odania-core.png?branch=master)](https://travis-ci.org/Odania-IT/odania-core)
+[![Code Climate](https://codeclimate.com/github/Odania-IT/odania-core/badges/gpa.svg)](https://codeclimate.com/github/Odania-IT/odania-core)
+
 
 == Templates
 

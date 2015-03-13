@@ -15,6 +15,7 @@ env:
   - DB=postgresql
 matrix:
   allow_failures:
+    - rvm: jruby-19mode
     - rvm: ree
     - rvm: ruby-head
     - rvm: jruby-head
@@ -27,3 +28,6 @@ before_script:
   - cp test/dummy/config/database.yml.travis test/dummy/config/database.yml
   - mysql -e 'create database odania_core_test'
   - psql -c 'create database odania_core_test' -U postgres
+addons:
+  code_climate:
+    repo_token: 2b335554fb7a1f2c6b00f37eebda596c8b10fcd1717a8ee55dd449b60a21ac11
