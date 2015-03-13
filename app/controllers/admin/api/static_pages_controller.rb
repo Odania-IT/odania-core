@@ -1,4 +1,6 @@
 class Admin::Api::StaticPagesController < Admin::ApiController
+	include VerifyConcern
+
 	before_action :verify_site_and_menu
 	before_action :verify_content, except: [:index, :create]
 	
@@ -44,14 +46,6 @@ class Admin::Api::StaticPagesController < Admin::ApiController
 	def verify_content
 		@static_page = Odania::StaticPage.where('id = ? AND (site_id = ? OR is_global = ?) AND language_id = ?', params[:id], params[:site_id], true, @menu.language_id).first
 		bad_api_request('resource_not_found') if @static_page.nil?
-	end
-
-	def verify_site_and_menu
-		@site = Odania::Site.where(id: params[:site_id]).first
-		bad_api_request('resource_not_found') if @site.nil?
-
-		@menu = Odania::Menu.where(site_id: @site.id, id: params[:menu_id]).first
-		bad_api_request('resource_not_found') if @menu.nil?
 	end
 
 	def static_page_params

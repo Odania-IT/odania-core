@@ -1,4 +1,6 @@
 class Admin::Api::MediasController < Admin::ApiController
+	include VerifyConcern
+
 	before_action :verify_site_and_menu
 	before_action :verify_media, except: [:index, :create]
 	
@@ -44,14 +46,6 @@ class Admin::Api::MediasController < Admin::ApiController
 	def verify_media
 		@media = Odania::Media.where(site_id: params[:site_id], language_id: @menu.language_id, id: params[:id]).first
 		bad_api_request('resource_not_found') if @media.nil?
-	end
-
-	def verify_site_and_menu
-		@site = Odania::Site.where(id: params[:site_id]).first
-		bad_api_request('resource_not_found') if @site.nil?
-
-		@menu = Odania::Menu.where(site_id: @site.id, id: params[:menu_id]).first
-		bad_api_request('resource_not_found') if @menu.nil?
 	end
 
 	def media_params

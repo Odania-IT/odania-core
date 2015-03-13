@@ -1,4 +1,6 @@
 class Admin::Api::ContentsController < Admin::ApiController
+	include VerifyConcern
+
 	before_action :verify_site_and_menu
 	before_action :verify_content, except: [:index, :create]
 	
@@ -45,14 +47,6 @@ class Admin::Api::ContentsController < Admin::ApiController
 	def verify_content
 		@content = Odania::Content.where(site_id: params[:site_id], language_id: @menu.language_id, id: params[:id]).first
 		bad_api_request('resource_not_found') if @content.nil?
-	end
-
-	def verify_site_and_menu
-		@site = Odania::Site.where(id: params[:site_id]).first
-		bad_api_request('resource_not_found') if @site.nil?
-
-		@menu = Odania::Menu.where(site_id: @site.id, id: params[:menu_id]).first
-		bad_api_request('resource_not_found') if @menu.nil?
 	end
 
 	def content_params
