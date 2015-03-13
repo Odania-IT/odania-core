@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
 			resources :languages, except: [:new, :edit]
 		end
-		get '/templates/*template' => 'template#index'
+		get '/templates/*template' => 'template#index', as: :admin_template
 
 		get '/' => 'dashboard#index'
 	end
