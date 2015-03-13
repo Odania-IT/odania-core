@@ -8,5 +8,8 @@ end
 
 json.sites @sites, partial: 'admin/api/sites/show', as: :site
 json.languages @languages, partial: 'admin/api/languages/show', as: :language
-json.content_states Odania::Content.states.keys
-json.templates Odania.templates
+
+json.general do
+	json.templates Odania.templates
+	json.content_states Odania::Content.states.keys
+end

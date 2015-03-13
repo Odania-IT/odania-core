@@ -41,7 +41,7 @@
 					<label class="col-sm-2 control-label">State</label>
 
 					<div class="col-sm-10">
-						<select data-ng-model="content.state" data-ng-options="state for state in contentStates" class="form-control"></select>
+						<select data-ng-model="content.state" data-ng-options="state for state in general.content_states" class="form-control"></select>
 						<span data-ng-if="errors.state" style="color: red;">{{ printErrors(errors.state) }}</span>
 					</div>
 				</div>
