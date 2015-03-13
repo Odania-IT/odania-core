@@ -2,7 +2,11 @@
 <% end %>
 
 <div class="entry hentry">
-	<h1 class="entry-title"><%= @odania_content.title %></h1>
+	<h1 class="entry-title">
+		<a class="bookmark" href="<%= odania_content_path(id: @odania_content.to_param) %>" rel="tag" target="_blank">
+			<%= @odania_content.title %>
+		</a>
+	</h1>
 
 	<%= render :partial => 'odania/contents/content_info', :locals => {odania_content: @odania_content} %>
 

@@ -1,16 +1,16 @@
 <!-- Meta details. Date, author, category and comment -->
 <div class="meta">
 	<abbr class="updated published" title="<%= odania_content.created_at.iso8601 %>">
-		<i class="glyphicon glyphicon-calendar"></i><%= format_date(odania_content.created_at) %>
+		<i class="fa fa-calendar"></i><%= format_date(odania_content.created_at) %>
 	</abbr>
-	<i class="glyphicon glyphicon-user"></i> <%= t('authorship_by') %> <%= odania_content.user.name %>
-	<i class="glyphicon glyphicon-folder-open"></i>
+	<i class="fa fa-user"></i> <%= t('authorship_by') %> <%= odania_content.user.name %>
+	<i class="fa fa-folder-open"></i>
 	<% odania_content.tags.each_with_index do |tag, idx| %>
 		<% if idx > 0 %>, <% end %>
 		<%= link_to tag.name, tag_url(tag: tag.name.parameterize), {rel: 'tag'} %>
 	<% end %>
 	<span class="pull-right">
-		<i class="glyphicon glyphicon-eye-open"></i><%= odania_content.views %>
-		<i class="glyphicon glyphicon-download"></i><%= odania_content.clicks %>
+		<i class="fa fa-eye"></i><%= odania_content.views %>
+		<i class="fa fa-arrow-circle-o-down"></i><%= odania_content.clicks %>
 	</span>
 </div>
