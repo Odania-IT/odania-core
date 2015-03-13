@@ -9,6 +9,9 @@
 	<div data-ng-if="field.type == 'wysiwyg'">
 		<div data-text-angular data-ng-model="widget.content[parameter.key][idx][field.key]" data-placeholder="<%= t('admin.views.create_widget.wysiwyg.placeholder') %>"></div>
 	</div>
+	<div data-ng-if="field.type == 'textarea'">
+		<textarea data-ng-model="widget.content[parameter.key][idx][field.key]" data-placeholder="<%= t('admin.views.create_widget.textarea.placeholder') %>"></textarea>
+	</div>
 	<div data-ng-if="field.type == 'site'">
 		<select data-ng-model="widget.content[parameter.key][idx][field.key]" data-ng-options="site.id as site.name for site in sites" class="form-control"></select>
 	</div>

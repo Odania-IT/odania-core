@@ -88,11 +88,19 @@ module Odania
 	mattr_accessor :widgets
 	@@widgets = Set.new
 	@@widgets << {
+		template: 'odania/widgets/wysiwyg',
+		description: 'Wysiwyg editor',
+		is_array: false,
+		parameters: [
+			{name: 'Wysiwyg editor', key: 'content', type: 'wysiwyg'}
+		]
+	}
+	@@widgets << {
 		template: 'odania/widgets/plain_html',
 		description: 'HTML content',
 		is_array: false,
 		parameters: [
-			{name: 'HTML Content', key: 'content', type: 'wysiwyg'}
+			{name: 'HTML Content', key: 'content', type: 'textarea'}
 		]
 	}
 	@@widgets << {

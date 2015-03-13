@@ -54,6 +54,8 @@ de:
       create_widget:
         wysiwyg:
           placeholder: 'HTML Inhalt'
+        textarea:
+          placeholder: 'HTML Inhalt'
       edit_site:
         description:
           placeholder: 'Beschreibung'
