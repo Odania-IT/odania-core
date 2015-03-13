@@ -4,6 +4,8 @@
 
 == Templates
 
+Homepage: [Odania](http://www.odania.com)
+
 This project uses twitter bootstrap for the layout.
 
 This project rocks and uses MIT-LICENSE.
@@ -11,8 +13,6 @@ This project rocks and uses MIT-LICENSE.
 
 == TODO
 
-- Template & Widget Registry
-- Templates as simple folder (manage via upload, pull from registry)
 - Add documentation
 - Loading indicator
 - RSS Feeds
@@ -20,3 +20,4 @@ This project rocks and uses MIT-LICENSE.
 - Tag cloud as widget
 - Tags list in menu
 - Content Preview
+- Template & Widget Registry
