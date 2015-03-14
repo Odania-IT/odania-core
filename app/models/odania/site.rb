@@ -5,6 +5,8 @@ module Odania
 		include Odania::Taggable::TagCount
 
 		serialize :social, JSON
+		serialize :meta, JSON
+		serialize :additional_parameters, JSON
 
 		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
@@ -89,6 +91,9 @@ module Odania
 			self.is_active = true if self.is_active.nil?
 			self.tracking_code = '' if self.tracking_code.nil?
 			self.host = self.subdomain.nil? ? self.host : "#{self.subdomain}.#{self.domain}"
+			self.social = {none: ''} if self.social.nil?
+			self.additional_parameters = {none: ''} if self.additional_parameters.nil?
+			self.meta = {keywords: ''} if self.meta.nil?
 
 			true
 		end

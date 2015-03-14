@@ -1,4 +1,4 @@
-app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$routeParams', 'resolveService', function ($location, $scope, SiteResource, $routeParams, resolveService) {
+app.controller('EditSiteController', ['$location', '$rootScope', '$scope', 'SiteResource', '$routeParams', 'resolveService', function ($location, $rootScope, $scope, SiteResource, $routeParams, resolveService) {
 	console.log("controller :: EditSiteController");
 	var siteId = null;
 
@@ -39,6 +39,19 @@ app.controller('EditSiteController', ['$location', '$scope', 'SiteResource', '$r
 		else {
 			$scope.site.languages.push(languageId);
 		}
+	};
+
+	$scope.getCurrentTemplate = function () {
+		var currentTemplate = null;
+
+		angular.forEach($rootScope.general.templates, function(template, idx) {
+			if (template.template == $scope.site.template) {
+				currentTemplate = template;
+				return;
+			}
+		});
+
+		return currentTemplate;
 	};
 
 	$scope.saveSite = saveSite;

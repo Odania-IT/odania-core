@@ -1,5 +1,6 @@
 json.id site.id
 json.name site.name
+json.title site.title
 json.host site.host
 json.domain site.domain
 json.subdomain site.subdomain
@@ -17,6 +18,8 @@ json.imprint_id site.imprint_id
 json.terms_and_conditions_id site.terms_and_conditions_id
 json.default_widget_id site.default_widget_id
 json.social site.social
+json.meta site.meta
+json.additional_parameters site.additional_parameters
 
 json.menus site.menus, partial: 'admin/api/menus/show', as: :menu
 json.languages site.menus.pluck(:language_id)

@@ -13,6 +13,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	def create
 		@site = Odania::Site.new(site_params)
 		@site.is_default = true if Odania::Site.where(is_default: true).count == 0
+		@site.additional_parameters = params[:site][:additional_parameters]
 
 		if @site.save
 			update_languages
@@ -25,6 +26,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	end
 
 	def update
+		@site.additional_parameters = params[:site][:additional_parameters]
 		if @site.update(site_params)
 			update_languages
 
@@ -50,9 +52,10 @@ class Admin::Api::SitesController < Admin::ApiController
 	end
 
 	def site_params
-		params.require(:site).permit(:name, :domain, :subdomain, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
+		params.require(:site).permit(:name, :title, :domain, :subdomain, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
 														:default_from_email, :notify_email_address, :imprint_id, :terms_and_conditions_id,
-														:default_widget_id, :redirect_to_id, :template, :default_language_id, social: [:linked_in, :facebook, :google_plus, :twitter])
+														:default_widget_id, :redirect_to_id, :template, :default_language_id, social: [:linked_in, :facebook, :google_plus, :twitter],
+														meta: [:keywords])
 	end
 
 	def update_languages

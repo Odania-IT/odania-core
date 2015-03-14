@@ -7,6 +7,14 @@
 	</div>
 </div>
 <div class="form-group">
+	<label class="col-sm-2 control-label" for="site_title">Title</label>
+
+	<div class="col-sm-10">
+		<input type="text" id="site_title" class="form-control" data-ng-model="site.title" placeholder="Site Title"/>
+		<span data-ng-if="errors.title" style="color: red;">{{ printErrors(errors.title) }}</span>
+	</div>
+</div>
+<div class="form-group">
 	<label class="col-sm-2 control-label" for="site_domain">Host</label>
 
 	<div class="col-sm-10">
@@ -50,15 +58,6 @@
 
 	<div class="col-sm-10">
 		<select data-ng-model="site.redirect_to_id" class="form-control" data-ng-options="site.id as site.name for site in sites"></select>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">Template</label>
-
-	<div class="col-sm-10">
-		<select data-ng-model="site.template" class="form-control" data-ng-options="template.template as template.name for (name, template) in general.templates">
-			<option value="">Default</option>
-		</select>
 	</div>
 </div>
 <div class="form-group">
