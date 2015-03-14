@@ -2,7 +2,7 @@ class Odania::ContentsController < ApplicationController
 	before_filter :valid_site!
 
 	def index
-		@odania_contents = current_site.contents
+		@odania_contents = current_site.contents.active
 
 		unless params[:tag].nil?
 			odania_tag = Odania::Tag.where(name: params[:tag], language_id: current_menu.language_id).first

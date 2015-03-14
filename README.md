@@ -23,6 +23,7 @@ This project rocks and uses MIT-LICENSE.
 - Tags list in menu
 - Content Preview
 - Template & Widget Registry
+- Widgets per Domain
 
 
 - TODO: What should happen with the content, etc if a site is deleted? 
