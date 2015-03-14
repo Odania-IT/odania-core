@@ -5,7 +5,7 @@ class AddFieldsToSite < ActiveRecord::Migration
 		add_column :odania_sites, :additional_parameters, :text
 
 		Odania::Site.update_all('title = name')
-		Odania::Site.update_all(additional_parameters: '{"none":""}')
-		Odania::Site.update_all(meta: '{"keywords":""}')
+		Odania::Site.update_all('additional_parameters = "{\"none\":\"\"}"')
+		Odania::Site.update_all('meta = "{\"keywords\":\"\"}"')
 	end
 end
