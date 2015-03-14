@@ -12,10 +12,4 @@ class Odania::Widget < ActiveRecord::Base
 
 		true
 	end
-
-	after_save do
-		Rails.cache.delete("show.widget.#{self.id}")
-
-		true
-	end
 end
