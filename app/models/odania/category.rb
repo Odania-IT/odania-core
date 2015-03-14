@@ -7,6 +7,10 @@ class Odania::Category < ActiveRecord::Base
 	validates_length_of :title, minimum: 1
 	validates_uniqueness_of :title, scope: [:site_id, :language_id]
 
+	def to_param
+		"#{self.id}-#{self.title.parameterize}"
+	end
+
 	before_create do
 		self.count = 0 if self.count.nil?
 

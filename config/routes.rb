@@ -65,6 +65,9 @@ Rails.application.routes.draw do
 		get 'tags/auto_complete' => 'odania/tags#auto_complete'
 		get 'tags/:tag' => 'odania/tags#show', as: :tag
 
+		get 'categories' => 'odania/categories#index'
+		get 'categories/:id' => 'odania/categories#show', as: :category
+
 		get 'imprint' => 'odania/info#imprint'
 		get 'terms_and_conditions' => 'odania/info#terms_and_conditions'
 		get 'contact' => 'odania/info#contact'

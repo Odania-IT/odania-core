@@ -1,0 +1,13 @@
+<h1><%= t('Category _category', category: @category.title) %></h1>
+
+<p>
+<table>
+	<% @category_xrefs.each do |category_xref| %>
+		<tr>
+			<td>
+				<%= link_to category_xref.ref.title, polymorphic_url([category_xref.ref], {locale: category_xref.ref.language.iso_639_1}) %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+</p>

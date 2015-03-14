@@ -43,6 +43,12 @@ module Odania
 
 				return nil
 			end
+
+			def validate_category_list(menu_item, target_data)
+				menu_item.full_path = 'categories'
+
+				nil
+			end
 		end
 	end
 end

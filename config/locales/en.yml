@@ -10,6 +10,8 @@ en:
   Language: 'Language'
   No content defined: 'No content defined'
   Dashboard: 'Dashboard'
+  Categories: 'Categories'
+  Category _category: 'Category %{category}'
   odania:
     save_and_back: 'Save & Back'
     save: 'Save'

@@ -11,6 +11,9 @@ module Odania
 		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
 								render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url',
 								initial_data: 'admin/api/menu_items/empty_inital_data'}
+		@@targets['CATEGORY_LIST'] = {type: 'CATEGORY_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_category_list',
+												render_func: '', selector: 'admin/odania/categories/choose_category_list',
+												initial_data: 'admin/api/menu_items/empty_inital_data'}
 
 		class << self
 			def get_target(menu_item)
