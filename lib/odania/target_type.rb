@@ -14,6 +14,9 @@ module Odania
 		@@targets['CATEGORY_LIST'] = {type: 'CATEGORY_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_category_list',
 												render_func: '', selector: 'admin/odania/categories/choose_category_list',
 												initial_data: 'admin/api/menu_items/empty_inital_data'}
+		@@targets['TAG_LIST'] = {type: 'TAG_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_tag_list',
+												render_func: '', selector: 'admin/odania/tags/choose_tag_list',
+												initial_data: 'admin/api/menu_items/empty_inital_data'}
 
 		class << self
 			def get_target(menu_item)

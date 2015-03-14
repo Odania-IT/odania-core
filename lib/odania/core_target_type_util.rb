@@ -49,6 +49,12 @@ module Odania
 
 				nil
 			end
+
+			def validate_tag_list(menu_item, target_data)
+				menu_item.full_path = 'tags'
+
+				nil
+			end
 		end
 	end
 end
