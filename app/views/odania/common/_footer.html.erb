@@ -56,7 +56,7 @@
 						<div class="widget">
 							<h5><%= t('odania.About Us') %></h5>
 							<hr/>
-							<p><%= current_site.description.html_safe %></p>
+							<p><%=raw current_site.description %></p>
 						</div>
 					</div>
 
@@ -97,4 +97,4 @@
 	</div>
 </footer>
 
-<%= current_site.tracking_code.html_safe %>
+<%=raw current_site.tracking_code %>

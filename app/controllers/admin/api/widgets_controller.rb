@@ -1,4 +1,6 @@
 class Admin::Api::WidgetsController < Admin::ApiController
+	include CleanArrayConcern
+
 	before_action :verify_widget, except: [:index, :create]
 	
 	def index
@@ -54,7 +56,7 @@ class Admin::Api::WidgetsController < Admin::ApiController
 		Odania::widgets.each do |widget|
 			if widget[:template].eql? params[:widget][:template]
 				if widget[:is_array]
-					@widget.content = params[:widget][:content]
+					@widget.content = clean_arrays(params[:widget][:content])
 				else
 					@widget.content = params[:widget][:content]
 				end
