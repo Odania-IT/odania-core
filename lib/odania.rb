@@ -143,6 +143,28 @@ module Odania
 			]}
 		]
 	}
+	@@widgets << {
+		template: 'odania/widgets/top_categories',
+		description: 'Top categories',
+		is_array: false,
+		parameters: [
+			{name: 'Amount', key: 'amount', type: 'number'}
+		]
+	}
+	@@widgets << {
+		template: 'odania/widgets/recent_posts',
+		description: 'Recent posts',
+		is_array: false,
+		parameters: [
+			{name: 'Amount', key: 'amount', type: 'number'}
+		]
+	}
+	@@widgets << {
+		template: 'odania/widgets/search_form',
+		description: 'Search',
+		is_array: false,
+		parameters: []
+	}
 
 	def self.widgets_for_select
 		result = []

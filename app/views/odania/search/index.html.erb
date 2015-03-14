@@ -1,0 +1,39 @@
+<h1><%= t('Search') %></h1>
+
+<%= form_tag search_path(locale: I18n.locale.to_s), {class: 'form-search'} do %>
+	<input type="text" value="<%= @search_value %>" name="search" class="input-medium"/>
+	<button type="submit" class="btn"><%= t('Search') %></button>
+<% end %>
+
+<table>
+	<tr>
+		<th><%= t('Categories') %></th>
+	</tr>
+	<% @contents.each do |content| %>
+		<tr>
+			<td><%= link_to content.title, odania_content_path(id: content.to_param, locale: I18n.locale.to_s) %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<th><%= t('Categories') %></th>
+	</tr>
+	<% @categories.each do |category| %>
+		<tr>
+			<td><%= link_to category.title, category_path(category, locale: I18n.locale.to_s), {:rel => 'category'} %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<th><%= t('Tags') %></th>
+	</tr>
+	<% @tags.each do |tag| %>
+		<tr>
+			<td><%= link_to tag.name, tag_path(tag: tag.name), {:rel => 'tag'} %></td>
+		</tr>
+	<% end %>
+</table>

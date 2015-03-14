@@ -73,6 +73,9 @@ Rails.application.routes.draw do
 		get 'contact' => 'odania/info#contact'
 		post 'contact' => 'odania/info#contact_send'
 
+		get 'search' => 'odania/search#index'
+		post 'search' => 'odania/search#search'
+
 		get '/*path' => 'odania/menu#show_page'
 		root to: 'odania/menu#menu_index', as: :locale_root
 	end

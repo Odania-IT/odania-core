@@ -12,6 +12,10 @@ de:
   Dashboard: 'Dashboard'
   Categories: 'Kategorien'
   Category _category: 'Kategorie %{category}'
+  Recent Posts: 'Neueste Beiträge'
+  Search: 'Suche'
+  Top Categories: 'Top Kategorien'
+  Newest Pages: 'Neueste Seiten'
   odania:
     save_and_back: 'Speichern & Zurück'
     save: 'Speichern'

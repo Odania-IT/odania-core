@@ -10,6 +10,5 @@ class Odania::CategoriesController < ApplicationController
 		return render_not_found if @category.nil?
 
 		@category_xrefs = @category.category_xrefs
-		return render_not_found if @category_xrefs.empty?
 	end
 end
