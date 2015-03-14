@@ -4,7 +4,7 @@ app.controller('MenuItemController', ['$rootScope', '$scope', 'MenuItemResource'
 
 	function loadMenuItems(id) {
 		MenuItemResource.get({siteId: $rootScope.currentSite.id, menuId: menuId, id: id}).$promise.then(function (data) {
-			$scope.menu = data;
+			$scope.menu_item = data;
 		});
 	}
 

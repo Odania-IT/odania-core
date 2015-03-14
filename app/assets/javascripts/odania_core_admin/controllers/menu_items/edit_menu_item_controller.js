@@ -19,7 +19,7 @@ app.controller('EditMenuItemController', ['$location', '$scope', '$rootScope', '
 	}
 
 	function onSaveSuccess() {
-		$location.path('/menus/'+menuId+'/menu_items');
+		$location.path('/menus');
 	}
 
 	function onSaveError(data) {
