@@ -13,7 +13,7 @@ class Odania::ContentsController < ApplicationController
 	end
 
 	def show
-		@odania_content = current_site.contents.where(id: params[:id], language_id: current_menu.language_id).first
+		@odania_content = current_site.contents.active.where(id: params[:id], language_id: current_menu.language_id).first
 
 		return render_not_found if @odania_content.nil?
 		return redirect_to odania_content_path(id: @odania_content.to_param) unless @odania_content.to_param.eql? params[:id]

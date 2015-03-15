@@ -2,12 +2,15 @@
 
 <p>
 <table>
-	<% @category_xrefs.each do |category_xref| %>
-		<tr>
-			<td>
-				<%= link_to category_xref.ref.title, polymorphic_url([category_xref.ref], {locale: category_xref.ref.language.iso_639_1}) %>
-			</td>
-		</tr>
+	<% @category_xrefs.each do |category_xref|
+		ref =  category_xref.ref %>
+		<% if ref.is_active %>
+			<tr>
+				<td>
+					<%= link_to ref.title, polymorphic_url([ref], {locale: ref.language.iso_639_1}) %>
+				</td>
+			</tr>
+		<% end %>
 	<% end %>
 </table>
 </p>
