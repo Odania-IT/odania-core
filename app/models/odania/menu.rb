@@ -15,4 +15,10 @@ class Odania::Menu < ActiveRecord::Base
 	def get_target_path
 		"/#{self.language.iso_639_1}"
 	end
+
+	before_create do
+		self.display_categories = true if self.display_categories.nil?
+
+		true
+	end
 end

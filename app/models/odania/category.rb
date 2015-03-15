@@ -13,7 +13,6 @@ class Odania::Category < ActiveRecord::Base
 
 	before_create do
 		self.count = 0 if self.count.nil?
-		self.display_categories = true if self.display_categories.nil?
 
 		true
 	end
