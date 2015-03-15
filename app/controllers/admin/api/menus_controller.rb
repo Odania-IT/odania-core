@@ -51,6 +51,6 @@ class Admin::Api::MenusController < Admin::ApiController
 	end
 
 	def content_params
-		params.require(:menu).permit(:published, :is_default_menu, :widget_id, :language_id)
+		params.require(:menu).permit(:published, :is_default_menu, :widget_id, :language_id, :display_categories)
 	end
 end
