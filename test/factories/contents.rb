@@ -8,7 +8,7 @@ FactoryGirl.define do
 		clicks 1
 		views 1
 		published_at '2014-02-12 21:54:11'
-		is_active true
+		state 'PUBLISHED'
 		site
 		language
 		user
