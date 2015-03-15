@@ -17,6 +17,7 @@ module Odania
 		has_many :tags, class_name: 'Odania::Tag'
 		has_many :widgets, class_name: 'Odania::Widget'
 		has_many :categories, class_name: 'Odania::Category'
+		has_many :static_pages, class_name: 'Odania::StaticPage'
 
 		belongs_to :imprint, class_name: 'Odania::StaticPage'
 		belongs_to :terms_and_conditions, class_name: 'Odania::StaticPage'

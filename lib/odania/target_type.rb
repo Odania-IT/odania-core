@@ -3,10 +3,10 @@ module Odania
 		mattr_reader :targets
 		@@targets = Hash.new
 		@@targets['CONTENT'] = {type: 'CONTENT', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_id',
-										render_func: 'render_content', selector: 'admin/odania/contents/choose_content',
+										render_func: '', selector: 'admin/odania/contents/choose_content',
 										initial_data: 'admin/api/menu_items/initial_data'}
 		@@targets['CONTENT_LIST'] = {type: 'CONTENT_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_content_list',
-										render_func: 'render_content_list', selector: 'admin/odania/contents/choose_content_list',
+										render_func: '', selector: 'admin/odania/contents/choose_content_list',
 										initial_data: 'admin/api/menu_items/empty_inital_data'}
 		@@targets['URL'] = {type: 'URL', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_url',
 								render_func: 'render_url', selector: 'admin/odania/menu_items/choose_url',
@@ -17,6 +17,9 @@ module Odania
 		@@targets['TAG_LIST'] = {type: 'TAG_LIST', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_tag_list',
 												render_func: '', selector: 'admin/odania/tags/choose_tag_list',
 												initial_data: 'admin/api/menu_items/empty_inital_data'}
+		@@targets['STATIC_PAGE'] = {type: 'STATIC_PAGE', module: 'Odania::CoreTargetTypeUtil', validator_func: 'validate_static_page_id',
+										render_func: '', selector: 'admin/odania/static_pages/choose_static_page',
+										initial_data: 'admin/api/menu_items/initial_data'}
 
 		class << self
 			def get_target(menu_item)

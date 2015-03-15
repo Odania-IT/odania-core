@@ -68,6 +68,8 @@ Rails.application.routes.draw do
 		get 'categories' => 'odania/categories#index'
 		get 'categories/:id' => 'odania/categories#show', as: :category
 
+		get 'static_pages/:id' => 'odania/static_pages#show', as: :static_page
+
 		get 'imprint' => 'odania/info#imprint'
 		get 'terms_and_conditions' => 'odania/info#terms_and_conditions'
 		get 'contact' => 'odania/info#contact'

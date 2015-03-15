@@ -1,0 +1,10 @@
+<!-- Meta details. Date, author, category and comment -->
+<div class="meta">
+	<abbr class="updated published" title="<%= static_page.created_at.iso8601 %>">
+		<i class="fa fa-calendar"></i><%= format_date(static_page.created_at) %>
+	</abbr>
+	<span class="pull-right">
+		<i class="fa fa-eye"></i><%= static_page.views %>
+		<i class="fa fa-arrow-circle-o-down"></i><%= static_page.clicks %>
+	</span>
+</div>

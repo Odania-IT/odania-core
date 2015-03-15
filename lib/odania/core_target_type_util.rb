@@ -55,6 +55,18 @@ module Odania
 
 				nil
 			end
+
+			# Single static page
+			def validate_static_page_id(menu_item, target_data)
+				return 'invalid static page id' if target_data['id'].nil?
+
+				content = Odania::StaticPage.where(id: target_data['id']).first
+				return 'invalid static page id' if content.nil?
+
+				menu_item.full_path = "static_pages/#{content.to_param}"
+
+				return nil
+			end
 		end
 	end
 end
