@@ -8,4 +8,28 @@ class Odania::Api::AuthenticateController < Odania::ApiController
 		return bad_api_request('invalid_token') if @device.nil?
 		@user = @device.user
 	end
+
+	def development
+		device_info = params[:device]
+		return bad_api_request('unauthorized'), status: :unauthorized unless 'development'.eql? Rails.env
+
+		@device = Odania::UserDevice.where(uuid: device_info['uuid'], platform: device_info['platform']).first
+		if @device.nil?
+			Odania::UserDevice.transaction do
+				@device = Odania::UserDevice.new(uuid: device_info['uuid'], platform: device_info['platform'], model: device_info['model'], version: device_info['version'])
+				user = Odania::User.create(name: 'Developer', email: 'developer@example.com')
+				@device.user_id = user.id
+				@device.save!
+			end
+		end
+
+		@user = @device.user
+
+		render action: :token
+	end
+
+	def facebook
+
+		render action: :token
+	end
 end

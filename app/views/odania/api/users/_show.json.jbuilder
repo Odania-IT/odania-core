@@ -1,2 +1,2 @@
-json.id member.id
-json.name member.name
+json.id user.id
+json.name user.name

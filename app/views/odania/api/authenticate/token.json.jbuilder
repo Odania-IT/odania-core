@@ -1,6 +1,4 @@
 json.user do
-	unless @user.nil?
-		json.partial! partial: 'api/users/show', locals: {user: @user}
-		json.token @device.token unless @device.nil?
-	end
+	json.partial! partial: 'odania/api/users/show', locals: {user: @user}
 end
+json.token @device.token

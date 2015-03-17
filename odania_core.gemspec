@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
 	s.add_dependency 'coffee-rails', '~> 4.1.0'
 	s.add_dependency 'jquery-rails'
 	s.add_dependency 'will_paginate', '~> 3.0'
+	s.add_dependency 'rack-cors'
 
 	# Newer sanitize version >= 3 is not compatible with jruby due to dependency on nokogumbo
 	s.add_dependency 'sanitize', '~> 2.1'

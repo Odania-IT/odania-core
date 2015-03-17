@@ -2,7 +2,7 @@ class Odania::ApiController < ApplicationController
 	after_action :add_flash_to_header
 
 	# @TODO maybe we can add it as header?
-	skip_before_action :verify_authenticity_token, :valid_site!
+	skip_before_action :verify_authenticity_token
 
 	private
 
@@ -22,9 +22,9 @@ class Odania::ApiController < ApplicationController
 	end
 
 	def verify_api_user
-		@device = Odania::UserDevice.where(token: params[:token]).first
-		return render json: {error: 'unauthorized'}, status: :unauthorized if @device.nil?
+		@current_device = Odania::UserDevice.where(token: request.headers['X-API-KEY']).first
+		return render json: {error: 'unauthorized'}, status: :unauthorized if @current_device.nil?
 
-		@user = @device.user
+		@current_user = @current_device.user
 	end
 end

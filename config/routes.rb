@@ -57,12 +57,16 @@ Rails.application.routes.draw do
 	end
 
 	namespace :odania do
-		namespace :api do
+		namespace :api, defaults: {format: :json} do
 			resources :categories
 			resources :contents
 			resources :sites
 			resources :static_pages
 			get 'users/me' => 'users#me'
+			get 'bootstrap' => 'bootstrap#index'
+			post 'authenticate/token' => 'authenticate#token'
+			post 'authenticate/development' => 'authenticate#development'
+			post 'authenticate/facebook' => 'authenticate#facebook'
 		end
 	end
 
