@@ -1,0 +1,14 @@
+json.id content.id
+json.title content.title
+json.body content.body
+json.body_short content.body_short
+json.clicks content.clicks
+json.views content.views
+json.published_at content.published_at.strftime('%s')
+json.site_id content.site_id
+json.language_id content.language_id
+json.user_id content.user_id
+json.created_at content.created_at.to_i
+json.updated_at content.updated_at.to_i
+json.categories content.categories
+json.tags content.tags

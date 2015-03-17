@@ -2,7 +2,7 @@ class Admin::Api::StaticPagesController < Admin::ApiController
 	include VerifyConcern
 
 	before_action :verify_site_and_menu
-	before_action :verify_content, except: [:index, :create]
+	before_action :verify_static_page, except: [:index, :create]
 	
 	def index
 		@static_pages = Odania::StaticPage.where('(site_id = ? OR is_global = ?) AND language_id = ?', params[:site_id], true, @menu.language_id).order('created_at DESC')
@@ -43,7 +43,7 @@ class Admin::Api::StaticPagesController < Admin::ApiController
 
 	private
 
-	def verify_content
+	def verify_static_page
 		@static_page = Odania::StaticPage.where('id = ? AND (site_id = ? OR is_global = ?) AND language_id = ?', params[:id], params[:site_id], true, @menu.language_id).first
 		bad_api_request('resource_not_found') if @static_page.nil?
 	end

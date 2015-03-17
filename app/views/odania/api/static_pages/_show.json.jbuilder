@@ -1,0 +1,9 @@
+json.id static_page.id
+json.title static_page.title
+json.body static_page.body
+json.clicks static_page.clicks
+json.views static_page.views
+json.site_id static_page.site_id
+json.language_id static_page.language_id
+json.created_at static_page.created_at.to_i
+json.updated_at static_page.updated_at.to_i

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
 	sequence :language_sequence do |n|
-		result = "aa"
+		result = 'aa'
 		n.times { result.succ! }
 		result
 	end
