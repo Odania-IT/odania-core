@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315204519) do
+ActiveRecord::Schema.define(version: 20150317160217) do
 
   create_table "odania_categories", force: :cascade do |t|
     t.integer  "site_id"
@@ -174,6 +174,19 @@ ActiveRecord::Schema.define(version: 20150315204519) do
   end
 
   add_index "odania_tags", ["site_id", "language_id", "name"], name: "index_odania_tags_on_site_id_and_language_id_and_name", unique: true
+
+  create_table "odania_user_devices", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "platform"
+    t.string   "token"
+    t.string   "uuid"
+    t.string   "model"
+    t.string   "version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "odania_user_devices", ["user_id"], name: "index_odania_user_devices_on_user_id"
 
   create_table "odania_user_roles", force: :cascade do |t|
     t.integer "user_id"

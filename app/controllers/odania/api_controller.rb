@@ -20,4 +20,11 @@ class Odania::ApiController < ApplicationController
 	def bad_api_request(msg)
 		render json: {message: msg}, status: :bad_request
 	end
+
+	def verify_api_user
+		@device = Odania::UserDevice.where(token: params[:token]).first
+		return render json: {error: 'unauthorized'}, status: :unauthorized if @device.nil?
+
+		@user = @device.user
+	end
 end

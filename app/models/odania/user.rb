@@ -6,6 +6,7 @@ class Odania::User < ActiveRecord::Base
 	has_many :roles, class_name: 'Odania::UserRole'
 	belongs_to :site, class_name: 'Odania::Site'
 	belongs_to :language, class_name: 'Odania::Language'
+	has_many :devices, class_name: 'Odania::UserDevice'
 
 	def admin?
 		role = self.roles.where(role: Odania::UserRole.roles[:admin]).first
