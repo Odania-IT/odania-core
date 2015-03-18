@@ -13,13 +13,16 @@ class Odania::Api::AuthenticateController < Odania::ApiController
 		device_info = params[:device]
 		return bad_api_request('unauthorized'), status: :unauthorized unless 'development'.eql? Rails.env
 
-		@device = Odania::UserDevice.where(uuid: device_info['uuid'], platform: device_info['platform']).first
-		if @device.nil?
-			Odania::UserDevice.transaction do
-				@device = Odania::UserDevice.new(uuid: device_info['uuid'], platform: device_info['platform'], model: device_info['model'], version: device_info['version'])
-				user = Odania::User.create(name: 'Developer', email: 'developer@example.com')
-				@device.user_id = user.id
-				@device.save!
+		Odania::UserDevice.transaction do
+			@device = Odania::UserDevice.where(uuid: device_info['uuid'], platform: device_info['platform']).first
+			if @device.nil?
+				Odania::UserDevice.transaction do
+					@device = Odania::UserDevice.new(uuid: device_info['uuid'], platform: device_info['platform'], model: device_info['model'], version: device_info['version'])
+					user = Odania::User.where(name: 'Developer', email: 'developer@example.com').first
+					user = Odania::User.create(name: 'Developer', email: 'developer@example.com') if user.nil?
+					@device.user_id = user.id
+					@device.save!
+				end
 			end
 		end
 
