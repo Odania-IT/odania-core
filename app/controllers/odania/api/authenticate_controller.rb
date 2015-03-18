@@ -10,7 +10,7 @@ class Odania::Api::AuthenticateController < Odania::ApiController
 	end
 
 	def development
-		device_info = params[:device]
+		device_info = params[:device].nil? ? 'development-uuid' : params[:device]
 		return bad_api_request('unauthorized'), status: :unauthorized unless 'development'.eql? Rails.env
 
 		Odania::UserDevice.transaction do
