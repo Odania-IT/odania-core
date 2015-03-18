@@ -27,4 +27,8 @@ class Odania::ApiController < ApplicationController
 
 		@current_user = @current_device.user
 	end
+
+	def validate_own_resource
+		return render json: {error: 'unauthorized'}, status: :unauthorized unless @current_user.id.eql? params[:user_id]
+	end
 end
