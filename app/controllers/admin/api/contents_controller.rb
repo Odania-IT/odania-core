@@ -9,7 +9,7 @@ class Admin::Api::ContentsController < Admin::ApiController
 	end
 
 	def show
-		@widgets = Odania::Widget.where(site_id: @site.id, language_id: @menu.language_id)
+		@widgets = Odania::Widget.where('(site = ? OR is_global = ?) AND language_id = ?', @site.id, true, @menu.language_id)
 		@categories = Odania::Category.where(site_id: @site.id, language_id: @menu.language_id)
 	end
 
