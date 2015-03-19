@@ -1,4 +1,6 @@
 class Odania::SearchController < ApplicationController
+	before_action :valid_site!
+
 	def index
 		@search_value = ''
 		@contents = []
