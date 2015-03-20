@@ -92,7 +92,7 @@ module Odania
 		before_save do
 			self.is_active = true if self.is_active.nil?
 			self.tracking_code = '' if self.tracking_code.nil?
-			self.host = self.subdomain.nil? ? self.host : "#{self.subdomain}.#{self.domain}"
+			self.host = self.subdomain.nil? ? self.domain : "#{self.subdomain}.#{self.domain}"
 			self.social = {none: ''} if self.social.nil?
 			self.additional_parameters = {none: ''} if self.additional_parameters.nil?
 			self.meta = {keywords: ''} if self.meta.nil?
