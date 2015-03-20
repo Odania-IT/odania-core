@@ -21,6 +21,11 @@ class Odania::ApiController < ApplicationController
 		render json: {message: msg}, status: :bad_request
 	end
 
+	def load_api_user
+		@current_device = Odania::UserDevice.where(token: request.headers['X-API-KEY']).first
+		@current_user = @current_device.user unless @current_device.nil?
+	end
+
 	def verify_api_user
 		@current_device = Odania::UserDevice.where(token: request.headers['X-API-KEY']).first
 		return render json: {error: 'unauthorized'}, status: :unauthorized if @current_device.nil?
