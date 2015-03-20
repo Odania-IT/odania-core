@@ -1,5 +1,5 @@
 class Odania::StatisticsController < ApplicationController
-	skip_before_filter :valid_site!
+	skip_before_action :valid_site!
 	include Viewable
 
 	def track_view

@@ -26,6 +26,20 @@ app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', 'MenuI
 		loadMenu();
 	});
 
+	$scope.getMenuItem = function (id) {
+		var menuItem;
+
+		for (var i=0 ; i<$scope.menuItems.length ; i++) {
+			menuItem = $scope.menuItems[i];
+
+			if (menuItem.id == id) {
+				return menuItem;
+			}
+		}
+
+		return null;
+	};
+
 	$scope.saveMenu = saveMenu;
 	$scope.menu = {
 		'language_id': null

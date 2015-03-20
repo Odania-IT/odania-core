@@ -29,7 +29,8 @@ app.controller('EditMenuItemController', ['$location', '$scope', '$rootScope', '
 
 	$scope.saveMenuItem = saveMenuItem;
 	$scope.menuItem = {
-		'title': null
+		'title': null,
+		'published': true
 	};
 	$scope.targetData = {};
 
@@ -38,7 +39,7 @@ app.controller('EditMenuItemController', ['$location', '$scope', '$rootScope', '
 		loadMenuItem(menuItemId);
 	}
 
-	MenuItemResource.initialData({siteId: $rootScope.currentSite.id, menuId: menuId}).$promise.then(function (data) {
+	MenuItemResource.initialData({siteId: $rootScope.currentSite.id, menuId: menuId, menu_item_id: menuItemId}).$promise.then(function (data) {
 		$scope.data = data;
 	});
 }]);

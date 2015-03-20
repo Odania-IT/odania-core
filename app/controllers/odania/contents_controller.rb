@@ -1,5 +1,5 @@
 class Odania::ContentsController < ApplicationController
-	before_filter :valid_site!
+	before_action :valid_site!
 
 	def index
 		@odania_contents = current_site.contents.active

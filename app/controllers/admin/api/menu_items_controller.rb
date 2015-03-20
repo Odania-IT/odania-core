@@ -48,6 +48,10 @@ class Admin::Api::MenuItemsController < Admin::ApiController
 	end
 
 	def initial_data
+		@menu_items = Odania::MenuItem.where(menu_id: @menu.id)
+		@menu_items = @menu_items.where('id != ?', params[:menu_item_id]) unless params[:menu_item_id].nil?
+		@static_pages = Odania::StaticPage.where(site_id: @menu.site_id, language_id: @menu.language_id)
+		@contents = Odania::Content.where(site_id: @menu.site_id, language_id: @menu.language_id)
 	end
 
 	def set_default

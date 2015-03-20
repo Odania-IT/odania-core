@@ -1,6 +1,6 @@
 class Odania::MenuController < ApplicationController
-	before_filter :valid_site!
-	before_filter :valid_menu!, except: [:index]
+	before_action :valid_site!
+	before_action :valid_menu!, except: [:index]
 
 	def index
 		accepted_langs = current_site.menus.map { |o| o.language.iso_639_1 }
