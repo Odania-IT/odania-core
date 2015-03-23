@@ -53,6 +53,12 @@ Rails.application.routes.draw do
 	end
 
 	namespace :protected do
+		namespace :api, defaults: {format: :json} do
+			get 'bootstrap' => 'bootstrap#index'
+			post 'bootstrap/change_language' => 'bootstrap#change_language'
+		end
+		get '/templates/*template' => 'template#index', as: :protected_template
+
 		get '/' => 'dashboard#index'
 	end
 

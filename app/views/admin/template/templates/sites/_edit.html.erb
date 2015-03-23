@@ -9,14 +9,15 @@
 				<tab heading="Email & Tracking"><%= render partial: 'admin/template/templates/sites/tab_mail_tracking' %></tab>
 				<tab heading="Social"><%= render partial: 'admin/template/templates/sites/tab_social' %></tab>
 				<tab heading="Template"><%= render partial: 'admin/template/templates/sites/tab_template' %></tab>
+				<tab heading="Plugins"><%= render partial: 'admin/template/templates/sites/tab_plugins' %></tab>
 			</tabset>
 		</div>
 		<div class="col-md-3">
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button data-ng-click="saveSite()" class="btn btn-primary">Save</button>
+					<button data-ng-click="saveSite()" class="btn btn-primary"><%= t('general.save') %></button>
 
-					<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+					<span data-ng-if="errors" style="color: red;"><%= t('general.Please correct the errors') %></span>
 				</div>
 			</div>
 

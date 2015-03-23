@@ -10,14 +10,15 @@ module Odania
 
 		belongs_to :default_language, :class_name => 'Odania::Language'
 		belongs_to :redirect_to, :class_name => 'Odania::Site'
-		has_many :menus, :class_name => 'Odania::Menu'
-		has_many :contents, :class_name => 'Odania::Content'
+		has_many :menus, :class_name => 'Odania::Menu', dependent: :delete_all
+		has_many :contents, :class_name => 'Odania::Content', dependent: :delete_all
 		belongs_to :default_widget, class_name: 'Odania::Widget'
 
 		has_many :tags, class_name: 'Odania::Tag'
-		has_many :widgets, class_name: 'Odania::Widget'
-		has_many :categories, class_name: 'Odania::Category'
-		has_many :static_pages, class_name: 'Odania::StaticPage'
+		has_many :widgets, class_name: 'Odania::Widget', dependent: :delete_all
+		has_many :categories, class_name: 'Odania::Category', dependent: :delete_all
+		has_many :static_pages, class_name: 'Odania::StaticPage', dependent: :delete_all
+		has_many :site_plugins, class_name: 'Odania::SitePlugin', dependent: :delete_all
 
 		belongs_to :imprint, class_name: 'Odania::StaticPage'
 		belongs_to :terms_and_conditions, class_name: 'Odania::StaticPage'
@@ -45,6 +46,11 @@ module Odania
 			if !self.default_widget_id.nil? and !self.id.eql?(self.default_widget.site_id)
 				errors.add(:default_widget_id, 'invalid widget')
 			end
+		end
+
+		def plugin_active?(name)
+			@active_plugins = self.site_plugins.pluck(:plugin_name) if @active_plugins.nil?
+			@active_plugins.include?(name)
 		end
 
 		def get_current_menu(locale)

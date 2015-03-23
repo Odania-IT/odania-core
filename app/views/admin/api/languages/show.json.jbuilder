@@ -1,1 +1,1 @@
-json.partial! partial: 'admin/api/languages/show', locals: {language: @language}
+json.partial! partial: 'api/languages/show', locals: {language: @language}

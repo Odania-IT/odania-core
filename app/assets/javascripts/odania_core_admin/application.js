@@ -22,4 +22,5 @@
 //= require ../textangular/textAngular-sanitize.min
 //= require ../textangular/textAngular.min
 //= require ../textangular/textAngular-rangy.min
+//= require_tree ../general
 //= require_tree .

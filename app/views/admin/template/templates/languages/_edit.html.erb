@@ -20,9 +20,9 @@
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button data-ng-click="saveLanguage()" class="btn btn-primary">Save</button>
+			<button data-ng-click="saveLanguage()" class="btn btn-primary"><%= t('general.save') %></button>
 
-			<span data-ng-if="errors" style="color: red;">Please correct the errors!</span>
+			<span data-ng-if="errors" style="color: red;"><%= t('general.Please correct the errors') %></span>
 		</div>
 	</div>
 </form>

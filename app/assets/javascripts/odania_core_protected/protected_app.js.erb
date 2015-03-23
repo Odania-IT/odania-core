@@ -1,4 +1,4 @@
-var app = angular.module('odaniaPortalAdmin', ['ngRoute', 'ngResource', 'ui.bootstrap', 'textAngular']);
+var app = angular.module('odaniaPortalProtected', ['ngRoute', 'ngResource', 'ui.bootstrap', 'textAngular']);
 
 app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 	console.log('config :: init');
@@ -8,47 +8,12 @@ app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 		'bootstrap': ['$rootScope', 'resolveService', 'eventTypeProvider', function ($rootScope, resolveService, eventTypeProvider) {
 			return resolveService.resolveBootstrap().then(function (data) {
 				console.log("bootstrap-data", data);
-				$rootScope.sites = data.sites;
+				$rootScope.currentSite = data.site;
 				$rootScope.languages = data.languages;
-				$rootScope.admin = data.admin;
 				$rootScope.general = data.general;
 
 				if (!resolved) {
-					if (data.sites.length > 0) {
-						console.log("INIT SITE & MENU");
-
-						var siteId = localStorage.siteId,
-							menuId = localStorage.menuId,
-							site, menu;
-
-						if (siteId) {
-							for (var i = 0; i < data.sites.length; i++) {
-								site = data.sites[i];
-
-								if (site.id == siteId) {
-									$rootScope.currentSite = site;
-									console.log('Switched back to site', site);
-
-									for (var j = 0; j < site.menus.length; j++) {
-										menu = site.menus[j];
-
-										if (menu.id == menuId) {
-											$rootScope.currentMenu = menu;
-											console.log('Switched back to menu', menu);
-										}
-									}
-								}
-							}
-						}
-
-						if (!$rootScope.currentSite) {
-							$rootScope.currentSite = data.sites[0];
-						}
-						if (!$rootScope.currentMenu) {
-							$rootScope.currentMenu = $rootScope.currentSite.menus[0];
-						}
-						resolved = true;
-					}
+					resolved = true;
 				}
 				$rootScope.$broadcast(eventTypeProvider.INTERNAL_BOOTSTRAP_RESOLVED);
 				console.log("bootstrap :: done");
@@ -89,14 +54,12 @@ app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 			'templateUrl': config.getTemplatePath('dashboard/index'),
 			'resolve': resolve
 		})
-		<% Odania::Admin.pages.each_pair do |category, pages| %>
-		<% pages.each do |page| %>
+		<% Odania::Protected.pages.each do |page| %>
 		.when('<%= page[:path] %>', {
 			'controller': '<%= page[:controller] %>',
 			'templateUrl': config.getTemplatePath('<%= page[:template] %>'),
 			'resolve': resolve
 		})
-		<% end %>
 		<% end %>
 		.otherwise({'redirectTo': '/dashboard'});
 }]);
@@ -105,32 +68,6 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 	console.log("bootstrap :: init");
 
 	BootstrapResource.get();
-
-	$rootScope.getLanguage = function (id) {
-		var language;
-		for (var i = 0; i < $rootScope.languages.length; i++) {
-			language = $rootScope.languages[i];
-
-			if (language.id === id) {
-				return language;
-			}
-		}
-
-		return null;
-	};
-
-	$rootScope.getSite = function (id) {
-		var site;
-		for (var i = 0; i < $rootScope.sites.length; i++) {
-			site = $rootScope.sites[i];
-
-			if (site.id === id) {
-				return site;
-			}
-		}
-
-		return null;
-	};
 
 	$rootScope.printErrors = function (errors) {
 		return errors.join(', ');
@@ -141,14 +78,6 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 		BootstrapResource.changeLanguage({language_id: language_id}).$promise.then(function () {
 			$window.location.reload();
 		});
-	};
-
-	$rootScope.getAsStringList = function (obj) {
-		if (!obj) {
-			return '';
-		}
-
-		return Object.keys(obj).join(',');
 	};
 
 	$rootScope.addToArray = function (arr, val) {

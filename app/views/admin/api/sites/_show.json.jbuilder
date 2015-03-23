@@ -1,13 +1,8 @@
-json.id site.id
-json.name site.name
-json.title site.title
-json.host site.host
-json.domain site.domain
-json.subdomain site.subdomain
+json.partial! partial: 'api/sites/show', locals: {site: site}
+
 json.is_active site.is_active
 json.is_default site.is_default
 json.tracking_code site.tracking_code
-json.description site.description
 json.template site.template
 json.user_signup_allowed site.user_signup_allowed
 json.default_language_id site.default_language_id
@@ -23,3 +18,4 @@ json.additional_parameters site.additional_parameters
 
 json.menus site.menus, partial: 'admin/api/menus/show', as: :menu
 json.languages site.menus.pluck(:language_id)
+json.plugins site.site_plugins.pluck(:plugin_name)

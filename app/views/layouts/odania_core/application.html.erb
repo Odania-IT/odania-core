@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= content_for?(:title) ? strip_tags(yield(:title)) : strip_tags(current_site.name) %></title>
+	<title><%=raw content_for?(:title) ? strip_tags(yield(:title)) : strip_tags(current_site.name) %></title>
 	<meta name="language" content="<%= I18n.locale.to_s %>"/>
-	<meta name="keywords" content="<%= content_for?(:keywords) ? yield(:keywords) : current_site.meta['keywords'] %>"/>
+	<meta name="keywords" content="<%=raw content_for?(:keywords) ? yield(:keywords) : current_site.meta['keywords'] %>"/>
 	<%= stylesheet_link_tag 'odania_core/application', media: 'all' %>
 	<%= javascript_include_tag 'odania_core/application' %>
 	<%= csrf_meta_tags %>

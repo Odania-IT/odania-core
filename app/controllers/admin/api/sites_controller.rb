@@ -17,6 +17,7 @@ class Admin::Api::SitesController < Admin::ApiController
 
 		if @site.save
 			update_languages
+			update_site_plugins
 
 			flash[:notice] = t('created')
 			render action: :show
@@ -29,6 +30,7 @@ class Admin::Api::SitesController < Admin::ApiController
 		@site.additional_parameters = params[:site][:additional_parameters]
 		if @site.update(site_params)
 			update_languages
+			update_site_plugins
 
 			flash[:notice] = t('updated')
 			render action: :show
@@ -54,7 +56,7 @@ class Admin::Api::SitesController < Admin::ApiController
 	def site_params
 		params.require(:site).permit(:name, :title, :domain, :subdomain, :is_active, :is_default, :tracking_code, :description, :user_signup_allowed,
 														:default_from_email, :notify_email_address, :imprint_id, :terms_and_conditions_id,
-														:default_widget_id, :redirect_to_id, :template, :default_language_id, social: [:linked_in, :facebook, :google_plus, :twitter],
+														:default_widget_id, :redirect_to_id, :template, :default_language_id, social: [:linked_in, :facebook, :google_plus, :twitter, :rss],
 														meta: [:keywords])
 	end
 
@@ -64,7 +66,7 @@ class Admin::Api::SitesController < Admin::ApiController
 		unless params[:site][:languages].nil?
 			params[:site][:languages].each do |language_id|
 				menu = @site.menus.where(language_id: language_id).first
-				menu = @site.menus.create(language_id: language_id) if menu.nil?
+				menu = @site.menus.create!(language_id: language_id) if menu.nil?
 				menus << menu.id
 
 				default_language_exists = true if language_id.eql? @site.default_language_id
@@ -77,5 +79,18 @@ class Admin::Api::SitesController < Admin::ApiController
 		end
 
 		@site.menus.where('id NOT IN (?)', menus).destroy_all
+	end
+
+	def update_site_plugins
+		active_plugins = []
+		unless params[:site][:plugins].nil?
+			params[:site][:plugins].each do |plugin_name|
+				plugin = @site.site_plugins.where(plugin_name: plugin_name).first
+				plugin = @site.site_plugins.create!(plugin_name: plugin_name) if plugin.nil?
+				active_plugins << plugin.id
+			end
+		end
+
+		@site.site_plugins.where('id NOT IN (?)', active_plugins).destroy_all
 	end
 end

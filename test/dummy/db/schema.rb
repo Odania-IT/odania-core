@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317160217) do
+ActiveRecord::Schema.define(version: 20150323150725) do
 
   create_table "odania_categories", force: :cascade do |t|
     t.integer  "site_id"
@@ -115,6 +115,15 @@ ActiveRecord::Schema.define(version: 20150317160217) do
   end
 
   add_index "odania_menus", ["site_id", "language_id"], name: "index_odania_menus_on_site_id_and_language_id", unique: true
+
+  create_table "odania_site_plugins", force: :cascade do |t|
+    t.integer  "site_id"
+    t.string   "plugin_name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "odania_site_plugins", ["site_id"], name: "index_odania_site_plugins_on_site_id"
 
   create_table "odania_sites", force: :cascade do |t|
     t.string  "name"

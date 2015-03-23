@@ -27,7 +27,7 @@ app.controller('EditSiteController', ['$location', '$rootScope', '$scope', 'Site
 		$scope.errors = data.data.errors;
 	}
 
-	$scope.toggleLanguageSelection = function toggleSelection(languageId) {
+	$scope.toggleLanguageSelection = function (languageId) {
 		var idx = $scope.site.languages.indexOf(languageId);
 
 		// is currently selected
@@ -38,6 +38,20 @@ app.controller('EditSiteController', ['$location', '$rootScope', '$scope', 'Site
 		// is newly selected
 		else {
 			$scope.site.languages.push(languageId);
+		}
+	};
+
+	$scope.togglePluginSelection = function (pluginName) {
+		var idx = $scope.site.plugins.indexOf(pluginName);
+
+		// is currently selected
+		if (idx > -1) {
+			$scope.site.plugins.splice(idx, 1);
+		}
+
+		// is newly selected
+		else {
+			$scope.site.plugins.push(pluginName);
 		}
 	};
 
