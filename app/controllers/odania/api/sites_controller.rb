@@ -4,7 +4,7 @@ class Odania::Api::SitesController < Odania::ApiController
 	end
 
 	def show
-		@site = Odania::Site.where(id: params[:id]).first
+		@site = Odania::Site.where(id: params[:id].to_i).first
 		bad_api_request('resource_not_found') if @site.nil?
 	end
 end

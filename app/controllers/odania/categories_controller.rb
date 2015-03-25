@@ -6,7 +6,7 @@ class Odania::CategoriesController < ApplicationController
 	end
 
 	def show
-		@category = current_site.categories.where(id: params[:id]).first
+		@category = current_site.categories.where(id: params[:id].to_i).first
 		return render_not_found if @category.nil?
 
 		@category_xrefs = @category.category_xrefs
