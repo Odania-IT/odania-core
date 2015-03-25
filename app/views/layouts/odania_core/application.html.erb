@@ -46,6 +46,7 @@
 	<div class="row-fluid">
 		<div class="col-md-9 hfeed">
 			<%= render :partial => 'odania/shared/flashes' %>
+			<%= yield(:page_header) %>
 			<%= yield %>
 		</div>
 		<div class="col-md-3">

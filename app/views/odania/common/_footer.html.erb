@@ -26,28 +26,7 @@
 
 							<hr/>
 							<div class="social">
-								<% if current_site.social %>
-									<% if current_site.social['facebook'] %>
-										<a href="<%= current_site.social['facebook'] %>" target="_blank">
-											<i class="fa fa-facebook"></i>
-										</a>
-									<% end %>
-									<% if current_site.social['twitter'] %>
-										<a href="<%= current_site.social['twitter'] %>" target="_blank">
-											<i class="fa fa-twitter"></i>
-										</a>
-									<% end %>
-									<% if current_site.social['google_plus'] %>
-										<a href="<%= current_site.social['google_plus'] %>" target="_blank">
-											<i class="fa fa-google-plus"></i>
-										</a>
-									<% end %>
-									<% if current_site.social['linked_in'] %>
-										<a href="<%= current_site.social['linked_in'] %>" target="_blank">
-											<i class="fa fa-linkedin"></i>
-										</a>
-									<% end %>
-								<% end %>
+								<%= render partial: 'odania/common/social', locals: {social: current_site.social} %>
 							</div>
 						</div>
 					</div>
