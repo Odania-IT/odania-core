@@ -71,6 +71,7 @@ Rails.application.routes.draw do
 			get 'users/me' => 'users#me'
 			get 'bootstrap' => 'bootstrap#index'
 			post 'authenticate/token' => 'authenticate#token'
+			get 'authenticate/verify' => 'authenticate#verify'
 			post 'authenticate/development' => 'authenticate#development'
 			post 'authenticate/facebook' => 'authenticate#facebook'
 		end

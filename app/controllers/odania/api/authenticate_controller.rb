@@ -1,4 +1,6 @@
 class Odania::Api::AuthenticateController < Odania::ApiController
+	before_action :verify_api_user, only: [:verify]
+
 	# Token auth (already registered)
 	def token
 		device_info = params[:device]
@@ -33,6 +35,10 @@ class Odania::Api::AuthenticateController < Odania::ApiController
 
 	def facebook
 
+		render action: :token
+	end
+
+	def verify
 		render action: :token
 	end
 end
