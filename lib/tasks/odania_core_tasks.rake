@@ -1,13 +1,14 @@
 namespace :odania do
 	desc 'Set default page'
 	task :set_default_page => :environment do
-		host_name = ENV['host']
+		domain = ENV['domain']
+		subdomain = ENV['subdomain']
 
 		# Check if parameter host is present
-		if host_name.blank?
-			puts 'Please set a host name, e.g. host=www.odania.com'
+		if domain.blank?
+			puts 'Please set a host name, e.g. domain=odania.com subdomain=www'
 		else
-			site = Odania::Site.where(host: host_name).first
+			site = Odania::Site.where(domain: domain, subdomain: subdomain).first
 
 			if site.is_default
 				puts "Site #{site.host} already default!"
@@ -22,19 +23,22 @@ namespace :odania do
 
 	desc 'Sets up the first domain'
 	task :add_site => :environment do
-		host_name = ENV['host']
+		domain = ENV['domain']
+		subdomain = ENV['subdomain']
 
 		# Check if parameter host is present
-		if host_name.blank?
-			puts 'Please set a host name, e.g. host=www.odania.com'
+		if domain.blank?
+			puts 'Please set a host name, e.g. domain=odania.com subdomain=www'
 		else
-			site = Odania::Site.where(host: host_name).first
+			site = Odania::Site.where(domain: domain, subdomain: subdomain).first
 			language = Odania::Language.first
 
 			if language.nil?
 				puts 'Create a language first'
 			elsif site.nil?
-				site = Odania::Site.create!(default_language_id: language.id, :name => host_name, :host => host_name, :is_default => (Odania::Site.count == 0), tracking_code: '')
+				name = subdomain.blank? ? domain : "#{subdomain}.#{domain}"
+				site = Odania::Site.create!(default_language_id: language.id, name: name, domain: domain, subdomain: subdomain,
+													 is_default: (Odania::Site.count == 0), tracking_code: '')
 				site.menus.create!(language_id: language.id)
 				puts "Site #{site.host} created!"
 			else
