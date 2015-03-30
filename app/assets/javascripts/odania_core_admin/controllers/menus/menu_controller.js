@@ -40,6 +40,13 @@ app.controller('MenuController', ['$rootScope', '$scope', 'MenuResource', 'MenuI
 		return null;
 	};
 
+	$scope.setDefaultMenuItem = function (id) {
+		MenuItemResource.setDefault({siteId: $rootScope.currentSite.id, menuId: $rootScope.currentMenu.id, id: id}).$promise.then(function (data) {
+			$scope.menuItems = data.menu_items;
+			$scope.menu = data.menu;
+		});
+	};
+
 	$scope.saveMenu = saveMenu;
 	$scope.menu = {
 		'language_id': null

@@ -51,7 +51,7 @@
 
 	<tbody>
 	<tr data-ng-repeat="menu_item in menuItems">
-		<td>
+		<td data-ng-click="setDefaultMenuItem(menu_item.id)">
 			<span data-ng-if="menu.default_menu_item_id == menu_item.id" class="fa fa-star" data-ng-click="setDefault(menu_item)"></span>
 			<span data-ng-if="menu.default_menu_item_id != menu_item.id" class="fa fa-star-o" data-ng-click="setDefault(menu_item)"></span>
 		</td>

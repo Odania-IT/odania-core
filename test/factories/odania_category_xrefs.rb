@@ -1,6 +1,6 @@
 FactoryGirl.define do
 	factory :odania_category_xref, :class => 'Odania::CategoryXref' do
-		ref
+		association :ref, factory: :content
 		category
 	end
 

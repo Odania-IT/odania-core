@@ -3,7 +3,7 @@ FactoryGirl.define do
 		site
 		user
 		language
-		title "MyString"
+		title { FFaker::Movie.title }
 		count 1
 	end
 
