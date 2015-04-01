@@ -1,5 +1,5 @@
 class Odania::SearchController < ApplicationController
-	before_action :valid_site!
+	before_action :valid_site!, :valid_menu!
 
 	def index
 		@search_value = ''

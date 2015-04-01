@@ -71,7 +71,8 @@ app.controller('EditSiteController', ['$location', '$rootScope', '$scope', 'Site
 	$scope.saveSite = saveSite;
 	$scope.site = {
 		'name': '',
-		'languages': []
+		'languages': [],
+		'plugins': []
 	};
 
 	if ($routeParams.id) {
