@@ -1,3 +1,3 @@
 class Protected::ApiController < Odania::ApiController
-	before_action :authenticate_user!
+	before_action :verify_api_user
 end
