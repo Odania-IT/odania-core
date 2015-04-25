@@ -111,10 +111,16 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 
 		//  Format Duration
 		//  -------------------------------------------------------------------  //
+		// Format Days
+		var daytext = '';
+		if (oDiff.days > 0) {
+			daytext = String(oDiff.days) + ' ';
+		}
+
 		//  Format Hours
 		var hourtext = '00';
-		if (oDiff.days > 0) {
-			hourtext = String(oDiff.days);
+		if (oDiff.hours > 0) {
+			hourtext = String(oDiff.hours);
 		}
 		if (hourtext.length == 1) {
 			hourtext = '0' + hourtext;
@@ -139,7 +145,7 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 		}
 
 		//  Set Duration
-		var sDuration = hourtext + ':' + mintext + ':' + sectext;
+		var sDuration = daytext + hourtext + ':' + mintext + ':' + sectext;
 		oDiff.duration = sDuration;
 		//  -------------------------------------------------------------------  //
 
