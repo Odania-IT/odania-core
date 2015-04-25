@@ -5,13 +5,6 @@ class Admin::Api::BootstrapController < Admin::ApiController
 	end
 
 	def change_language
-		user = current_user
-		language = Odania::Language.where(id: params[:language_id]).first
-		return render json: {error: 'invalid language'}, status: :bad_request if language.nil?
-
-		user.language_id = language.id
-		user.save!
-
-		render json: {message: 'language updated'}
+		change_user_language
 	end
 end

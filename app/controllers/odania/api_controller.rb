@@ -38,4 +38,15 @@ class Odania::ApiController < ApplicationController
 	def validate_own_resource
 		render json: {error: 'unauthorized'}, status: :unauthorized unless @current_user.id.eql? params[:user_id].to_i
 	end
+
+	def change_user_language
+		user = current_user
+		language = Odania::Language.where(id: params[:language_id]).first
+		return render json: {error: 'invalid language'}, status: :bad_request if language.nil?
+
+		user.language_id = language.id
+		user.save!
+
+		render json: {message: 'language updated'}
+	end
 end
