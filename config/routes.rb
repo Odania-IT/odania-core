@@ -54,6 +54,7 @@ Rails.application.routes.draw do
 
 	namespace :protected do
 		namespace :api, defaults: {format: :json} do
+			resources :medias, except: [:new, :edit]
 			get 'bootstrap' => 'bootstrap#index'
 			post 'bootstrap/change_language' => 'bootstrap#change_language'
 		end
@@ -75,6 +76,8 @@ Rails.application.routes.draw do
 			post 'authenticate/development' => 'authenticate#development'
 			post 'authenticate/facebook' => 'authenticate#facebook'
 		end
+
+		get '/templates/*template' => 'template#index', as: :odania_template
 	end
 
 	# Track views

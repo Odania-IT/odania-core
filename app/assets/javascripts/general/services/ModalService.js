@@ -5,7 +5,7 @@ app.service('modalService', ['$modal',
 			backdrop: true,
 			keyboard: true,
 			modalFade: true,
-			templateUrl: config.getTemplatePath('modals/default')
+			templateUrl: config.getTemplatePath('modals/default', 'odania')
 		};
 
 		var modalOptions = {

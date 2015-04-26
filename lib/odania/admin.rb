@@ -36,10 +36,10 @@ module Odania
 		@@pages[:site] << {name: 'Show Widgets', in_menu: false, path: '/widgets/:id', controller: 'WidgetController', template: 'widgets/show'}
 		@@pages[:site] << {name: 'Edit Widgets', in_menu: false, path: '/widgets/:id/edit', controller: 'EditWidgetController', template: 'widgets/edit'}
 
-		@@pages[:site] << {name: 'Media', in_menu: true, path: '/medias', controller: 'MediasController', template: 'medias/index'}
-		@@pages[:site] << {name: 'New Media', in_menu: false, path: '/medias/new', controller: 'EditMediaController', template: 'medias/edit'}
-		@@pages[:site] << {name: 'Show Media', in_menu: false, path: '/medias/:id', controller: 'MediaController', template: 'medias/show'}
-		@@pages[:site] << {name: 'Edit Media', in_menu: false, path: '/medias/:id/edit', controller: 'EditMediaController', template: 'medias/edit'}
+		@@pages[:site] << {name: 'Media', in_menu: true, path: '/medias', controller: 'MediasController', template: 'medias/index', template_app: 'odania'}
+		@@pages[:site] << {name: 'New Media', in_menu: false, path: '/medias/new', controller: 'EditMediaController', template: 'medias/edit', template_app: 'odania'}
+		@@pages[:site] << {name: 'Show Media', in_menu: false, path: '/medias/:id', controller: 'MediaController', template: 'medias/show', template_app: 'odania'}
+		@@pages[:site] << {name: 'Edit Media', in_menu: false, path: '/medias/:id/edit', controller: 'EditMediaController', template: 'medias/edit', template_app: 'odania'}
 
 		@@pages[:site] << {name: 'Static Pages', in_menu: true, path: '/static_pages', controller: 'StaticPagesController', template: 'static_pages/index'}
 		@@pages[:site] << {name: 'New Static Pages', in_menu: false, path: '/static_pages/new', controller: 'EditStaticPageController', template: 'static_pages/edit'}

@@ -3,8 +3,12 @@ function Config() {
 		return '/admin/api/' + path;
 	};
 
-	this.getTemplatePath = function getTemplatePath(name) {
-		return ['/admin/templates', '.html'].join('/' + name);
+	this.getTemplatePath = function getTemplatePath(name, type) {
+		if (type) {
+			return ['/'+type+'/templates', '.html'].join('/' + name);
+		}
+
+		return ['/protected/templates', '.html'].join('/' + name);
 	};
 }
 
