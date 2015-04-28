@@ -8,7 +8,7 @@ function Config() {
 			return ['/'+type+'/templates', '.html'].join('/' + name);
 		}
 
-		return ['/protected/templates', '.html'].join('/' + name);
+		return ['/admin/templates', '.html'].join('/' + name);
 	};
 }
 
