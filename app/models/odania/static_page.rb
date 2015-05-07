@@ -1,5 +1,5 @@
 class Odania::StaticPage < ActiveRecord::Base
-	belongs_to :site, :class_name => 'Odania::Site'
+	belongs_to :site, :class_name => 'Odania::Site', touch: true
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'
 	belongs_to :widget, class_name: 'Odania::Widget'

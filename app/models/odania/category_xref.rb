@@ -1,5 +1,5 @@
 class Odania::CategoryXref < ActiveRecord::Base
-	belongs_to :ref, polymorphic: true
+	belongs_to :ref, polymorphic: true, touch: true
 	belongs_to :category
 
 	validates_presence_of :category_id

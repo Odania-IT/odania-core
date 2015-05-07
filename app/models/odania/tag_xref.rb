@@ -1,5 +1,5 @@
 class Odania::TagXref < ActiveRecord::Base
-	belongs_to :tag, class_name: 'Odania::Tag'
+	belongs_to :tag, class_name: 'Odania::Tag', touch: true
 	belongs_to :ref, polymorphic: true
 
 	validates_presence_of :context

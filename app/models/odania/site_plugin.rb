@@ -1,5 +1,5 @@
 class Odania::SitePlugin < ActiveRecord::Base
-	belongs_to :site, class_name: 'Odania::Site'
+	belongs_to :site, class_name: 'Odania::Site', touch: true
 
 	validates_presence_of :site_id
 	validate :validate_plugin_name

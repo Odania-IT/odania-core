@@ -2,7 +2,7 @@ class Odania::Content < ActiveRecord::Base
 	acts_as_taggable
 	acts_as_categorizable
 
-	belongs_to :site, :class_name => 'Odania::Site'
+	belongs_to :site, :class_name => 'Odania::Site', touch: true
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'
 	belongs_to :menu_item, class_name: 'Odania::MenuItem'

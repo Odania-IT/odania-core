@@ -1,5 +1,5 @@
 class Odania::Widget < ActiveRecord::Base
-	belongs_to :site, inverse_of: :default_widget
+	belongs_to :site, inverse_of: :default_widget, touch: true
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'
 

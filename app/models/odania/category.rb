@@ -1,7 +1,7 @@
 class Odania::Category < ActiveRecord::Base
-	belongs_to :site, :class_name => 'Odania::Site'
-	belongs_to :language, :class_name => 'Odania::Language'
-	belongs_to :user, :class_name => 'Odania::User'
+	belongs_to :site, :class_name => 'Odania::Site', touch: true
+	belongs_to :language, :class_name => 'Odania::Language', touch: true
+	belongs_to :user, :class_name => 'Odania::User', touch: true
 	has_many :category_xrefs, :class_name => 'Odania::CategoryXref'
 
 	validates_length_of :title, minimum: 1

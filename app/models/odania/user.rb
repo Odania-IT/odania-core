@@ -4,7 +4,7 @@ class Odania::User < ActiveRecord::Base
 	validates_uniqueness_of :email, :scope => [:site_id]
 
 	has_many :roles, class_name: 'Odania::UserRole'
-	belongs_to :site, class_name: 'Odania::Site'
+	belongs_to :site, class_name: 'Odania::Site', touch: true
 	belongs_to :language, class_name: 'Odania::Language'
 	has_many :devices, class_name: 'Odania::UserDevice'
 
