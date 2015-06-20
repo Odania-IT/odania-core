@@ -17,6 +17,7 @@ require 'responders'
 require 'font-awesome-rails'
 require 'uglifier'
 require 'rack/cors'
+require 'oj'
 
 # Require internals
 require 'odania'
