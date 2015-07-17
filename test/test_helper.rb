@@ -18,13 +18,22 @@ Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| r
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
-# Setup mock config
-require 'support/test_setup'
-OdaniaTestMock.user_authenticated = true
-
 class ActiveSupport::TestCase
 	# Add more helper methods to be used by all tests here...
 	include FactoryGirl::Syntax::Methods
+end
+
+class ActionController::TestCase
+	include Devise::TestHelpers
+
+	setup do
+		create(:default_language)
+		@site = create(:default_site)
+		@request.host = @site.host
+		@user = create(:default_user, site: @site)
+		sign_in @user
+		create(:user_role, user: @user)
+	end
 end
 
 # Setup database cleaner
@@ -44,27 +53,4 @@ end
 
 class MiniTest::Unit::TestCase
 	include DatabaseCleanerModule
-end
-
-# Resetting the setup (otherwise there are some weird side effects)
-class ActionController::TestCase
-	setup do
-		Odania.setup do |config|
-			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
-			config.current_user_function = 'OdaniaTestMock.current_user'
-			config.authenticate_user_function = 'user_auth'
-		end
-		OdaniaTestMock.user_authenticated = true
-	end
-end
-
-class ActionDispatch::IntegrationTest
-	setup do
-		Odania.setup do |config|
-			config.user_signed_in_function = 'OdaniaTestMock.signed_in'
-			config.current_user_function = 'OdaniaTestMock.current_user'
-			config.authenticate_user_function = 'user_auth'
-		end
-		OdaniaTestMock.user_authenticated = true
-	end
 end

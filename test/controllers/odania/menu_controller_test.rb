@@ -3,8 +3,6 @@ require 'test_helper'
 
 class Odania::MenuControllerTest < ActionController::TestCase
 	def setup
-		@site = create(:default_site)
-		@request.host = @site.host
 		@content = create(:content, site: @site)
 		@menu = create(:menu_with_items, site: @site, amount: 1, language: @site.default_language)
 	end

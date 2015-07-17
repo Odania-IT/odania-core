@@ -40,5 +40,13 @@ Gem::Specification.new do |s|
 	s.add_dependency 'fb_graph2'
 	s.add_dependency 'oj'
 
+	s.add_dependency 'devise'
+	s.add_dependency 'devise-encryptable'
+	s.add_dependency 'omniauth', '>= 1.0.0'
+	s.add_dependency 'omniauth-openid'
+	s.add_dependency 'omniauth-facebook'
+	s.add_dependency 'omniauth-twitter'
+	s.add_dependency 'omniauth-google-oauth2'
+
 	s.add_development_dependency 'ffaker'
 end

@@ -4,6 +4,7 @@ FactoryGirl.define do
 	factory :user, :class => 'Odania::User' do
 		sequence(:name) { |n| "User#{n}" }
 		sequence(:email) { |n| "mail#{n}@example.com" }
+		password '12345678'
 
 		after(:create) do |user, evaluator|
 			create_list(:user_role, 1, user: user)

@@ -16,6 +16,7 @@ class Admin::Api::MediasController < Admin::ApiController
 		@media = Odania::Media.new(media_params)
 		@media.user_id = current_user.id
 		@media.site_id = @site.id
+		@media.language_id = @menu.language_id
 
 		if @media.save
 			flash[:notice] = t('created')

@@ -3,9 +3,7 @@ require 'test_helper'
 
 class Admin::Api::SitesControllerTest < ActionController::TestCase
 	def setup
-		site = create(:default_site)
-		@request.host = site.host
-		@content = create(:content, site: site)
+		@content = create(:content, site: @site)
 		@site = @content.site
 	end
 

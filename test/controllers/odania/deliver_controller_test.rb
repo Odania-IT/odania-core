@@ -3,8 +3,6 @@ require 'test_helper'
 
 class Odania::DeliverControllerTest < ActionController::TestCase
 	def setup
-		@site = create(:default_site)
-		@request.host = @site.host
 		@content = create(:content, site: @site)
 	end
 

@@ -3,8 +3,6 @@ require 'test_helper'
 
 class Odania::Api::SitesControllerTest < ActionController::TestCase
 	def setup
-		@site = create(:default_site)
-		@request.host = @site.host
 		@language = create(:language)
 	end
 

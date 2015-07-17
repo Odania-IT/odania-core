@@ -3,8 +3,6 @@ require 'test_helper'
 
 class Odania::Api::StaticPagesControllerTest < ActionController::TestCase
 	def setup
-		@site = create(:default_site)
-		@request.host = @site.host
 		@language = create(:language)
 		@static_page = create(:static_page, language: @language, site: @site)
 	end

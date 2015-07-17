@@ -3,7 +3,6 @@ require 'test_helper'
 
 class Admin::Api::LanguagesControllerTest < ActionController::TestCase
 	def setup
-		site = create(:default_site)
 		@request.host = site.host
 		@language = create(:language)
 	end

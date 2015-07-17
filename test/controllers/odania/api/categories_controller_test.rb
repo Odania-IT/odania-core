@@ -3,8 +3,6 @@ require 'test_helper'
 
 class Odania::Api::CategoriesControllerTest < ActionController::TestCase
 	def setup
-		@site = create(:default_site)
-		@request.host = @site.host
 		@language = create(:language)
 		@category = create(:category, language: @language, site: @site)
 		create_list(:category, 25, language: @language, site: @site)

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+	devise_for :users, class_name: 'Odania::User', :controllers => {registrations: 'odania/registration'}
 	match '/deliver/click' => 'odania/deliver#click', via: [:get, :post], as: :deliver_click
 
 	namespace :admin do

@@ -18,6 +18,13 @@ require 'font-awesome-rails'
 require 'uglifier'
 require 'rack/cors'
 require 'oj'
+require 'devise'
+require 'devise-encryptable'
+require 'omniauth'
+require 'omniauth-openid'
+require 'omniauth-facebook'
+require 'omniauth-twitter'
+require 'omniauth-google-oauth2'
 
 # Require internals
 require 'odania'
