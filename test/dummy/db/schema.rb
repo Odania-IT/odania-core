@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610092915) do
+ActiveRecord::Schema.define(version: 20150610120951) do
 
   create_table "odania_categories", force: :cascade do |t|
     t.integer  "site_id"
@@ -241,6 +241,10 @@ ActiveRecord::Schema.define(version: 20150610092915) do
     t.integer  "failed_attempts",        default: 0, null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.datetime "terms_accepted"
+    t.integer  "ref_id"
+    t.text     "tracking"
+    t.boolean  "newsletter"
   end
 
   add_index "odania_users", ["confirmation_token"], name: "index_odania_users_on_confirmation_token", unique: true

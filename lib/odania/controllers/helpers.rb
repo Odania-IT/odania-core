@@ -28,12 +28,12 @@ module Odania
 					return false
 				end
 
-				return true
+				true
 			end
 
 			def require_admin_role!
 				return false unless user_signed_in?
-				return redirect_to root_path, notice: t('Not allowed') unless current_user.admin?
+				redirect_to root_path, notice: t('Not allowed') unless current_user.admin?
 			end
 
 			# Define accessor helpers.

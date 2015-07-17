@@ -18,6 +18,9 @@ Dir[Rails.root.join("#{File.dirname(__FILE__)}/factories/**/*.rb")].each { |f| r
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
+# Setup mock config
+require 'support/test_setup'
+
 class ActiveSupport::TestCase
 	# Add more helper methods to be used by all tests here...
 	include FactoryGirl::Syntax::Methods
@@ -31,8 +34,8 @@ class ActionController::TestCase
 		@site = create(:default_site)
 		@request.host = @site.host
 		@user = create(:default_user, site: @site)
-		sign_in @user
 		create(:user_role, user: @user)
+		sign_in @user
 	end
 end
 
