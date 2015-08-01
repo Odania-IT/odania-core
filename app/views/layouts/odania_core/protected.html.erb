@@ -3,13 +3,14 @@
 <head>
 	<title>OdaniaCore</title>
 	<%= stylesheet_link_tag 'odania_core_protected/application', media: 'all' %>
+	<%= stylesheet_link_tag 'print/application', media: 'print' %>
 	<%= javascript_include_tag 'odania_core_protected/application' %>
 	<script src="https://code.angularjs.org/1.2.5/i18n/angular-locale_<%= I18n.locale.to_s %>.js"></script>
 	<%= csrf_meta_tags %>
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" id="top-nav-bar">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -47,7 +48,7 @@
 
 <div class="container-fluid">
 	<div class="row-fluid" style="margin-top: 60px;">
-		<div class="col-md-3">
+		<div class="col-md-3" id="side-nav-bar">
 			<div class="well sidebar-nav">
 				<%= render partial: 'protected/odania/shared/menu' %>
 			</div>
