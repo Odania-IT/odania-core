@@ -94,8 +94,16 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 		return format_time_difference(nTotalDiff);
 	};
 
-	$rootScope.formatTimeDifference = function (nTotalDiff) {
-		var oDiff = new Object();
+	$rootScope.formatTimeDifference = function (nTotalDiff, includeDays, includeSeconds) {
+		var oDiff = new Object(), sDuration;
+
+		if (includeDays === undefined) {
+			includeDays = true;
+		}
+
+		if (includeDays === undefined) {
+			includeSeconds = true;
+		}
 
 		oDiff.days = Math.floor(nTotalDiff / 1000 / 60 / 60 / 24);
 		nTotalDiff -= oDiff.days * 1000 * 60 * 60 * 24;
@@ -114,7 +122,11 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 		// Format Days
 		var daytext = '';
 		if (oDiff.days > 0) {
-			daytext = String(oDiff.days) + ' ';
+			if (includeDays) {
+				daytext = String(oDiff.days) + ' ';
+			} else {
+				oDiff.hours += oDiff.days * 24;
+			}
 		}
 
 		//  Format Hours
@@ -135,17 +147,22 @@ app.run(['$rootScope', 'BootstrapResource', '$window', function ($rootScope, Boo
 			mintext = '0' + mintext;
 		}
 
-		//  Format Seconds
-		var sectext = '00';
-		if (oDiff.seconds > 0) {
-			sectext = String(oDiff.seconds);
-		}
-		if (sectext.length == 1) {
-			sectext = '0' + sectext;
-		}
+		if (includeSeconds) {
+			//  Format Seconds
+			var sectext = '00';
+			if (oDiff.seconds > 0) {
+				sectext = String(oDiff.seconds);
+			}
+			if (sectext.length == 1) {
+				sectext = '0' + sectext;
+			}
 
-		//  Set Duration
-		var sDuration = daytext + hourtext + ':' + mintext + ':' + sectext;
+			//  Set Duration
+			sDuration = daytext + hourtext + ':' + mintext + ':' + sectext;
+		} else {
+			//  Set Duration
+			sDuration = daytext + hourtext + ':' + mintext;
+		}
 		oDiff.duration = sDuration;
 		//  -------------------------------------------------------------------  //
 
