@@ -7,7 +7,9 @@ module Odania
 			# before_filter to make sure that we have a valid site
 			def valid_site!
 				if current_site.nil?
-					site = Site.active.where(is_default: true, domain: request.domain).first
+					domain = request.domain
+					domain += ":#{request.port}" unless [80, 443].include? request.port
+					site = Site.active.where(is_default: true, domain: domain).first
 					return redirect_to "http://#{site.host}" unless site.nil?
 
 					site = Site.active.where(is_default: true).first
