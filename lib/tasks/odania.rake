@@ -1,0 +1,24 @@
+namespace :odania do
+	desc 'Register service at consul'
+	task :register do
+		settings = YAML.load_file 'config/settings.yml'
+		domain = settings['config']['domain']
+		subdomain = settings['config']['subdomain']
+
+		plugin_config = JSON.parse File.read 'config/odania-config.json'
+		plugin_config['domains'][domain] = {
+			subdomain => plugin_config['domains']['ADMIN_DOMAIN']['ADMIN_SUB_DOMAIN']
+		}
+		plugin_config['domains'].delete('ADMIN_DOMAIN')
+
+		ips = Odania.ips
+		plugin_config['plugin-config']['ips'] = ips
+		plugin_config['plugin-config']['ip'] = ips.first
+		plugin_config['plugin-config']['port'] = 9292
+		plugin_config['plugin-config']['tags'] = ['core-backend']
+		puts JSON.pretty_generate plugin_config
+
+		plugin_instance_name = Odania.plugin.get_plugin_instance_name plugin_config['plugin-config']['name']
+		Odania.plugin.register plugin_instance_name, plugin_config
+	end
+end

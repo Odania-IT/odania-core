@@ -1,0 +1,64 @@
+{
+	"plugin-config": {
+		"name": "odania-core",
+		"default": false
+	},
+	"domains": {
+		"_general": {
+			"_general": {
+				"direct": {
+					"/detect_language": {
+						"plugin_url": "/base/detect_language",
+						"cacheable": false
+					}
+				}
+			}
+		},
+		"ADMIN_DOMAIN": {
+			"ADMIN_SUB_DOMAIN": {
+				"config": {
+					"languages": [
+						"de"
+					],
+					"layout": "admin"
+				},
+				"direct": {
+					"/en/admin": {
+						"plugin_url": "/admin",
+						"cacheable": false
+					},
+					"/en/admin/consul": {
+						"plugin_url": "/admin/consul",
+						"cacheable": false
+					},
+					"/en/admin/consul/status": {
+						"plugin_url": "/admin/consul/status",
+						"cacheable": false
+					},
+					"/en/admin/consul/service": {
+						"plugin_url": "/admin/consul/service",
+						"cacheable": false
+					},
+					"/favicon.ico": {
+						"plugin_url": "/admin/favicon.ico",
+						"cacheable": false
+					},
+					"/assets/admin/js/admin.js": {
+						"plugin_url": "/assets/admin/js/admin.js",
+						"cacheable": false
+					}
+				},
+				"internal": {
+					"layouts": {
+						"admin": {
+							"name": "admin",
+							"styles": {
+								"entry_point": "admin.html.erb"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

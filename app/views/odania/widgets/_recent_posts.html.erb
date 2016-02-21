@@ -1,8 +1,0 @@
-<div class="widget">
-	<h4><%= t('Recent Posts') %></h4>
-	<ul>
-		<% current_site.contents.active.where(language_id: current_menu.language_id).order('created_at DESC').limit(content['amount'].to_i).each do |content| %>
-			<li><%= link_to content.title, odania_content_path(id: content.to_param), {:class => 'bookmark'} %></li>
-		<% end %>
-	</ul>
-</div>

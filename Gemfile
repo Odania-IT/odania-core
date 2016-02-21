@@ -1,49 +1,51 @@
 source 'https://rubygems.org'
 
-# Declare your gem's dependencies in odania_core.gemspec.
-# Bundler will treat runtime dependencies like base dependencies, and
-# development dependencies will be added by default to the :development group.
-gemspec
 
-# Declare any dependencies that are still in development here instead of in
-# your gemspec. These might include edge Rails or gems from your path or
-# Git. Remember to move these dependencies to your gemspec before releasing
-# your gem to rubygems.org.
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '>= 5.0.0.beta2', '< 5.1'
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
+# See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'libv8', :platforms => :ruby
+gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'
+gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
 
-# To use debugger
-# gem 'debugger'
+
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.0'
+# Use Puma as the app server
+gem 'puma'
+
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
+group :development, :test do
+	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+	gem 'byebug'
+
+	gem 'rspec-rails', '~> 3.0'
+end
 
 group :development do
+	# Access an IRB console on exception pages or by using <%= console %> in views
+	gem 'web-console', '~> 3.0'
+	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
 end
 
-group :development, :test do
-	gem 'factory_girl_rails'
-	gem 'minitest'
-	gem 'minitest-reporters'
-	gem 'database_cleaner'
-	gem 'paperclip', '~> 4'
-	gem 'http_accept_language'
+gem 'http_accept_language'
+gem 'odania'
 
-	gem 'libv8', '~> 3.11.8.12', :platforms => :ruby
-	gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'
-	gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
-	gem 'bootstrap-sass'
-	gem 'jquery-rails'
-
-	# Necessary for travis
-	platforms :jruby do
-		gem 'activerecord-jdbcsqlite3-adapter'
-		gem 'activerecord-jdbcmysql-adapter'
-		gem 'activerecord-jdbcpostgresql-adapter'
-		gem 'jruby-openssl'
-	end
-
-	platforms :mri do
-		gem 'sqlite3'
-		gem 'mysql2'
-		gem 'pg'
-	end
-end
-
-gem 'codeclimate-test-reporter', group: :test, require: nil
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,6 +1,0 @@
-<h1><%= t('Tags') %></h1>
-
-<% tag_cloud(@odania_tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4)) do |tag, css_class| %>
-	<%= link_to tag.name, tag_path(tag: tag.name), {:class => css_class, :rel => 'tag'} %>
-<% end %>
-

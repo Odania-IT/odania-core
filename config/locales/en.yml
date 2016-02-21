@@ -1,42 +1,23 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
 en:
-  Under construction: 'Under construction'
-  This page is still under construction: 'This site is still under construction. Please check it out later.'
-  Select: 'Select'
-  Tagged as: 'Tagged as'
-  authorship_by: 'Authorship by'
-  Tags: 'Tags'
-  Tag _tag: "Tag %{tag}"
-  Read more: 'Read more'
-  Language: 'Language'
-  No content defined: 'No content defined'
-  Dashboard: 'Dashboard'
-  Categories: 'Categories'
-  Category _category: 'Category %{category}'
-  Recent Posts: 'Recent Posts'
-  Search: 'Search'
-  Top Categories: 'Top Categories'
-  Newest Pages: 'Newest Pages'
-  Signed in: Signed in
-  Successfully linked that account: Successfully linked that account!
-  Already linked that account: Already linked that account!
-  Signed out: Signed out!
-  Create an account: Create an account
-  Login: Login
-  odania:
-    send: 'Send'
-    name: 'Name'
-    email: 'Email'
-    ContactText: 'Message'
-    Contact: 'Contact'
-    Your request is send: 'Your message has been sent'
-    Imprint: 'Imprint'
-    Terms and Conditions: 'Terms and Conditions'
-    Or you can contact us via this form: 'Or you can contact us via this form'
-    This page is created with the Open Source Portal: 'This page is created with the Open Source Portal "Odania"'
-    Are you sure: 'Are you sure?'
-    Additional Information: "Additional Information"
-    About Us: 'About Us'
-    Partners: 'Partners'
-    newsletter_not_give_away: "Of cause we will not give away your email address. We just use it to send you additional information."
-    Sign up: 'Sign up'
-    Newsletter: 'Newsletter'
+  hello: "Hello world"

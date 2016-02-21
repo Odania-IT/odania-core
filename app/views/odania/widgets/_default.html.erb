@@ -1,7 +1,0 @@
-<% if @widget_id and !@widget_id.nil? %>
-	<%= render partial: 'odania/widgets/show', locals: {widget_id: @widget_id} %>
-<% elsif !current_menu.widget_id.nil? %>
-	<%= render partial: 'odania/widgets/show', locals: {widget_id: current_menu.widget_id} %>
-<% elsif !current_site.default_widget_id.nil? %>
-	<%= render partial: 'odania/widgets/show', locals: {widget_id: current_site.default_widget_id} %>
-<% end %>

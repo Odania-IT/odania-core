@@ -1,6 +1,0 @@
-<% widget = Odania::Widget.where(id: widget_id).first if local_assigns[:widget_id] %>
-<% cache [widget, current_site, current_menu] do %>
-	<% unless widget.nil? %>
-		<%= render partial: widget.template, locals: {content: widget.content} %>
-	<% end %>
-<% end %>

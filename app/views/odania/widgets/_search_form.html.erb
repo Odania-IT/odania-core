@@ -1,9 +1,0 @@
-<div class="widget">
-	<!-- Search form -->
-	<h4><%= t('Search') %></h4>
-
-	<%= form_tag search_path(locale: I18n.locale.to_s), {class: 'form-search'} do %>
-		<input type="text" value="" name="search" id="s" class="input-medium"/>
-		<button type="submit" class="btn"><%= t('Search') %></button>
-	<% end %>
-</div>

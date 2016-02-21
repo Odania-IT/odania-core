@@ -1,6 +1,0 @@
-de:
-  protected:
-    views:
-      dashboard:
-        title: 'Willkommen bei %{site}!'
-        welcome_text: 'Wir heißen dich Herzlich Willkommen. Have fun and enjoy the fish!'
