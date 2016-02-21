@@ -84,6 +84,7 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     multipart-post (2.0.0)
+    mysql2 (0.4.2)
     nio4r (1.2.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -92,6 +93,9 @@ GEM
       diplomat
       erubis
       public_suffix
+    pg (0.18.4)
+    postgresql (1.0.0)
+      pg
     public_suffix (1.5.3)
     puma (2.16.0)
     rack (2.0.0.alpha)
@@ -181,7 +185,9 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   libv8
+  mysql2
   odania
+  postgresql
   puma
   rails (>= 5.0.0.beta2, < 5.1)
   rspec-rails (~> 3.0)
