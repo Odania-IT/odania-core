@@ -1,7 +1,9 @@
 namespace :odania do
 	desc 'Register service at consul'
 	task :register do
-		settings = YAML.load_file 'config/settings.yml'
+		# First check for a config in the docker volume
+		settings = YAML.load_file '/srv/conf/settings.yml' if File.exist? '/srv/conf/settings.yml'
+		settings = YAML.load_file 'config/settings.yml' if settings.nil?
 		domain = settings['config']['domain']
 		subdomain = settings['config']['subdomain']
 
