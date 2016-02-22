@@ -15,7 +15,7 @@ COPY docker/runit_core.sh /etc/service/core/run
 # Setup haproxy
 COPY docker/runit_haproxy.sh /etc/service/haproxy/run
 
-VOLUME ["/srv/odania", "/srv/conf"]
+VOLUME ["/srv/odania", "/srv/config"]
 
 EXPOSE 9393
 
