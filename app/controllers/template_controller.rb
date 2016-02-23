@@ -74,6 +74,9 @@ class TemplateController < ApplicationController
 		render html: odania_template.render.html_safe
 	end
 
+	def error
+	end
+
 	private
 
 	def get_from_internal_varnish(uri, original_host)

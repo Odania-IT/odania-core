@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
 	get 'template/page'
 	get 'template/content'
+	get 'template/error'
 	get 'template/partial/:partial_name' => 'template#partial'
 
 	get 'base/detect_language'
