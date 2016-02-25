@@ -4,10 +4,10 @@ sqlite: &sqlite
 
 mysql: &mysql
   adapter: mysql2
-  host: <%= ENV['MYSQL_PORT_3306_TCP_ADDR'] %>
-  port: <%= ENV['MYSQL_PORT_3306_TCP_PORT'] %>
+  host: <%= ENV['MYSQL_ADDR'] %>
+  port: <%= ENV['MYSQL_PORT'] %>
   username: root
-  password: <%= ENV['MYSQL_ENV_MYSQL_ROOT_PASSWORD'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
   database: odania_core_<%= Rails.env %>
 
 postgresql: &postgresql

@@ -22,6 +22,10 @@
 					],
 					"layout": "admin"
 				},
+				"redirects": {
+					"^/$": "/en",
+					"^/en": "/en/admin"
+				},
 				"direct": {
 					"/en/admin": {
 						"plugin_url": "/admin",
@@ -39,6 +43,14 @@
 						"plugin_url": "/admin/consul/service",
 						"cacheable": false
 					},
+					"/en/admin/domains": {
+						"plugin_url": "/admin/domains",
+						"cacheable": false
+					},
+					"/en/admin/config": {
+						"plugin_url": "/admin/config",
+						"cacheable": false
+					},
 					"/favicon.ico": {
 						"plugin_url": "/admin/favicon.ico",
 						"cacheable": false
@@ -46,16 +58,6 @@
 					"/assets/admin/js/admin.js": {
 						"plugin_url": "/assets/admin/js/admin.js",
 						"cacheable": false
-					}
-				},
-				"internal": {
-					"layouts": {
-						"admin": {
-							"name": "admin",
-							"styles": {
-								"entry_point": "admin.html.erb"
-							}
-						}
 					}
 				}
 			}
