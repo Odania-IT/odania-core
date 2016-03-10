@@ -16,7 +16,7 @@ namespace :odania do
 
 		ips = Odania.ips
 		plugin_config['plugin-config']['ips'] = ips
-		plugin_config['plugin-config']['ip'] = ips.first
+		plugin_config['plugin-config']['ip'] = Odania.primary_ip(ips)
 		plugin_config['plugin-config']['port'] = 9292
 		plugin_config['plugin-config']['tags'] = ['core-backend']
 		puts JSON.pretty_generate plugin_config
