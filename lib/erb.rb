@@ -36,10 +36,12 @@ module OdaniaCore
 				self.template = template
 				self.global_config = Odania.plugin.get_global_config
 
-				domain_info = PublicSuffix.parse(domain)
+				domain_info = PublicSuffix.parse(req_host)
+				domain_info_domain = domain_info.domain
+				domain_info_trd = domain_info.trd
 
-				self.config, self.base_domain = Odania.plugin.get_domain_config_for domain_info.domain, self.global_config
-				self.subdomain_config = self.config[domain_info.trd] unless domain_info.trd.nil?
+				self.config, self.base_domain = Odania.plugin.get_domain_config_for domain_info_domain, self.global_config
+				self.subdomain_config = self.config[domain_info_trd] unless domain_info_trd.nil?
 				self.subdomain_config = self.config['_general'] if self.subdomain_config.nil?
 				self.subdomain_config = {} if self.subdomain_config.nil?
 
@@ -127,7 +129,6 @@ module OdaniaCore
 					partial = @variables.get_partial(page)
 
 					if partial.nil?
-						#"<!-- Page: #{page} -->\n<esi:include src=\"http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}\"/>\n<!-- End Page: #{page} -->"
 						"\n\n\n<pre>UNHANDLED PAGE: #{page} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
 					else
 						"<!-- Page: #{page} -->\n<esi:include src=\"http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}\"/>\n<!-- End Page: #{page} -->"
@@ -142,16 +143,16 @@ module OdaniaCore
 			end
 
 			def get(asset)
-				asset_url = get_asset_url(@variables.domain)
+				asset_url = get_asset_url(@variables.req_host)
 				asset_url = "//#{asset_url}" unless asset_url.include? '//'
 				"#{asset_url}/#{asset}"
 			end
 
 			private
 
-			def get_asset_url(domain)
+			def get_asset_url(req_host)
 				return @variables.subdomain_config['asset_url'] unless @variables.subdomain_config['asset_url'].nil?
-				domain
+				req_host
 			end
 		end
 	end

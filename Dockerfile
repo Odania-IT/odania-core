@@ -7,7 +7,7 @@ COPY . /srv/odania
 
 # Setup core
 WORKDIR /srv/odania
-RUN bundle install --without development test
+RUN bundle install
 
 RUN mkdir -p /etc/service/core
 COPY docker/runit_core.sh /etc/service/core/run

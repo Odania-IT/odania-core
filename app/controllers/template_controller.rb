@@ -13,9 +13,10 @@ class TemplateController < ApplicationController
 
 		global_config = Odania.plugin.get_global_config
 
-		selected_layout = get_layout_name global_config, domain, req_host.gsub(".#{domain}", '')
+		domain_info = PublicSuffix.parse(req_host)
+		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
 
-		layout_config = find_layout global_config, selected_layout, domain, req_host.gsub(".#{domain}", '')
+		layout_config = find_layout global_config, selected_layout, domain_info.domain, domain_info.trd
 		get_url = params[:plugin_url]
 		if layout_config.nil?
 			logger.info 'KEINE CONFIG'
@@ -31,7 +32,7 @@ class TemplateController < ApplicationController
 			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&plugin_url=#{params[:plugin_url]}&group_name=#{group_name}&req_host=#{req_host}"
 		}
 
-		odania_template = OdaniaCore::Erb.new(template, req_host, partials, group_name, req_host)
+		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
 		render html: odania_template.render.html_safe
 	end
 
