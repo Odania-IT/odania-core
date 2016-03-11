@@ -1,6 +1,4 @@
 class BaseController < ApplicationController
-	session :off
-
 	def index
 	end
 
