@@ -131,7 +131,9 @@ module OdaniaCore
 					if partial.nil?
 						"\n\n\n<pre>UNHANDLED PAGE: #{page} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
 					else
-						"<!-- Page: #{page} -->\n<esi:include src=\"http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}\"/>\n<!-- End Page: #{page} -->"
+						esi_url = "http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}"
+						esi_remove = '<esi:remove><p>Not ESI!</p></esi:remove>'
+						"<!-- Page: #{page} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
 					end
 				end
 			end
