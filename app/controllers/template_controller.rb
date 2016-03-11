@@ -34,6 +34,7 @@ class TemplateController < ApplicationController
 			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&plugin_url=#{params[:plugin_url]}&group_name=#{group_name}&req_host=#{req_host}"
 		}
 
+		request.headers['X-Do-Esi'] = true
 		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
 		render html: odania_template.render.html_safe
 	end
@@ -55,6 +56,7 @@ class TemplateController < ApplicationController
 		partials = {}
 		"Page, it's #{params.inspect} at the server! <br/>#{template.inspect} <br/> #{uri} <br/>end"
 
+		request.headers['X-Do-Esi'] = true
 		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
 		render html: odania_template.render.html_safe
 	end
@@ -73,6 +75,7 @@ class TemplateController < ApplicationController
 		template = get_from_internal_varnish uri, req_host
 		partials = {}
 
+		request.headers['X-Do-Esi'] = true
 		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
 		render html: odania_template.render.html_safe
 	end
