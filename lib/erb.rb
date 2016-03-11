@@ -123,8 +123,9 @@ module OdaniaCore
 			end
 
 			def get(page)
+				esi_remove = '<esi:remove><p>Not ESI!</p></esi:remove>'
 				if not @variables.partials[page].nil?
-					"<!-- Page: #{page} -->\n<esi:include src=\"#{@variables.partials[page]}\"/>\n<!-- End Page: #{page} -->"
+					"<!-- Page: #{page} -->\n<esi:include src=\"#{@variables.partials[page]}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
 				else
 					partial = @variables.get_partial(page)
 
@@ -132,7 +133,6 @@ module OdaniaCore
 						"\n\n\n<pre>UNHANDLED PAGE: #{page} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
 					else
 						esi_url = "http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}"
-						esi_remove = '<esi:remove><p>Not ESI!</p></esi:remove>'
 						"<!-- Page: #{page} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
 					end
 				end
