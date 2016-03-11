@@ -1,6 +1,8 @@
 require 'odania'
 
 class TemplateController < ApplicationController
+	session :off
+
 	INTERNAL_VARNISH_IP = '127.0.0.1'
 	INTERNAL_VARNISH_PORT = 80
 

@@ -15,6 +15,7 @@ This project rocks and uses MIT-LICENSE.
 
 == TODO
 
+- Listen for service changes and update config
 - Add documentation
 - Loading indicator
 - RSS Feeds
