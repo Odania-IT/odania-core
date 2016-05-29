@@ -1,0 +1,13 @@
+<!--
+@req_url: <%= @req_url %>
+@req_host: <%= @req_host %>
+@domain: <%= @domain %>
+@subdomain: <%= @subdomain %>
+-->
+
+<% @pages.each do |page| %>
+	<div>
+		<%= "D: #{page.domain} S: #{page.subdomain} U: #{page.url}" %>
+		<%= link_to page.url, page.url %>
+	</div>
+<% end %>

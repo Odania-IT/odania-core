@@ -1,0 +1,7 @@
+development:
+  clients:
+    default:
+      database: odania_core_development
+      hosts:
+        #- <%= ENV.fetch('MONGODB_PORT_27017_TCP_ADDR', 'localhost') %>:<%= ENV.fetch('MONGODB_PORT_27017_TCP_PORT', '27017') %>
+        - mongo:27017

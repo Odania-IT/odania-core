@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+	get 'home/index'
+
 	namespace :admin do
 		get 'consul' => 'consul#index'
 		get 'consul/service'
 		get 'consul/status'
 		get 'domains' => 'domains#index'
 		get 'config' => 'config#index'
+		get 'preview' => 'preview#index'
+		get 'preview/show'
 	end
 	get 'admin' => 'admin#index'
 
@@ -15,6 +19,7 @@ Rails.application.routes.draw do
 
 	get 'base/detect_language'
 	get 'base/index'
+	get 'base/identify'
 
 	get 'health' => 'base#health'
 

@@ -13,6 +13,6 @@ class Admin::ConsulController < AdminController
 	end
 
 	def status
-		Odania.plugin.health.state
+		@health_states = Odania.plugin.health.state
 	end
 end

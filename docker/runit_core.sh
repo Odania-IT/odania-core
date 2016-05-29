@@ -4,6 +4,7 @@ cd /srv/odania
 echo "Register service in consul"
 rake odania:register
 rake odania:global:generate_config
+rake odania:global:write_to_database
 
 # TODO this is only for develop! Will restart on every request
 IP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')

@@ -123,7 +123,7 @@ module OdaniaCore
 			end
 
 			def get(page)
-				esi_remove = '<esi:remove><p>Not ESI!</p></esi:remove>'
+				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
 				if not @variables.partials[page].nil?
 					"<!-- Page: #{page} -->\n<esi:include src=\"#{@variables.partials[page]}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
 				else

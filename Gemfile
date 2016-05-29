@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
 gem 'rake', '< 11.0'
+gem 'rb-readline'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.beta3', '< 5.1'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-gem 'mysql2'
-gem 'postgresql'
+
+# Database
+# Mongoid compatibility with Rails 5: https://jira.mongodb.org/browse/MONGOID-4218
+#gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
+gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -31,9 +33,6 @@ gem 'puma'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :development, :test do
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
 	gem 'byebug'
@@ -52,8 +51,8 @@ group :test do
 	gem 'codeclimate-test-reporter'
 end
 
-gem 'http_accept_language'
 gem 'odania'
+gem 'http_accept_language'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

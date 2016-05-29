@@ -29,7 +29,7 @@ RSpec.describe TemplateController, :type => :controller do
 
 		$consul_mock.config.set('global_plugins_config', global_cfg)
 
-		allow_any_instance_of(TemplateController).to receive(:get_from_internal_varnish) do
+		allow_any_instance_of(TemplateController).to receive(:get_from_internal_proxy) do
 			'This is our test template!!!'
 		end
 	end

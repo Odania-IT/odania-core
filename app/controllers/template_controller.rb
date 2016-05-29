@@ -1,8 +1,8 @@
 require 'odania'
 
 class TemplateController < ApplicationController
-	INTERNAL_VARNISH_IP = '127.0.0.1'
-	INTERNAL_VARNISH_PORT = 80
+	INTERNAL_PROXY_IP = '127.0.0.1'
+	INTERNAL_PROXY_PORT = 80
 
 	def page
 		puts params.inspect
@@ -26,7 +26,7 @@ class TemplateController < ApplicationController
 
 		uri = URI.parse("http://#{group_name}.internal/#{get_url}")
 
-		template = get_from_internal_varnish uri, req_host
+		template = get_from_internal_proxy uri, req_host
 
 		partials = {
 			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&plugin_url=#{params[:plugin_url]}&group_name=#{group_name}&req_host=#{req_host}"
@@ -38,7 +38,6 @@ class TemplateController < ApplicationController
 	end
 
 	def content
-		puts params.inspect
 		req_host = params[:req_host]
 		domain = params[:domain]
 		group_name = params[:group_name]
@@ -47,7 +46,7 @@ class TemplateController < ApplicationController
 
 		uri = URI.parse("http://#{group_name}.internal#{params[:plugin_url]}")
 
-		template = get_from_internal_varnish uri, req_host
+		template = get_from_internal_proxy uri, req_host
 
 		#response = Net::HTTP.get(uri)
 		#$logger.info template.inspect
@@ -70,7 +69,7 @@ class TemplateController < ApplicationController
 
 		uri = URI.parse("http://#{group_name}.internal#{params[:plugin_url]}")
 
-		template = get_from_internal_varnish uri, req_host
+		template = get_from_internal_proxy uri, req_host
 		partials = {}
 
 		response.headers['X-Do-Esi'] = true
@@ -79,15 +78,16 @@ class TemplateController < ApplicationController
 	end
 
 	def error
+		render status: :not_found
 	end
 
 	private
 
-	def get_from_internal_varnish(uri, original_host)
-		logger.info "Retrieve from internal varnish: #{uri}"
+	def get_from_internal_proxy(uri, original_host)
+		logger.info "Retrieve from internal proxy: #{uri}"
 
 		template = ''
-		Net::HTTP.new(uri.host, uri.port, INTERNAL_VARNISH_IP, INTERNAL_VARNISH_PORT).start do |http|
+		Net::HTTP.new(uri.host, uri.port, INTERNAL_PROXY_IP, INTERNAL_PROXY_PORT).start do |http|
 			request = Net::HTTP::Get.new uri
 			request['X-Original-Host'] = original_host
 			response = http.request request
