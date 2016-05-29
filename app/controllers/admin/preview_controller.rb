@@ -13,14 +13,16 @@ class Admin::PreviewController < AdminController
 		html_doc.css('a').each do |element|
 			href = element['href']
 
-			if href.start_with? 'http'
-				target_uri = URI.parse(href)
-				href = target_uri.query
-			end
+			unless href.nil?
+				if href.start_with? 'http'
+					target_uri = URI.parse(href)
+					href = target_uri.query
+				end
 
-			href = "/#{href}" unless href.nil? or href.start_with? '/'
-			href = admin_preview_show_path(uri: "http://#{@uri.host}#{href}")
-			element['href'] = href
+				href = "/#{href}" unless href.nil? or href.start_with? '/'
+				href = admin_preview_show_path(uri: "http://#{@uri.host}#{href}")
+				element['href'] = href
+			end
 		end
 
 		render html: html_doc.to_xhtml(indent: 3).html_safe

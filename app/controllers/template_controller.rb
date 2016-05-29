@@ -15,6 +15,7 @@ class TemplateController < ApplicationController
 
 		domain_info = PublicSuffix.parse(req_host)
 		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
+		logger.info "Selected Layout: '#{selected_layout}'"
 
 		layout_config = find_layout global_config, selected_layout, domain_info.domain, domain_info.trd
 		get_url = params[:plugin_url]
@@ -22,9 +23,11 @@ class TemplateController < ApplicationController
 			logger.info 'KEINE CONFIG'
 		else
 			get_url = get_layout_file layout_config, layout_config['styles']['_general']['entry_point']
+
+			return render text: "Sorry.... we could not retrieve the layout :(\n'#{selected_layout}'" if get_url.nil?
 		end
 
-		uri = URI.parse("http://#{group_name}.internal/#{get_url}")
+		uri = URI.parse("http://#{group_name}.internal#{get_url}")
 
 		template = get_from_internal_proxy uri, req_host
 
@@ -136,12 +139,12 @@ class TemplateController < ApplicationController
 
 	def get_layout_file(layout_config, file)
 		file_data = retrieve_hash_path layout_config, ['styles', '_general', 'direct', file]
-		return file_data['plugin_url'] unless file.nil?
+		return file_data['plugin_url'] unless file_data.nil?
 
 		file_data = retrieve_hash_path layout_config, ['styles', '_general', 'dynamic', file]
-		return file_data['plugin_url'] unless file.nil?
+		return file_data['plugin_url'] unless file_data.nil?
 
-		'Sorry.... we could not retrieve the layout :('
+		nil
 	end
 
 	def retrieve_hash_path(hash, path)
