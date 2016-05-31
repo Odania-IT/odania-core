@@ -4,12 +4,13 @@ gem 'rake', '< 11.0'
 gem 'rb-readline'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.beta3', '< 5.1'
+gem 'rails', '>= 5.0.0.rc1', '< 5.1'
 
 # Database
 # Mongoid compatibility with Rails 5: https://jira.mongodb.org/browse/MONGOID-4218
-#gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
-gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
+# gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
+# gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
+gem 'elasticsearch'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
