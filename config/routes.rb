@@ -23,6 +23,12 @@ Rails.application.routes.draw do
 
 	get 'health' => 'base#health'
 
+	namespace :api do
+		resources :web, except: [:new, :edit]
+		resources :partials, except: [:new, :edit]
+		resources :layouts, except: [:new, :edit]
+	end
+
 	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 	# Serve websocket cable requests in-process
