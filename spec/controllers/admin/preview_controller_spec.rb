@@ -11,7 +11,7 @@ RSpec.describe Admin::PreviewController, :type => :controller do
 
   describe "GET show" do
     it "returns http success" do
-      get :show
+      get :show, {uri: 'http://test.odania.com'}
       expect(response).to have_http_status(:success)
     end
   end

@@ -1,16 +1,27 @@
 class Api::WebController < ApiController
+	include EntryConcern
+
 	def index
-		@results = $elasticsearch_client.search index: 'odania', type: 'layout', body: {}
+		search 'web'
+
+		logger.info @entries['hits']['hits'].inspect
+		#logger.info @entries.inspect
 	end
 
 	def show
-	end
-
-	def create
-		data = params[:data]
-		$elasticsearch_client.index index: 'odania', type: 'layout', body: data
+		get_entry 'web', params[:id]
 	end
 
 	def update
+		data = params[:data]
+		save_entry 'web', params[:id], data
+
+		render json: {status: :ok}
+	end
+
+	def destroy
+		destroy_entry 'web', params[:id]
+
+		render json: {status: :ok}
 	end
 end

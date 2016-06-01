@@ -11,6 +11,44 @@ class TemplateController < ApplicationController
 		group_name = params[:group_name]
 		req_url = params[:req_url]
 
+		result = $elasticsearch.search index: 'odania', type: 'web', body: {
+			query: {
+				bool: {
+					should: [
+						{match: {full_path: req_host}},
+						{match: {full_path: domain}},
+						{match: {full_path: ''}}
+					],
+					must: [
+						{match: {path: req_url}}
+					]
+				}
+			}
+		}
+
+		puts result.inspect
+
+=begin
+		2.2.4 :013 > c.count index: 'odania', body: { query: { bool: { must: [ {match: {domain: 'die-information.eu'}}, {match: {subdomain: 'auto'}}] }}}
+		2016-05-30 23:03:19 +0200: GET http://172.19.0.9:9200/odania/_count [status:200, request:0.008s, query:n/a]
+		2016-05-30 23:03:19 +0200: > {"query":{"bool":{"must":[{"match":{"domain":"die-information.eu"}},{"match":{"subdomain":"auto"}}]}}}
+		2016-05-30 23:03:19 +0200: < {"count":8,"_shards":{"total":5,"successful":5,"failed":0}}
+		 => {"count"=>8, "_shards"=>{"total"=>5, "successful"=>5, "failed"=>0}}
+		2.2.4 :014 > c.count index: 'odania', body: { query: { bool: { should: [ {match: {domain: 'die-information.eu'}}, {match: {subdomain: 'auto'}}] }}}
+		2016-05-30 23:03:28 +0200: GET http://172.19.0.9:9200/odania/_count [status:200, request:0.005s, query:n/a]
+		2016-05-30 23:03:28 +0200: > {"query":{"bool":{"should":[{"match":{"domain":"die-information.eu"}},{"match":{"subdomain":"auto"}}]}}}
+		2016-05-30 23:03:28 +0200: < {"count":74,"_shards":{"total":5,"successful":5,"failed":0}}
+		 => {"count"=>74, "_shards"=>{"total"=>5, "successful"=>5, "failed"=>0}}
+=end
+	end
+
+	def old_page
+		puts params.inspect
+		req_host = params[:req_host]
+		domain = params[:domain]
+		group_name = params[:group_name]
+		req_url = params[:req_url]
+
 		global_config = Odania.plugin.get_global_config
 
 		domain_info = PublicSuffix.parse(req_host)

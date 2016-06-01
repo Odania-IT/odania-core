@@ -22,11 +22,11 @@ require 'rspec/rails'
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
-ActiveRecord::Migration.maintain_test_schema!
+# ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 	# Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-	config.fixture_path = "#{::Rails.root}/spec/fixtures"
+	# config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
 	# RSpec Rails can automatically mix in different behaviours to your tests
 	# based on their file location, for example enabling you to call `get` and

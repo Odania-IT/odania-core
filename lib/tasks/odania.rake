@@ -42,8 +42,8 @@ namespace :odania do
 							use_domain = '_general'.eql?(domain) ? nil : domain
 							use_subdomain = '_general'.eql?(subdomain) ? nil : subdomain
 
-							page = Page.where(domain: use_domain, subdomain: use_subdomain, category: category).first
-							page = Page.new if page.nil?
+							page = Entry.where(domain: use_domain, subdomain: use_subdomain, category: category).first
+							page = Entry.new if page.nil?
 							page.domain = use_domain
 							page.subdomain = use_subdomain
 							page.category = category

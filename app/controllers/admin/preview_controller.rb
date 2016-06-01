@@ -1,4 +1,6 @@
 class Admin::PreviewController < AdminController
+	skip_before_filter :verify_authenticity_token, only: :show
+
 	def index
 		global_config = Odania.plugin.get_global_config
 		@plugin_config = Odania.plugin.plugin_config.load_global_config global_config
@@ -10,8 +12,24 @@ class Admin::PreviewController < AdminController
 
 		html_doc = Nokogiri::HTML(@result)
 
-		html_doc.css('a').each do |element|
-			href = element['href']
+		prepare_preview_link html_doc, 'a', 'href'
+		prepare_preview_link html_doc, 'script', 'src'
+		prepare_preview_link html_doc, 'link', 'href'
+		prepare_preview_link html_doc, 'img', 'src'
+
+		uri_string = @uri.to_s
+		if uri_string.end_with? 'js'
+			render js: html_doc.to_xhtml(indent: 3).html_safe
+		else
+			render html: html_doc.to_xhtml(indent: 3).html_safe
+		end
+	end
+
+	private
+
+	def prepare_preview_link(html_doc, type, href_name)
+		html_doc.css(type).each do |element|
+			href = element[href_name]
 
 			unless href.nil?
 				if href.start_with? 'http'
@@ -20,15 +38,10 @@ class Admin::PreviewController < AdminController
 				end
 
 				href = "/#{href}" unless href.nil? or href.start_with? '/'
-				href = admin_preview_show_path(uri: "http://#{@uri.host}#{href}")
-				element['href'] = href
+				element[href_name] = admin_preview_show_path(uri: "http://#{@uri.host}#{href}")
 			end
 		end
-
-		render html: html_doc.to_xhtml(indent: 3).html_safe
 	end
-
-	private
 
 	def get_varnish
 		Odania.consul.service.get 'odania-varnish'

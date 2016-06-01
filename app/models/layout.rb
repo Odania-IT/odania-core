@@ -1,0 +1,2 @@
+class Layout < Entry
+end

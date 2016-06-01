@@ -11,6 +11,7 @@ gem 'rails', '>= 5.0.0.rc1', '< 5.1'
 # gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
 # gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
 gem 'elasticsearch'
+gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

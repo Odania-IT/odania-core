@@ -19,7 +19,7 @@ class BaseController < ApplicationController
 
 		##@pages = Page.where('(domain = ? OR domain IS NULL) AND (subdomain = ? OR subdomain IS NULL) AND category LIKE ?', @domain, @subdomain, "#{@req_url}%")
 		#@pages = Page.where('domain = ? AND subdomain = ? AND category LIKE ?', @domain, @subdomain, "#{@req_url}%")
-		@pages = Page.where(domain: @domain, subdomain: @subdomain, category: Regexp.new("#{@req_url}.*"))
+		@pages = Entry.where(domain: @domain, subdomain: @subdomain, category: Regexp.new("#{@req_url}.*"))
 	end
 
 	def health
