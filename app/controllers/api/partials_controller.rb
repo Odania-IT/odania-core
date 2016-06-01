@@ -9,7 +9,7 @@ class Api::PartialsController < ApiController
 		get_entry 'partial', params[:id]
 	end
 
-	def update
+	def create
 		data = params[:data]
 		save_entry 'partial', params[:id], data
 

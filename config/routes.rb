@@ -24,9 +24,9 @@ Rails.application.routes.draw do
 	get 'health' => 'base#health'
 
 	namespace :api do
-		resources :web, except: [:new, :edit, :create]
-		resources :partials, except: [:new, :edit, :create]
-		resources :layouts, except: [:new, :edit, :create]
+		resources :web, except: [:new, :edit, :update]
+		resources :partials, except: [:new, :edit, :update]
+		resources :layouts, except: [:new, :edit, :update]
 	end
 
 	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

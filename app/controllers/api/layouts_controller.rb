@@ -9,7 +9,7 @@ class Api::LayoutsController < ApiController
 		get_entry 'layout', params[:id]
 	end
 
-	def update
+	def create
 		data = params[:data]
 		save_entry 'layout', params[:id], data
 

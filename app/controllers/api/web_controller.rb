@@ -12,7 +12,7 @@ class Api::WebController < ApiController
 		get_entry 'web', params[:id]
 	end
 
-	def update
+	def create
 		data = params[:data]
 		save_entry 'web', params[:id], data
 
