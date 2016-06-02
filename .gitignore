@@ -24,7 +24,7 @@
 .idea
 
 # Settings file
-config/mongoid.yml
+config/elasticsearch.yml
 config/settings.yml
 
 
