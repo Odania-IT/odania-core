@@ -16,7 +16,7 @@ COPY docker/runit_core.sh /etc/service/core/run
 # Setup haproxy
 COPY docker/runit_haproxy.sh /etc/service/haproxy/run
 
-COPY config/mongoid.docker.yml config/mongoid.yml
+COPY config/elasticsearch.dist.yml config/elasticsearch.yml
 
 VOLUME ["/srv/odania", "/srv/config"]
 

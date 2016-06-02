@@ -17,9 +17,23 @@ class BaseController < ApplicationController
 		@domain = params[:domain]
 		@subdomain = @req_host.gsub(".#{@domain}", '')
 
+		@pages = $elasticsearch.search index: 'odania', type: 'web', body: {
+			query: {
+				bool: {
+					must: [
+						{match: {domain: @domain}},
+						{match: {subdomain: @subdomain}},
+						{regexp: {category: "#{@req_url}.*"}}
+					]
+				}
+			}
+		}
+
+		@hits = @pages['hits']['hits']
+
 		##@pages = Page.where('(domain = ? OR domain IS NULL) AND (subdomain = ? OR subdomain IS NULL) AND category LIKE ?', @domain, @subdomain, "#{@req_url}%")
 		#@pages = Page.where('domain = ? AND subdomain = ? AND category LIKE ?', @domain, @subdomain, "#{@req_url}%")
-		@pages = Entry.where(domain: @domain, subdomain: @subdomain, category: Regexp.new("#{@req_url}.*"))
+		#@pages = Entry.where(domain: @domain, subdomain: @subdomain, category: Regexp.new("#{@req_url}.*"))
 	end
 
 	def health

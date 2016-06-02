@@ -5,9 +5,10 @@
 @subdomain: <%= @subdomain %>
 -->
 
-<% @pages.each do |page| %>
+<% @hits.each do |hit|
+	source = hit['_source'] %>
 	<div>
-		<%= "D: #{page.domain} S: #{page.subdomain} U: #{page.url}" %>
-		<%= link_to page.url, page.url %>
+		<%= "D: #{source.domain} S: #{source.subdomain} U: #{source.url}" %>
+		<%= link_to source.url, source.url %>
 	</div>
 <% end %>
