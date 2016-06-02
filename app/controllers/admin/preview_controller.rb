@@ -1,5 +1,5 @@
 class Admin::PreviewController < AdminController
-	skip_before_filter :verify_authenticity_token, only: :show
+	skip_before_action :verify_authenticity_token, only: :show
 
 	def index
 		global_config = Odania.plugin.get_global_config
