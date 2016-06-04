@@ -68,6 +68,9 @@ class Admin::PreviewController < AdminController
 		logger.info "TIME #{uri}: #{diff}s"
 
 		case response
+			when Net::HTTPNoContent then
+				logger.info "No content: #{response.inspect}"
+				return ''
 			when Net::HTTPSuccess then
 				logger.info response.inspect
 				template = response.body

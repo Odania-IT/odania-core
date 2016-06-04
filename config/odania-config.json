@@ -6,7 +6,7 @@
 	"domains": {
 		"_general": {
 			"_general": {
-				"direct": {
+				"web": {
 					"/detect_language": {
 						"plugin_url": "/base/detect_language",
 						"cacheable": false
@@ -26,36 +26,36 @@
 					"^/$": "/en",
 					"^/en": "/en/admin"
 				},
-				"direct": {
-					"/en/admin": {
+				"web": {
+					"^/en/admin$": {
 						"plugin_url": "/admin",
 						"cacheable": false
 					},
-					"/en/admin/consul": {
+					"^/en/admin/consul$": {
 						"plugin_url": "/admin/consul",
 						"cacheable": false
 					},
-					"/en/admin/consul/status": {
+					"^/en/admin/consul/status$": {
 						"plugin_url": "/admin/consul/status",
 						"cacheable": false
 					},
-					"/en/admin/consul/service": {
+					"^/en/admin/consul/service$": {
 						"plugin_url": "/admin/consul/service",
 						"cacheable": false
 					},
-					"/en/admin/domains": {
+					"^/en/admin/domains$": {
 						"plugin_url": "/admin/domains",
 						"cacheable": false
 					},
-					"/en/admin/config": {
+					"^/en/admin/config$": {
 						"plugin_url": "/admin/config",
 						"cacheable": false
 					},
-					"/favicon.ico": {
+					"^/favicon.ico$": {
 						"plugin_url": "/admin/favicon.ico",
 						"cacheable": false
 					},
-					"/assets/admin/js/admin.js": {
+					"^/assets/admin/js/admin.js$": {
 						"plugin_url": "/assets/admin/js/admin.js",
 						"cacheable": false
 					}
