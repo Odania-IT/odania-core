@@ -3,13 +3,11 @@ class Api::WebController < ApiController
 
 	def index
 		search 'web'
-
-		logger.info @entries['hits']['hits'].inspect
-		#logger.info @entries.inspect
 	end
 
 	def show
 		get_entry 'web', params[:id]
+		render status: :not_found, text: 'Not found' if @entry.nil?
 	end
 
 	def create

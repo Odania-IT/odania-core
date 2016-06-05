@@ -1,1 +1,1 @@
-json.partial! 'api/entries/index', hits: @entries['hits']['hits']
+json.partial! 'api/entries/index', hits: @entries['hits']

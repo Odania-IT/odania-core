@@ -1,158 +1,168 @@
 require 'odania'
 
 class TemplateController < ApplicationController
-	INTERNAL_PROXY_IP = '127.0.0.1'
-	INTERNAL_PROXY_PORT = 80
+	include EntryConcern
 
 	def page
-		puts params.inspect
+		global_config = Odania.plugin.get_global_config
 		req_host = params[:req_host]
-		domain = params[:domain]
-		group_name = params[:group_name]
 		req_url = params[:req_url]
 
-		result = $elasticsearch.search index: 'odania', type: 'web', body: {
+		domain_info = PublicSuffix.parse(req_host)
+		domain = domain_info.domain
+
+		# Do we have a direct hit?
+		result = get_entry_by_path('web', domain, req_host, req_url)
+		total_hits = result['total']
+		esi_action = 'content'
+
+		if total_hits.eql? 0
+			esi_action = 'list_view'
+			logger.debug "No direct page found for #{req_url} [#{req_host}]"
+			render_list_view = get_render_list_view global_config, domain_info
+			logger.debug render_list_view.inspect
+			return error unless render_list_view
+
+			# Do we have pages belonging under this path?
+			query = {
+				from: 0,
+				size: 10,
+				sort: {
+					_score: 'desc'
+				},
+				query: build_domain_query(domain, req_host, {
+					bool: {
+						must: [
+							{prefix: {path: req_url}},
+							{term: {released: true}}
+						]
+					}
+				})
+			}
+			result = search 'web', query
+			total_hits = result['total']
+		end
+
+		logger.info total_hits
+
+		hits = result['hits']
+		hits.each do |hit|
+			source = hit['_source']
+			logger.info "Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']} | #{source['path']}"
+		end
+
+
+		return error if total_hits.eql? 0
+
+		# Identify layout
+		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
+		layout_file = '/application.html'
+		logger.info "Selected Layout: '#{selected_layout}' [layouts/#{selected_layout}#{layout_file}]"
+
+		result = $elasticsearch.search index: 'odania', type: 'partial', body: {
 			query: {
 				bool: {
 					should: [
-						{match: {full_path: req_host}},
-						{match: {full_path: domain}},
-						{match: {full_path: ''}}
+						{match: {full_domain: {query: req_host, boost: 10}}},
+						{match: {full_domain: {query: domain, boost: 6}}},
+						{match: {domain: '_general'}}
 					],
 					must: [
-						{match: {path: req_url}}
+						{term: {partial_name: "layouts/#{selected_layout}#{layout_file}"}}
 					]
 				}
 			}
 		}
 
-		puts result.inspect
+		total_hits = result['hits']['total']
+		logger.info "Layout total hits: #{total_hits}"
 
-=begin
-		2.2.4 :013 > c.count index: 'odania', body: { query: { bool: { must: [ {match: {domain: 'die-information.eu'}}, {match: {subdomain: 'auto'}}] }}}
-		2016-05-30 23:03:19 +0200: GET http://172.19.0.9:9200/odania/_count [status:200, request:0.008s, query:n/a]
-		2016-05-30 23:03:19 +0200: > {"query":{"bool":{"must":[{"match":{"domain":"die-information.eu"}},{"match":{"subdomain":"auto"}}]}}}
-		2016-05-30 23:03:19 +0200: < {"count":8,"_shards":{"total":5,"successful":5,"failed":0}}
-		 => {"count"=>8, "_shards"=>{"total"=>5, "successful"=>5, "failed"=>0}}
-		2.2.4 :014 > c.count index: 'odania', body: { query: { bool: { should: [ {match: {domain: 'die-information.eu'}}, {match: {subdomain: 'auto'}}] }}}
-		2016-05-30 23:03:28 +0200: GET http://172.19.0.9:9200/odania/_count [status:200, request:0.005s, query:n/a]
-		2016-05-30 23:03:28 +0200: > {"query":{"bool":{"should":[{"match":{"domain":"die-information.eu"}},{"match":{"subdomain":"auto"}}]}}}
-		2016-05-30 23:03:28 +0200: < {"count":74,"_shards":{"total":5,"successful":5,"failed":0}}
-		 => {"count"=>74, "_shards"=>{"total"=>5, "successful"=>5, "failed"=>0}}
-=end
-	end
+		hits = result['hits']['hits']
+		hit = hits.first
+		source = hit['_source']
+		logger.info "Layout Best Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']}"
+		template = source['content']
 
-	def old_page
-		puts params.inspect
-		req_host = params[:req_host]
-		domain = params[:domain]
-		group_name = params[:group_name]
-		req_url = params[:req_url]
-
-		global_config = Odania.plugin.get_global_config
-
-		domain_info = PublicSuffix.parse(req_host)
-		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
-		logger.info "Selected Layout: '#{selected_layout}'"
-
-		layout_config = find_layout global_config, selected_layout, domain_info.domain, domain_info.trd
-		get_url = params[:plugin_url]
-		if layout_config.nil?
-			logger.info 'KEINE CONFIG'
-		else
-			get_url = get_layout_file layout_config, layout_config['styles']['_general']['entry_point']
-
-			return render text: "Sorry.... we could not retrieve the layout :(\n'#{selected_layout}'" if get_url.nil?
-		end
-
-		uri = URI.parse("http://#{group_name}.internal#{get_url}")
-
-		template = get_from_internal_proxy uri, req_host
+		return error if template.nil?
 
 		partials = {
-			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&plugin_url=#{params[:plugin_url]}&group_name=#{group_name}&req_host=#{req_host}"
+			'content' => "http://internal.core/template/#{esi_action}?req_url=#{req_url}&domain=#{domain}&req_host=#{req_host}&layout=#{selected_layout}"
 		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
+		odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
 		render html: odania_template.render.html_safe
 	end
 
 	def content
-		req_host = params[:req_host]
-		domain = params[:domain]
-		group_name = params[:group_name]
-
-		puts params[:plugin_url].inspect
-
-		uri = URI.parse("http://#{group_name}.internal#{params[:plugin_url]}")
-
-		template = get_from_internal_proxy uri, req_host
-
-		#response = Net::HTTP.get(uri)
-		#$logger.info template.inspect
-		partials = {}
-		"Page, it's #{params.inspect} at the server! <br/>#{template.inspect} <br/> #{uri} <br/>end"
-
-		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
-		render html: odania_template.render.html_safe
+		render_direct_page 'web'
 	end
 
 	def partial
-		puts params.inspect
-		partial_name = params[:partial_name]
+		render_direct_page 'partial'
+	end
+
+	def list_view
 		req_host = params[:req_host]
-		domain = params[:domain]
-		group_name = params[:group_name]
+		req_url = params[:req_url]
 
-		puts params[:plugin_url].inspect
+		domain_info = PublicSuffix.parse(req_host)
+		@domain = domain_info.domain
 
-		uri = URI.parse("http://#{group_name}.internal#{params[:plugin_url]}")
-
-		template = get_from_internal_proxy uri, req_host
-		partials = {}
+		query = {
+			from: 0,
+			size: 10,
+			sort: {
+				_score: 'desc'
+			},
+			query: build_domain_query(@domain, req_host, {
+				bool: {
+					must: [
+						{prefix: {path: req_url}},
+						{term: {released: true}},
+						{term: {view_in_list: true}}
+					]
+				}
+			})
+		}
+		result = search 'web', query
+		logger.info query
+		logger.info result.inspect
+		@total_hits = result['total']
+		@hits = result['hits']
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, group_name, req_host)
-		render html: odania_template.render.html_safe
+		#odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
+		#render html: odania_template.render.html_safe
 	end
 
 	def error
-		render status: :not_found
+		render status: :not_found, action: :error
 	end
 
 	private
 
-	def get_from_internal_proxy(uri, original_host)
-		logger.info "Retrieve from internal proxy: #{uri}"
+	def render_direct_page(type)
+		req_host = params[:req_host]
+		req_url = params[:req_url]
 
-		template = ''
-		Net::HTTP.new(uri.host, uri.port, INTERNAL_PROXY_IP, INTERNAL_PROXY_PORT).start do |http|
-			request = Net::HTTP::Get.new uri
-			request['X-Original-Host'] = original_host
-			response = http.request request
+		domain_info = PublicSuffix.parse(req_host)
+		domain = domain_info.domain
 
-			logger.info response.inspect
-			template = response.body
-		end
-		template.html_safe
-	end
+		result = get_entry_by_path(type, domain, req_host, req_url)
+		total_hits = result['total']
 
-	def find_layout(global_config, selected_layout, domain, subdomain)
-		# subdomain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'internal', 'layouts', selected_layout]
-		return result unless result.nil?
+		return error if total_hits.eql? 0
+		hits = result['hits']['hits']
+		hit = hits.first
+		template = hit['content']
 
-		# domain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'internal', 'layouts', selected_layout]
-		return result unless result.nil?
+		partials = {}
+		"[#{type}] params #{params.inspect} template: #{template.inspect} req_url: #{req_url}"
 
-		# general layouts
-		result = retrieve_hash_path global_config, ['domains', '_general', '_general', 'internal', 'layouts', selected_layout]
-		return result unless result.nil?
-
-		{}
+		response.headers['X-Do-Esi'] = true
+		odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
+		render html: odania_template.render.html_safe
 	end
 
 	def get_layout_name(global_config, domain, subdomain)
@@ -175,21 +185,52 @@ class TemplateController < ApplicationController
 		'simple'
 	end
 
-	def get_layout_file(layout_config, file)
-		file_data = retrieve_hash_path layout_config, ['styles', '_general', 'direct', file]
-		return file_data['plugin_url'] unless file_data.nil?
-
-		file_data = retrieve_hash_path layout_config, ['styles', '_general', 'dynamic', file]
-		return file_data['plugin_url'] unless file_data.nil?
-
-		nil
-	end
-
 	def retrieve_hash_path(hash, path)
 		key = path.shift
 
 		return nil until hash.has_key? key
 		return hash[key] if path.empty?
 		retrieve_hash_path hash[key], path
+	end
+
+	def get_render_list_view(global_config, domain_info)
+		domain = domain_info.domain
+		subdomain = domain_info.trd
+		# subdomain specific layouts
+		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'config', 'render_list_view']
+		return result unless result.nil?
+
+		# domain specific layouts
+		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'config', 'render_list_view']
+		return result unless result.nil?
+
+		# general layouts
+		result = retrieve_hash_path global_config, %w(domains _general _general config render_list_view)
+		return result unless result.nil?
+
+		# general layouts
+		result = retrieve_hash_path global_config, %w(config render_list_view)
+		return result unless result.nil?
+
+		false
+	end
+
+	def get_entry_by_path(type, domain, req_host, req_url)
+		query = {
+			from: 0,
+			size: 10,
+			sort: {
+				_score: 'desc'
+			},
+			query: build_domain_query(domain, req_host, {
+				bool: {
+					must: [
+						{term: {path: req_url}},
+						{term: {released: true}}
+					]
+				}
+			})
+		}
+		search type, query
 	end
 end

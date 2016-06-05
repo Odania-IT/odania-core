@@ -7,6 +7,7 @@ class Api::LayoutsController < ApiController
 
 	def show
 		get_entry 'layout', params[:id]
+		render status: :not_found, text: 'Not found' if @entry.nil?
 	end
 
 	def create

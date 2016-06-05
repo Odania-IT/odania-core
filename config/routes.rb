@@ -1,19 +1,9 @@
 Rails.application.routes.draw do
 	get 'home/index'
 
-	namespace :admin do
-		get 'consul' => 'consul#index'
-		get 'consul/service'
-		get 'consul/status'
-		get 'domains' => 'domains#index'
-		get 'config' => 'config#index'
-		get 'preview' => 'preview#index'
-		get 'preview/show'
-	end
-	get 'admin' => 'admin#index'
-
 	get 'template/page'
 	get 'template/content'
+	get 'template/list_view'
 	get 'template/error'
 	get 'template/partial/:partial_name' => 'template#partial'
 
@@ -24,9 +14,21 @@ Rails.application.routes.draw do
 	get 'health' => 'base#health'
 
 	namespace :api do
-		resources :web, except: [:new, :edit, :update]
-		resources :partials, except: [:new, :edit, :update]
-		resources :layouts, except: [:new, :edit, :update]
+		resources :web, except: [:new, :edit, :update] do
+			collection do
+				get 'by_id' => 'web#show'
+			end
+		end
+		resources :partials, except: [:new, :edit, :update] do
+			collection do
+				get 'by_id' => 'partials#show'
+			end
+		end
+		resources :layouts, except: [:new, :edit, :update] do
+			collection do
+				get 'by_id' => 'layouts#show'
+			end
+		end
 	end
 
 	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

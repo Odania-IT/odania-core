@@ -7,6 +7,7 @@ class Api::PartialsController < ApiController
 
 	def show
 		get_entry 'partial', params[:id]
+		render status: :not_found, text: 'Not found' if @entry.nil?
 	end
 
 	def create
