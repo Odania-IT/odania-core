@@ -116,7 +116,7 @@ GEM
     notiffany (0.1.0)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    odania (0.0.35)
+    odania (0.0.36)
       deep_merge
       diplomat
       erubis
@@ -238,6 +238,3 @@ DEPENDENCIES
   therubyrhino (>= 0.11.4)
   tzinfo-data
   web-console (~> 3.0)
-
-BUNDLED WITH
-   1.11.2
