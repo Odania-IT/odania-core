@@ -6,27 +6,14 @@ gem 'rb-readline'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.rc1', '< 5.1'
 
-# Database
-# Mongoid compatibility with Rails 5: https://jira.mongodb.org/browse/MONGOID-4218
-# gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
-# gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
 gem 'elasticsearch'
-gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'libv8', :platforms => :ruby
 gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'
 gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
 
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # Use Puma as the app server

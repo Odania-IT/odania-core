@@ -3,6 +3,7 @@ require 'odania'
 class TemplateController < ApplicationController
 	include EntryConcern
 
+	# Only rendering template might result in 200 instead of 404. Is there a way to let varnish send a 404 if one page fails?
 	def page
 		global_config = Odania.plugin.get_global_config
 		req_host = params[:req_host]
@@ -11,65 +12,52 @@ class TemplateController < ApplicationController
 		domain_info = PublicSuffix.parse(req_host)
 		domain = domain_info.domain
 
-		# Do we have a direct hit?
-		result = get_entry_by_path('web', domain, req_host, req_url)
-		total_hits = result['total']
-		esi_action = 'content'
-
-		if total_hits.eql? 0
-			esi_action = 'list_view'
-			logger.debug "No direct page found for #{req_url} [#{req_host}]"
-			render_list_view = get_render_list_view global_config, domain_info
-			logger.debug render_list_view.inspect
-			return error unless render_list_view
-
-			# Do we have pages belonging under this path?
-			query = {
-				from: 0,
-				size: 10,
-				sort: {
-					_score: 'desc'
-				},
-				query: build_domain_query(domain, req_host, {
-					bool: {
-						must: [
-							{prefix: {path: req_url}},
-							{term: {released: true}}
-						]
-					}
-				})
-			}
-			result = search 'web', query
-			total_hits = result['total']
+		# Is this a valid domain?
+		valid_domains = global_config['valid_domains']
+		if valid_domains[domain].nil?
+			# Redirect to default domain
+			default_domains = global_config['default_domains']
+			domain = default_domains.keys.first
+			subdomain = default_domains[domain].first
+			return redirect_to "http://#{subdomain}.#{domain}"
+		elsif not valid_domains[domain].include? domain_info.trd
+			# Redirect to valid subdomain
+			default_domains = global_config['default_domains']
+			subdomain = default_domains[domain].nil? ? nil : default_domains[domain].first
+			subdomain = valid_domains[domain].first if subdomain.nil?
+			return redirect_to "http://#{subdomain}.#{domain}"
 		end
-
-		logger.info total_hits
-
-		hits = result['hits']
-		hits.each do |hit|
-			source = hit['_source']
-			logger.info "Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']} | #{source['path']}"
-		end
-
-
-		return error if total_hits.eql? 0
 
 		# Identify layout
 		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
-		layout_file = '/application.html'
-		logger.info "Selected Layout: '#{selected_layout}' [layouts/#{selected_layout}#{layout_file}]"
+		style = '_general'
+		layout_config = get_layout_config global_config, domain, subdomain, selected_layout
+		layout_file = retrieve_hash_path layout_config, ['config', 'styles', style, 'entry_point']
+		partial_name = get_layout_partial_name selected_layout, layout_file
+		logger.info "Selected Layout: '#{selected_layout}' [#{partial_name}]"
 
-		result = $elasticsearch.search index: 'odania', type: 'partial', body: {
+		result = $elasticsearch.search index: select_index('partial'), type: 'partial', body: {
+			sort: {
+				_score: 'desc'
+			},
 			query: {
-				bool: {
-					should: [
-						{match: {full_domain: {query: req_host, boost: 10}}},
-						{match: {full_domain: {query: domain, boost: 6}}},
-						{match: {domain: '_general'}}
-					],
-					must: [
-						{term: {partial_name: "layouts/#{selected_layout}#{layout_file}"}}
-					]
+				filtered: {
+					filter: {
+						bool: {
+							must: [
+								{term: {partial_name: partial_name}}
+							]
+						}
+					},
+					query: {
+						bool: {
+							should: [
+								{match: {full_domain: {query: req_host, boost: 10}}},
+								{match: {full_domain: {query: domain, boost: 6}}},
+								{match: {domain: '_general'}}
+							]
+						}
+					}
 				}
 			}
 		}
@@ -77,38 +65,49 @@ class TemplateController < ApplicationController
 		total_hits = result['hits']['total']
 		logger.info "Layout total hits: #{total_hits}"
 
+		if total_hits.eql? 0
+			@error_msg = 'Sorry.... there was an internal error and we could not find the required template!'
+			return error
+		end
+
 		hits = result['hits']['hits']
 		hit = hits.first
 		source = hit['_source']
 		logger.info "Layout Best Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']}"
 		template = source['content']
 
-		return error if template.nil?
-
 		partials = {
-			'content' => "http://internal.core/template/#{esi_action}?req_url=#{req_url}&domain=#{domain}&req_host=#{req_host}&layout=#{selected_layout}"
+			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&req_host=#{req_host}&layout=#{selected_layout}"
 		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
+		odania_template = OdaniaCore::Erb.new(template, domain, partials, selected_layout, req_host)
 		render html: odania_template.render.html_safe
 	end
 
 	def content
-		render_direct_page 'web'
-	end
+		req_host = params[:req_host]
+		req_url = params[:req_url]
+		layout = params[:layout]
 
-	def partial
-		render_direct_page 'partial'
-	end
+		result = render_direct_page 'web', req_host, req_url, layout
+		return render html: result if result
 
-	def list_view
+		# Try list view
+		global_config = Odania.plugin.get_global_config
 		req_host = params[:req_host]
 		req_url = params[:req_url]
 
 		domain_info = PublicSuffix.parse(req_host)
 		@domain = domain_info.domain
 
+		# Is list view enabled?
+		logger.debug "No direct page found for #{req_url} [#{req_host}]"
+		render_list_view = get_render_list_view global_config, domain_info
+		logger.debug render_list_view.inspect
+		return error unless render_list_view
+
+		# Do we have pages belonging under this path?
 		query = {
 			from: 0,
 			size: 10,
@@ -126,43 +125,67 @@ class TemplateController < ApplicationController
 			})
 		}
 		result = search 'web', query
-		logger.info query
-		logger.info result.inspect
 		@total_hits = result['total']
 		@hits = result['hits']
 
-		response.headers['X-Do-Esi'] = true
-		#odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
-		#render html: odania_template.render.html_safe
+		return error if @total_hits.eql? 0
+
+		# Get list view template from layout
+		domain = domain_info.domain
+		subdomain = domain_info.trd
+		layout_config = get_layout_config global_config, domain, subdomain, layout
+
+		unless layout_config.nil?
+			style = '_general'
+			list_view_template_path = retrieve_hash_path layout_config, ['config', 'styles', style, 'list_view']
+
+			unless list_view_template_path.nil?
+				partial_name = get_layout_partial_name layout, list_view_template_path
+				logger.info "rendering partial #{partial_name}"
+				result = render_direct_page 'partial', req_host, partial_name, layout
+				logger.info "rendering partial #{result.inspect}"
+				render html: result if result
+			end
+		end
+	end
+
+	def partial
+		req_host = params[:req_host]
+		partial_name = params[:partial_name]
+		layout = params[:layout]
+
+		result = render_direct_page 'partial', req_host, partial_name, layout
+		return error if result.nil?
+		render html: result
 	end
 
 	def error
+		@error_msg = 'Sorry.... we could not find the requested page.' if @error_msg.nil?
+
+		response.headers['X-Do-Esi'] = true
 		render status: :not_found, action: :error
 	end
 
 	private
 
-	def render_direct_page(type)
-		req_host = params[:req_host]
-		req_url = params[:req_url]
-
+	def render_direct_page(type, req_host, path, layout)
 		domain_info = PublicSuffix.parse(req_host)
 		domain = domain_info.domain
 
-		result = get_entry_by_path(type, domain, req_host, req_url)
+		result = get_entry_by_path(type, domain, req_host, path)
 		total_hits = result['total']
 
-		return error if total_hits.eql? 0
-		hits = result['hits']['hits']
+		return nil if total_hits.eql? 0
+		hits = result['hits']
 		hit = hits.first
-		template = hit['content']
+		template = hit['_source']['content']
 
 		partials = {}
-		"[#{type}] params #{params.inspect} template: #{template.inspect} req_url: #{req_url}"
+		"[#{type}] params #{params.inspect} template: #{template.inspect} req_url: #{path}"
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, 'NOT-PROVIDED', req_host)
-		render html: odania_template.render.html_safe
+		odania_template = OdaniaCore::Erb.new(template, domain, partials, layout, req_host)
+		odania_template.render.html_safe
 	end
 
 	def get_layout_name(global_config, domain, subdomain)
@@ -215,7 +238,23 @@ class TemplateController < ApplicationController
 		false
 	end
 
-	def get_entry_by_path(type, domain, req_host, req_url)
+	def get_layout_config(global_config, domain, subdomain, layout)
+		# subdomain specific layouts
+		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'layouts', layout]
+		return result unless result.nil?
+
+		# domain specific layouts
+		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'layouts', layout]
+		return result unless result.nil?
+
+		# general layouts
+		result = retrieve_hash_path global_config, ['domains', '_general', '_general', 'layouts', layout]
+		return result unless result.nil?
+
+		{}
+	end
+
+	def get_entry_by_path(type, domain, req_host, path)
 		query = {
 			from: 0,
 			size: 10,
@@ -225,12 +264,18 @@ class TemplateController < ApplicationController
 			query: build_domain_query(domain, req_host, {
 				bool: {
 					must: [
-						{term: {path: req_url}},
+						{term: {path: path}},
 						{term: {released: true}}
 					]
 				}
 			})
 		}
+
 		search type, query
+	end
+
+	def get_layout_partial_name(layout_name, layout_file)
+		return "layouts/#{layout_name}#{layout_file}" if '/'.eql? layout_file[0]
+		"layouts/#{layout_name}/#{layout_file}"
 	end
 end

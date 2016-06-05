@@ -1,24 +1,22 @@
 module OdaniaCore
 	class Erb
-		attr_accessor :variables, :config, :page, :asset
+		attr_accessor :variables, :config, :page, :asset, :layout
 
-		def initialize(template, domain, partials, group_name, req_host)
+		def initialize(template, domain, partials, layout, req_host)
 			@template = template.html_safe
 
-			self.variables = Variables.new(template, domain, partials, group_name, req_host)
+			self.variables = Variables.new(template, domain, partials, layout, req_host)
 			self.config = Config.new self.variables
 			self.page = Page.new self.variables
 			self.asset = Asset.new self.variables
+			self.layout = Layout.new self.variables
 
 			if LOCAL_TEST_MODE
 				data = "\n<!-- Domain: #{domain} -->"
-				data += "\n<!-- Group Name: #{group_name} -->"
+				data += "\n<!-- Layout: #{layout} -->"
 				data += "\n<!-- Request Host: #{req_host} -->"
 				data += "\n<!-- Base Domain: #{self.variables.base_domain} -->"
 				data += "\n<!-- Partials: #{JSON.pretty_generate(self.variables.partials)} -->"
-				#data += "\n<!-- Config: #{JSON.pretty_generate(self.variables.config)} -->"
-				#data += "\n<!-- SubDomain Config: #{JSON.pretty_generate(self.variables.subdomain_config)} -->"
-				#data += "\n<!-- Global Config: #{JSON.pretty_generate(self.variables.global_config)} -->"
 
 				@template += data.html_safe
 			end
@@ -30,9 +28,9 @@ module OdaniaCore
 
 		class Variables
 			attr_accessor :template, :config, :subdomain_config, :global_config, :domain
-			attr_accessor :base_domain, :partials, :group_name, :req_host
+			attr_accessor :base_domain, :partials, :layout, :req_host
 
-			def initialize(template, domain, partials, group_name, req_host)
+			def initialize(template, domain, partials, layout, req_host)
 				self.template = template
 				self.global_config = Odania.plugin.get_global_config
 
@@ -47,7 +45,7 @@ module OdaniaCore
 
 				self.domain = domain
 				self.partials = partials
-				self.group_name = group_name
+				self.layout = layout
 				self.req_host = req_host
 			end
 
@@ -65,7 +63,7 @@ module OdaniaCore
 				data = {
 					domain: self.domain,
 					base_domain: self.base_domain,
-					group_name: self.group_name,
+					layout: self.layout,
 					req_host: self.req_host,
 					type: type,
 					key: key,
@@ -132,7 +130,7 @@ module OdaniaCore
 					if partial.nil?
 						"\n\n\n<pre>UNHANDLED PAGE: #{page} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
 					else
-						esi_url = "http://internal.core/template/partial/#{page}?domain=#{@variables.domain}&group_name=#{@variables.group_name}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}"
+						esi_url = "http://internal.core/template/partial?partial_name=#{page}&domain=#{@variables.domain}&layout=#{@variables.layout}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}"
 						"<!-- Page: #{page} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
 					end
 				end
@@ -155,6 +153,26 @@ module OdaniaCore
 			def get_asset_url(req_host)
 				return @variables.subdomain_config['asset_url'] unless @variables.subdomain_config['asset_url'].nil?
 				req_host
+			end
+		end
+
+		class Layout
+			def initialize(variables)
+				@variables = variables
+			end
+
+			def get(partial_name)
+				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
+				layout_partial_name = get_layout_partial_name partial_name
+				esi_url = "http://internal.core/template/partial?partial_name=#{layout_partial_name}&layout=#{@variables.layout}&req_host=#{@variables.req_host}"
+				"<!-- Layout Partial: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Layout Partial: #{partial_name} -->"
+			end
+
+			private
+
+			def get_layout_partial_name(layout_file)
+				return "layouts/#{@variables.layout}#{layout_file}" if '/'.eql? layout_file[0]
+				"layouts/#{@variables.layout}/#{layout_file}"
 			end
 		end
 	end

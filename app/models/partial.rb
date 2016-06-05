@@ -1,2 +1,0 @@
-class Partial < Entry
-end

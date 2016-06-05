@@ -3,9 +3,8 @@ Rails.application.routes.draw do
 
 	get 'template/page'
 	get 'template/content'
-	get 'template/list_view'
 	get 'template/error'
-	get 'template/partial/:partial_name' => 'template#partial'
+	get 'template/partial'
 
 	get 'base/detect_language'
 	get 'base/index'
