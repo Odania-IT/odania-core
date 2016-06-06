@@ -5,35 +5,35 @@ class TemplateController < ApplicationController
 
 	# Only rendering template might result in 200 instead of 404. Is there a way to let varnish send a 404 if one page fails?
 	def page
-		global_config = Odania.plugin.get_global_config
 		req_host = params[:req_host]
 		req_url = params[:req_url]
+		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
+		domain = subdomain_config['domain']
 
-		domain_info = PublicSuffix.parse(req_host)
-		domain = domain_info.domain
+		if subdomain_config.nil?
+			valid_domain_config = Odania.plugin.get_valid_domain_config
 
-		# Is this a valid domain?
-		valid_domains = global_config['valid_domains']
-		if valid_domains[domain].nil?
-			# Redirect to default domain
-			default_domains = global_config['default_domains']
-			domain = default_domains.keys.first
-			subdomain = default_domains[domain].first
-			return redirect_to "http://#{subdomain}.#{domain}"
-		elsif not valid_domains[domain].include? domain_info.trd
-			# Redirect to valid subdomain
-			default_domains = global_config['default_domains']
-			subdomain = default_domains[domain].nil? ? nil : default_domains[domain].first
-			subdomain = valid_domains[domain].first if subdomain.nil?
-			return redirect_to "http://#{subdomain}.#{domain}"
+			# Is this a valid domain?
+			valid_domains = valid_domain_config['valid_domains']
+			if valid_domains[domain].nil?
+				# Redirect to default domain
+				default_domains = valid_domain_config['default_domains']
+				domain = default_domains.keys.first
+				subdomain = default_domains[domain].first
+				return redirect_to "http://#{subdomain}.#{domain}"
+			else
+				# Redirect to valid subdomain
+				default_domains = valid_domain_config['default_domains']
+				subdomain = default_domains[domain].nil? ? nil : default_domains[domain].first
+				subdomain = valid_domains[domain].first if subdomain.nil?
+				return redirect_to "http://#{subdomain}.#{domain}"
+			end
 		end
 
 		# Identify layout
-		selected_layout = get_layout_name global_config, domain_info.domain, domain_info.trd
+		selected_layout = subdomain_config['layout']
 		style = '_general'
-		layout_config = get_layout_config global_config, domain, subdomain, selected_layout
-		layout_file = retrieve_hash_path layout_config, ['config', 'styles', style, 'entry_point']
-		partial_name = get_layout_partial_name selected_layout, layout_file
+		partial_name = subdomain_config['styles'][style]['entry_point']
 		logger.info "Selected Layout: '#{selected_layout}' [#{partial_name}]"
 
 		result = $elasticsearch.search index: select_index('partial'), type: 'partial', body: {
@@ -76,36 +76,26 @@ class TemplateController < ApplicationController
 		logger.info "Layout Best Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']}"
 		template = source['content']
 
-		partials = {
-			'content' => "http://internal.core/template/content?req_url=#{req_url}&domain=#{domain}&req_host=#{req_host}&layout=#{selected_layout}"
-		}
+		subdomain_config['partials']['content'] = "http://internal.core/template/content?req_url=#{req_url}&req_host=#{req_host}"
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, selected_layout, req_host)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config)
 		render html: odania_template.render.html_safe
 	end
 
 	def content
 		req_host = params[:req_host]
 		req_url = params[:req_url]
-		layout = params[:layout]
+		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
+		layout = subdomain_config['layout']
 
 		result = render_direct_page 'web', req_host, req_url, layout
 		return render html: result if result
 
 		# Try list view
-		global_config = Odania.plugin.get_global_config
-		req_host = params[:req_host]
-		req_url = params[:req_url]
-
-		domain_info = PublicSuffix.parse(req_host)
-		@domain = domain_info.domain
-
-		# Is list view enabled?
 		logger.debug "No direct page found for #{req_url} [#{req_host}]"
-		render_list_view = get_render_list_view global_config, domain_info
-		logger.debug render_list_view.inspect
-		return error unless render_list_view
+		return error unless subdomain_config['config']['render_list_view']
+		@domain = subdomain_config['domain']
 
 		# Do we have pages belonging under this path?
 		query = {
@@ -131,28 +121,17 @@ class TemplateController < ApplicationController
 		return error if @total_hits.eql? 0
 
 		# Get list view template from layout
-		domain = domain_info.domain
-		subdomain = domain_info.trd
-		layout_config = get_layout_config global_config, domain, subdomain, layout
-
-		unless layout_config.nil?
-			style = '_general'
-			list_view_template_path = retrieve_hash_path layout_config, ['config', 'styles', style, 'list_view']
-
-			unless list_view_template_path.nil?
-				partial_name = get_layout_partial_name layout, list_view_template_path
-				logger.info "rendering partial #{partial_name}"
-				result = render_direct_page 'partial', req_host, partial_name, layout
-				logger.info "rendering partial #{result.inspect}"
-				render html: result if result
-			end
-		end
+		partial_name = subdomain_config['partials']['list_view']
+		result = render_direct_page 'partial', req_host, partial_name, layout
+		logger.info "rendering partial #{result.inspect}"
+		render html: result if result
 	end
 
 	def partial
 		req_host = params[:req_host]
 		partial_name = params[:partial_name]
-		layout = params[:layout]
+		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
+		layout = subdomain_config['layout']
 
 		result = render_direct_page 'partial', req_host, partial_name, layout
 		return error if result.nil?
@@ -174,6 +153,7 @@ class TemplateController < ApplicationController
 
 		result = get_entry_by_path(type, domain, req_host, path)
 		total_hits = result['total']
+		logger.info "total_hits: #{total_hits}"
 
 		return nil if total_hits.eql? 0
 		hits = result['hits']
@@ -186,72 +166,6 @@ class TemplateController < ApplicationController
 		response.headers['X-Do-Esi'] = true
 		odania_template = OdaniaCore::Erb.new(template, domain, partials, layout, req_host)
 		odania_template.render.html_safe
-	end
-
-	def get_layout_name(global_config, domain, subdomain)
-		# subdomain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'config', 'layout']
-		return result unless result.nil?
-
-		# domain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'config', 'layout']
-		return result unless result.nil?
-
-		# general layouts
-		result = retrieve_hash_path global_config, %w(domains _general _general config layout)
-		return result unless result.nil?
-
-		# general layouts
-		result = retrieve_hash_path global_config, %w(config layout)
-		return result unless result.nil?
-
-		'simple'
-	end
-
-	def retrieve_hash_path(hash, path)
-		key = path.shift
-
-		return nil until hash.has_key? key
-		return hash[key] if path.empty?
-		retrieve_hash_path hash[key], path
-	end
-
-	def get_render_list_view(global_config, domain_info)
-		domain = domain_info.domain
-		subdomain = domain_info.trd
-		# subdomain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'config', 'render_list_view']
-		return result unless result.nil?
-
-		# domain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'config', 'render_list_view']
-		return result unless result.nil?
-
-		# general layouts
-		result = retrieve_hash_path global_config, %w(domains _general _general config render_list_view)
-		return result unless result.nil?
-
-		# general layouts
-		result = retrieve_hash_path global_config, %w(config render_list_view)
-		return result unless result.nil?
-
-		false
-	end
-
-	def get_layout_config(global_config, domain, subdomain, layout)
-		# subdomain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, subdomain, 'layouts', layout]
-		return result unless result.nil?
-
-		# domain specific layouts
-		result = retrieve_hash_path global_config, ['domains', domain, '_general', 'layouts', layout]
-		return result unless result.nil?
-
-		# general layouts
-		result = retrieve_hash_path global_config, ['domains', '_general', '_general', 'layouts', layout]
-		return result unless result.nil?
-
-		{}
 	end
 
 	def get_entry_by_path(type, domain, req_host, path)
@@ -271,11 +185,8 @@ class TemplateController < ApplicationController
 			})
 		}
 
-		search type, query
-	end
+		logger.info query
 
-	def get_layout_partial_name(layout_name, layout_file)
-		return "layouts/#{layout_name}#{layout_file}" if '/'.eql? layout_file[0]
-		"layouts/#{layout_name}/#{layout_file}"
+		search type, query
 	end
 end

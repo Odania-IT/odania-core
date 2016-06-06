@@ -1,22 +1,19 @@
 module OdaniaCore
 	class Erb
-		attr_accessor :variables, :config, :page, :asset, :layout
+		attr_accessor :variables, :config, :partial, :asset, :logger
 
-		def initialize(template, domain, partials, layout, req_host)
+		def initialize(template, subdomain_config)
+			self.logger = Rails.logger
 			@template = template.html_safe
 
-			self.variables = Variables.new(template, domain, partials, layout, req_host)
+			self.variables = Variables.new(template, subdomain_config)
 			self.config = Config.new self.variables
-			self.page = Page.new self.variables
+			self.partial = Partial.new self.variables
 			self.asset = Asset.new self.variables
-			self.layout = Layout.new self.variables
 
 			if LOCAL_TEST_MODE
-				data = "\n<!-- Domain: #{domain} -->"
-				data += "\n<!-- Layout: #{layout} -->"
-				data += "\n<!-- Request Host: #{req_host} -->"
-				data += "\n<!-- Base Domain: #{self.variables.base_domain} -->"
-				data += "\n<!-- Partials: #{JSON.pretty_generate(self.variables.partials)} -->"
+				data = "\n<!-- Full Domain: #{subdomain_config['full_domain']} -->"
+				data += "\n<!-- Layout: #{subdomain_config['layout']} -->"
 
 				@template += data.html_safe
 			end
@@ -27,77 +24,38 @@ module OdaniaCore
 		end
 
 		class Variables
-			attr_accessor :template, :config, :subdomain_config, :global_config, :domain
-			attr_accessor :base_domain, :partials, :layout, :req_host
+			attr_accessor :template, :config, :subdomain_config, :domain
+			attr_accessor :layout, :full_domain, :subdomain
 
-			def initialize(template, domain, partials, layout, req_host)
+			def initialize(template, subdomain_config)
 				self.template = template
-				self.global_config = Odania.plugin.get_global_config
+				self.subdomain_config = subdomain_config
 
-				domain_info = PublicSuffix.parse(req_host)
-				domain_info_domain = domain_info.domain
-				domain_info_trd = domain_info.trd
-
-				self.config, self.base_domain = Odania.plugin.get_domain_config_for domain_info_domain, self.global_config
-				self.subdomain_config = self.config[domain_info_trd] unless domain_info_trd.nil?
-				self.subdomain_config = self.config['_general'] if self.subdomain_config.nil?
-				self.subdomain_config = {} if self.subdomain_config.nil?
-
-				self.domain = domain
-				self.partials = partials
-				self.layout = layout
-				self.req_host = req_host
+				self.domain = subdomain_config['domain']
+				self.layout = subdomain_config['layout']
+				self.full_domain = subdomain_config['full_domain']
+				self.subdomain = subdomain_config['subdomain']
 			end
 
-			def get_partial(page)
-				get_specific %w(internal partials), page
+			def get_partial(partial)
+				subdomain_config['partials'][partial]
 			end
 
 			def get_config_key(key)
-				data = get_specific %w(config), key
-				return retrieve_hash_path global_config, ['config', key] if data.nil?
-				data
+				subdomain_config['config'][key]
 			end
 
 			def notify_error_async(type, key, data)
 				data = {
 					domain: self.domain,
-					base_domain: self.base_domain,
+					subdomain: self.subdomain,
 					layout: self.layout,
-					req_host: self.req_host,
+					full_domain: self.full_domain,
 					type: type,
 					key: key,
 					data: data
 				}
 				ProcessErrorJob.perform_later JSON.dump(data)
-			end
-
-			private
-
-			def get_specific(part, page)
-				subdomain = req_host.gsub(".#{base_domain}", '')
-
-				# subdomain specific layouts
-				result = retrieve_hash_path global_config, ['domains', base_domain, subdomain] + part + [page]
-				return result unless result.nil?
-
-				# domain specific layouts
-				result = retrieve_hash_path global_config, ['domains', base_domain, '_general'] + part + [page]
-				return result unless result.nil?
-
-				# general layouts
-				result = retrieve_hash_path global_config, %w(domains _general _general) + part + [page]
-				return result unless result.nil?
-
-				nil
-			end
-
-			def retrieve_hash_path(hash, path)
-				key = path.shift
-
-				return nil until hash.has_key? key
-				return hash[key] if path.empty?
-				retrieve_hash_path hash[key], path
 			end
 		end
 
@@ -115,24 +73,24 @@ module OdaniaCore
 			end
 		end
 
-		class Page
+		class Partial
 			def initialize(variables)
 				@variables = variables
 			end
 
-			def get(page)
-				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
-				if not @variables.partials[page].nil?
-					"<!-- Page: #{page} -->\n<esi:include src=\"#{@variables.partials[page]}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
-				else
-					partial = @variables.get_partial(page)
+			def get(partial_name, through_esi=true)
+				if through_esi
+					esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
+					partial = @variables.get_partial(partial_name)
 
 					if partial.nil?
-						"\n\n\n<pre>UNHANDLED PAGE: #{page} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
+						"\n\n\n<pre>UNHANDLED PAGE: #{partial_name} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
 					else
-						esi_url = "http://internal.core/template/partial?partial_name=#{page}&domain=#{@variables.domain}&layout=#{@variables.layout}&plugin_url=#{partial['plugin_url']}&req_host=#{@variables.req_host}"
-						"<!-- Page: #{page} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{page} -->"
+						esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&domain=#{@variables.domain}&layout=#{@variables.layout}&plugin_url=#{partial_name['plugin_url']}&req_host=#{@variables.full_domain}"
+						"<!-- Page: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{partial_name} -->"
 					end
+				else
+					# TODO Directly fetch and process template
 				end
 			end
 		end
@@ -143,36 +101,16 @@ module OdaniaCore
 			end
 
 			def get(asset)
-				asset_url = get_asset_url(@variables.req_host)
+				asset_url = get_asset_url(@variables.full_domain)
 				asset_url = "//#{asset_url}" unless asset_url.include? '//'
 				"#{asset_url}/#{asset}"
 			end
 
 			private
 
-			def get_asset_url(req_host)
+			def get_asset_url(full_domain)
 				return @variables.subdomain_config['asset_url'] unless @variables.subdomain_config['asset_url'].nil?
-				req_host
-			end
-		end
-
-		class Layout
-			def initialize(variables)
-				@variables = variables
-			end
-
-			def get(partial_name)
-				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
-				layout_partial_name = get_layout_partial_name partial_name
-				esi_url = "http://internal.core/template/partial?partial_name=#{layout_partial_name}&layout=#{@variables.layout}&req_host=#{@variables.req_host}"
-				"<!-- Layout Partial: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Layout Partial: #{partial_name} -->"
-			end
-
-			private
-
-			def get_layout_partial_name(layout_file)
-				return "layouts/#{@variables.layout}#{layout_file}" if '/'.eql? layout_file[0]
-				"layouts/#{@variables.layout}/#{layout_file}"
+				full_domain
 			end
 		end
 	end
