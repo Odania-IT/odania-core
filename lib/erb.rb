@@ -1,12 +1,13 @@
 module OdaniaCore
 	class Erb
-		attr_accessor :variables, :config, :partial, :asset, :logger
+		attr_accessor :variables, :config, :partial, :asset, :logger, :data
 
-		def initialize(template, subdomain_config)
+		def initialize(template, subdomain_config, data={}, extra_partials={})
 			self.logger = Rails.logger
+			self.data = data
 			@template = template.html_safe
 
-			self.variables = Variables.new(template, subdomain_config)
+			self.variables = Variables.new(template, subdomain_config, extra_partials)
 			self.config = Config.new self.variables
 			self.partial = Partial.new self.variables
 			self.asset = Asset.new self.variables
@@ -25,11 +26,12 @@ module OdaniaCore
 
 		class Variables
 			attr_accessor :template, :config, :subdomain_config, :domain
-			attr_accessor :layout, :full_domain, :subdomain
+			attr_accessor :layout, :full_domain, :subdomain, :extra_partials
 
-			def initialize(template, subdomain_config)
+			def initialize(template, subdomain_config, extra_partials)
 				self.template = template
 				self.subdomain_config = subdomain_config
+				self.extra_partials = extra_partials
 
 				self.domain = subdomain_config['domain']
 				self.layout = subdomain_config['layout']
@@ -81,14 +83,13 @@ module OdaniaCore
 			def get(partial_name, through_esi=true)
 				if through_esi
 					esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
-					partial = @variables.get_partial(partial_name)
 
-					if partial.nil?
-						"\n\n\n<pre>UNHANDLED PAGE: #{partial_name} !!!!!!!!!!!!!!!!!!!!</pre>\n\n\n"
+					if @variables.extra_partials[partial_name].nil?
+						esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&req_host=#{@variables.full_domain}"
 					else
-						esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&domain=#{@variables.domain}&layout=#{@variables.layout}&plugin_url=#{partial_name['plugin_url']}&req_host=#{@variables.full_domain}"
-						"<!-- Page: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{partial_name} -->"
+						esi_url = @variables.extra_partials[partial_name]
 					end
+					"<!-- Page: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{partial_name} -->"
 				else
 					# TODO Directly fetch and process template
 				end

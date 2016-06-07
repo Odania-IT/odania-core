@@ -76,10 +76,12 @@ class TemplateController < ApplicationController
 		logger.info "Layout Best Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']}"
 		template = source['content']
 
-		subdomain_config['partials']['content'] = "http://internal.core/template/content?req_url=#{req_url}&req_host=#{req_host}"
+		extra_partials = {
+			'content' => "http://internal.core/template/content?req_url=#{req_url}&req_host=#{req_host}"
+		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, subdomain_config)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, {}, extra_partials)
 		render html: odania_template.render.html_safe
 	end
 
@@ -87,9 +89,8 @@ class TemplateController < ApplicationController
 		req_host = params[:req_host]
 		req_url = params[:req_url]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
-		layout = subdomain_config['layout']
 
-		result = render_direct_page 'web', req_host, req_url, layout
+		result = render_direct_page 'web', req_host, req_url, subdomain_config
 		return render html: result if result
 
 		# Try list view
@@ -121,8 +122,8 @@ class TemplateController < ApplicationController
 		return error if @total_hits.eql? 0
 
 		# Get list view template from layout
-		partial_name = subdomain_config['partials']['list_view']
-		result = render_direct_page 'partial', req_host, partial_name, layout
+		partial_name = get_partial_template subdomain_config['partials']['list_view']
+		result = render_direct_page 'partial', req_host, partial_name, subdomain_config, {hits: @hits, total_hits: @total_hits}
 		logger.info "rendering partial #{result.inspect}"
 		render html: result if result
 	end
@@ -131,9 +132,9 @@ class TemplateController < ApplicationController
 		req_host = params[:req_host]
 		partial_name = params[:partial_name]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
-		layout = subdomain_config['layout']
 
-		result = render_direct_page 'partial', req_host, partial_name, layout
+		el_partial_name = get_partial_template subdomain_config['partials'][partial_name]
+		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config
 		return error if result.nil?
 		render html: result
 	end
@@ -147,7 +148,7 @@ class TemplateController < ApplicationController
 
 	private
 
-	def render_direct_page(type, req_host, path, layout)
+	def render_direct_page(type, req_host, path, subdomain_config, data={})
 		domain_info = PublicSuffix.parse(req_host)
 		domain = domain_info.domain
 
@@ -160,15 +161,14 @@ class TemplateController < ApplicationController
 		hit = hits.first
 		template = hit['_source']['content']
 
-		partials = {}
-		"[#{type}] params #{params.inspect} template: #{template.inspect} req_url: #{path}"
-
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, domain, partials, layout, req_host)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, data)
 		odania_template.render.html_safe
 	end
 
 	def get_entry_by_path(type, domain, req_host, path)
+		must_query = 'web'.eql?(type) ? [{term: {released: true}}, {term: {path: path}}] : [{term: {partial_name: path}}]
+
 		query = {
 			from: 0,
 			size: 10,
@@ -177,10 +177,7 @@ class TemplateController < ApplicationController
 			},
 			query: build_domain_query(domain, req_host, {
 				bool: {
-					must: [
-						{term: {path: path}},
-						{term: {released: true}}
-					]
+					must: must_query
 				}
 			})
 		}
@@ -188,5 +185,10 @@ class TemplateController < ApplicationController
 		logger.info query
 
 		search type, query
+	end
+
+	def get_partial_template(partial)
+		return '' if partial.nil?
+		partial['template']
 	end
 end
