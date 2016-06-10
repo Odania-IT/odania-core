@@ -2,14 +2,14 @@ module OdaniaCore
 	class Erb
 		attr_accessor :variables, :config, :partial, :asset, :logger, :data
 
-		def initialize(template, subdomain_config, data={}, extra_partials={})
+		def initialize(template, subdomain_config, domain_query, data={}, extra_partials={})
 			self.logger = Rails.logger
 			self.data = data
 			@template = template.html_safe
 
-			self.variables = Variables.new(template, subdomain_config, extra_partials)
+			self.variables = Variables.new(template, subdomain_config, data, extra_partials)
 			self.config = Config.new self.variables
-			self.partial = Partial.new self.variables
+			self.partial = Partial.new self.variables, domain_query
 			self.asset = Asset.new self.variables
 
 			if LOCAL_TEST_MODE
@@ -25,13 +25,14 @@ module OdaniaCore
 		end
 
 		class Variables
-			attr_accessor :template, :config, :subdomain_config, :domain
+			attr_accessor :template, :config, :subdomain_config, :domain, :data
 			attr_accessor :layout, :full_domain, :subdomain, :extra_partials
 
-			def initialize(template, subdomain_config, extra_partials)
+			def initialize(template, subdomain_config, data, extra_partials)
 				self.template = template
 				self.subdomain_config = subdomain_config
 				self.extra_partials = extra_partials
+				self.data = data
 
 				self.domain = subdomain_config['domain']
 				self.layout = subdomain_config['layout']
@@ -76,23 +77,47 @@ module OdaniaCore
 		end
 
 		class Partial
-			def initialize(variables)
+			def initialize(variables, domain_query)
 				@variables = variables
+				@domain_query = domain_query
 			end
 
-			def get(partial_name, through_esi=true)
-				if through_esi
-					esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
+			# Let varnish fetch the partial
+			def get(partial_name)
+				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
 
-					if @variables.extra_partials[partial_name].nil?
-						esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&req_host=#{@variables.full_domain}"
-					else
-						esi_url = @variables.extra_partials[partial_name]
-					end
-					"<!-- Page: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{partial_name} -->"
+				if @variables.extra_partials[partial_name].nil?
+					esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&req_host=#{@variables.full_domain}"
 				else
-					# TODO Directly fetch and process template
+					esi_url = @variables.extra_partials[partial_name]
 				end
+				"<!-- Page: #{partial_name} -->\n<esi:include src=\"#{esi_url}\"/>\n#{esi_remove}\n<!-- End Page: #{partial_name} -->"
+			end
+
+			# Directly embed the partial into the page
+			def embed(partial_name)
+				query = {
+					filtered: {
+						filter: {
+							bool: {
+								must: [
+									{term: {partial_name: partial_name}}
+								]
+							}
+						},
+						query: @domain_query
+					}
+				}
+				result = $elasticsearch.search index: $partial_index, type: 'partial', body: query
+				entries = result['hits']
+				total_hits = entries['total']
+
+				return "ERROR PARTIAL NOT FOUND #{partial_name}" if total_hits.eql? 0
+
+				el_partial_data = get_partial_template @variables.subdomain_config['partials'][partial_name]
+				return '' if el_partial_data.nil?
+				odania_template = OdaniaCore::Erb.new(el_partial_data['template'], @variables.subdomain_config, @domain_query, @variables.data, @variables.extra_partials)
+				odania_template.render.html_safe
 			end
 		end
 

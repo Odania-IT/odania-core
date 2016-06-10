@@ -26,38 +26,42 @@ module EntryConcern
 		$elasticsearch.delete index: select_index(type), type: type, id: id
 	end
 
-	def build_domain_query(domain, req_host, filter)
+	def build_filtered_domain_query(domain, req_host, filter)
 		{
 			filtered: {
 				filter: filter,
-				query: {
-					bool: {
-						should: [
-							{
-								bool: {
-									must: [
-										{match: {full_domain: {query: req_host, boost: 10}}}
-									]
-								}
-							},
-							{
-								bool: {
-									must: [
-										{match: {full_domain: {query: domain, boost: 6}}}
-									]
-								}
-							},
-							{
-								bool: {
-									must: [
-										{match: {domain: '_general'}}
-									]
-								}
-							}
-						],
-						minimum_should_match: 1
+				query: build_domain_query(domain, req_host)
+			}
+		}
+	end
+
+	def build_domain_query(domain, req_host)
+		{
+			bool: {
+				should: [
+					{
+						bool: {
+							must: [
+								{match: {full_domain: {query: req_host, boost: 20}}}
+							]
+						}
+					},
+					{
+						bool: {
+							must: [
+								{match: {full_domain: {query: domain, boost: 10}}}
+							]
+						}
+					},
+					{
+						bool: {
+							must: [
+								{match: {domain: '_general'}}
+							]
+						}
 					}
-				}
+				],
+				minimum_should_match: 1
 			}
 		}
 	end

@@ -22,7 +22,7 @@ RSpec.describe TemplateController, :type => :controller do
 										'ServiceName' => 'odania_static',
 										'ServiceTags' => [],
 										'ServicePort' => 80,
-										'ServiceAddress' => '172.20.20.1'
+										'ServiceAddress' => '172.20.20.2'
 									})
 			]
 		}

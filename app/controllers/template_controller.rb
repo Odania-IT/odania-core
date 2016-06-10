@@ -81,7 +81,7 @@ class TemplateController < ApplicationController
 		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, subdomain_config, {}, extra_partials)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), {}, extra_partials)
 		render html: odania_template.render.html_safe
 	end
 
@@ -105,7 +105,7 @@ class TemplateController < ApplicationController
 			sort: {
 				_score: 'desc'
 			},
-			query: build_domain_query(@domain, req_host, {
+			query: build_filtered_domain_query(@domain, req_host, {
 				bool: {
 					must: [
 						{prefix: {path: req_url}},
@@ -162,7 +162,7 @@ class TemplateController < ApplicationController
 		template = hit['_source']['content']
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, subdomain_config, data)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), data)
 		odania_template.render.html_safe
 	end
 
@@ -175,7 +175,7 @@ class TemplateController < ApplicationController
 			sort: {
 				_score: 'desc'
 			},
-			query: build_domain_query(domain, req_host, {
+			query: build_filtered_domain_query(domain, req_host, {
 				bool: {
 					must: must_query
 				}
