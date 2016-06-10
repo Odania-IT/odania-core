@@ -8,9 +8,10 @@ class TemplateController < ApplicationController
 		req_host = params[:req_host]
 		req_url = params[:req_url]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
-		domain = subdomain_config['domain']
 
 		if subdomain_config.nil?
+			domain_info = PublicSuffix.parse(req_host)
+			domain = domain_info.domain
 			valid_domain_config = Odania.plugin.get_valid_domain_config
 
 			# Is this a valid domain?
@@ -31,6 +32,7 @@ class TemplateController < ApplicationController
 		end
 
 		# Identify layout
+		domain = subdomain_config['domain']
 		selected_layout = subdomain_config['layout']
 		style = '_general'
 		partial_name = subdomain_config['styles'][style]['entry_point']
