@@ -1,7 +1,7 @@
 ---
 development:
-  hosts: 127.0.0.1
+  hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>
 test:
-  hosts: 127.0.0.1
+  hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>
 production:
   hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>
