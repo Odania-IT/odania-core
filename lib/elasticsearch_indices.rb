@@ -38,11 +38,10 @@ class ElasticsearchIndices
 	def create_or_update
 		begin
 			create
+			update
 		rescue
 			# TODO check index exists
 		end
-
-		update
 	end
 
 	def create

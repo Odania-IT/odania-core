@@ -70,7 +70,7 @@ class TemplateController < ApplicationController
 
 		if total_hits.eql? 0
 			@error_msg = 'Sorry.... there was an internal error and we could not find the required template!'
-			return error
+			return error :service_unavailable
 		end
 
 		hits = result['hits']['hits']
@@ -142,11 +142,11 @@ class TemplateController < ApplicationController
 		render html: result
 	end
 
-	def error
+	def error(status=:not_found)
 		@error_msg = 'Sorry.... we could not find the requested page.' if @error_msg.nil?
 
 		response.headers['X-Do-Esi'] = true
-		render status: :not_found, action: :error
+		render status: status, action: :error
 	end
 
 	private
