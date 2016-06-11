@@ -20,6 +20,7 @@ class TemplateController < ApplicationController
 				# Redirect to default domain
 				valid_domains = valid_domain_config['default_domains'].empty? ? valid_domain_config['valid_domains'] : valid_domain_config['default_domains']
 				domain = valid_domains.keys.first
+				return render plain: 'No valid domain defined!', status: :service_unavailable if domain.nil?
 				subdomain = valid_domains[domain].first
 				return redirect_to "http://#{subdomain}.#{domain}"
 			else
