@@ -3,10 +3,6 @@ require 'odania'
 class TemplateController < ApplicationController
 	include EntryConcern
 
-	def default_or_valid_domain(valid_domain_config)
-
-	end
-
 	# Only rendering template might result in 200 instead of 404. Is there a way to let varnish send a 404 if one page fails?
 	def page
 		req_host = params[:req_host]
