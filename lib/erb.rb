@@ -65,6 +65,15 @@ module OdaniaCore
 		class Config
 			def initialize(variables)
 				@variables = variables
+				languages = config.get('languages')
+				req_url = @variables.data[:req_url]
+				req_url.split('/')
+				req_url.shift
+				if req_url.nil?
+					@current_language = languages.first
+				else
+					@current_language = languages.include?(req_url[0]) ? req_url[0] : languages.first
+				end
 			end
 
 			def get(key)
@@ -73,6 +82,10 @@ module OdaniaCore
 
 				@variables.notify_error_async :config, 'Key not found', key
 				"--- Config Key Not found: #{key} ---"
+			end
+
+			def current_language
+				@current_language
 			end
 		end
 

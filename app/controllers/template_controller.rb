@@ -84,7 +84,7 @@ class TemplateController < ApplicationController
 		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), {}, extra_partials)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), {req_url: req_url}, extra_partials)
 		render html: odania_template.render.html_safe
 	end
 
@@ -93,7 +93,7 @@ class TemplateController < ApplicationController
 		req_url = params[:req_url]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
 
-		result = render_direct_page 'web', req_host, req_url, subdomain_config
+		result = render_direct_page 'web', req_host, req_url, subdomain_config, {req_url: req_url}
 		return render html: result if result
 
 		# Try list view
@@ -126,7 +126,7 @@ class TemplateController < ApplicationController
 
 		# Get list view template from layout
 		partial_name = get_partial_template subdomain_config['partials']['list_view']
-		result = render_direct_page 'partial', req_host, partial_name, subdomain_config, {hits: @hits, total_hits: @total_hits}
+		result = render_direct_page 'partial', req_host, partial_name, subdomain_config, {hits: @hits, total_hits: @total_hits, req_url: req_url}
 		logger.info "rendering partial #{result.inspect}"
 		render html: result if result
 	end
@@ -137,7 +137,7 @@ class TemplateController < ApplicationController
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
 
 		el_partial_name = get_partial_template subdomain_config['partials'][partial_name]
-		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config
+		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config, {req_url: req_url}
 		return error if result.nil?
 		render html: result
 	end
@@ -151,7 +151,7 @@ class TemplateController < ApplicationController
 
 	private
 
-	def render_direct_page(type, req_host, path, subdomain_config, data={})
+	def render_direct_page(type, req_host, path, subdomain_config, data)
 		domain_info = PublicSuffix.parse(req_host)
 		domain = domain_info.domain
 
