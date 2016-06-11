@@ -38,7 +38,18 @@ class ElasticsearchIndices
 	def create_or_update
 		begin
 			create
-			update
+		rescue
+			# TODO check index exists
+		end
+
+		begin
+			update_mappings
+		rescue
+			# TODO check index exists
+		end
+
+		begin
+			update_settings
 		rescue
 			# TODO check index exists
 		end
@@ -63,7 +74,7 @@ class ElasticsearchIndices
 		}
 	end
 
-	def update
+	def update_settings
 		$elasticsearch.indices.put_settings index: $web_index, body: {
 			settings: @settings_content
 		}
@@ -71,7 +82,9 @@ class ElasticsearchIndices
 		$elasticsearch.indices.put_settings index: $partial_index, body: {
 			settings: @settings_content
 		}
+	end
 
+	def update_mappings
 		$elasticsearch.indices.put_mapping index: $web_index, type: 'web', body: {
 			properties: @web_index_content
 		}
