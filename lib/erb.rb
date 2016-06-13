@@ -65,14 +65,12 @@ module OdaniaCore
 		class Config
 			def initialize(variables)
 				@variables = variables
-				languages = config.get('languages')
-				req_url = @variables.data[:req_url]
-				req_url.split('/')
-				req_url.shift
-				if req_url.nil?
+				languages = get('languages')
+				locale = @variables.data[:locale]
+				if locale.nil?
 					@current_language = languages.first
 				else
-					@current_language = languages.include?(req_url[0]) ? req_url[0] : languages.first
+					@current_language = languages.include?(locale) ? locale : languages.first
 				end
 			end
 

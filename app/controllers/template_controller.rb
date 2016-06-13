@@ -79,21 +79,27 @@ class TemplateController < ApplicationController
 		logger.info "Layout Best Hit: [#{hit['_score']}] #{source['full_domain']} #{source['full_path']}"
 		template = source['content']
 
+		data = {
+			req_url: req_url,
+			locale: locale_from_url(req_url)
+		}
+
 		extra_partials = {
-			'content' => "http://internal.core/template/content?req_url=#{req_url}&req_host=#{req_host}"
+			'content' => "http://internal.core/template/content?req_url=#{req_url}&req_host=#{req_host}&locale=#{data[:locale]}"
 		}
 
 		response.headers['X-Do-Esi'] = true
-		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), {req_url: req_url}, extra_partials)
+		odania_template = OdaniaCore::Erb.new(template, subdomain_config, build_domain_query(domain, req_host), data, extra_partials)
 		render html: odania_template.render.html_safe
 	end
 
 	def content
 		req_host = params[:req_host]
 		req_url = params[:req_url]
+		locale = params[:locale]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
 
-		result = render_direct_page 'web', req_host, req_url, subdomain_config, {req_url: req_url}
+		result = render_direct_page 'web', req_host, req_url, subdomain_config, {req_url: req_url, locale: locale}
 		return render html: result if result
 
 		# Try list view
@@ -126,7 +132,7 @@ class TemplateController < ApplicationController
 
 		# Get list view template from layout
 		partial_name = get_partial_template subdomain_config['partials']['list_view']
-		result = render_direct_page 'partial', req_host, partial_name, subdomain_config, {hits: @hits, total_hits: @total_hits, req_url: req_url}
+		result = render_direct_page 'partial', req_host, partial_name, subdomain_config, {hits: @hits, total_hits: @total_hits, req_url: req_url, locale: locale}
 		logger.info "rendering partial #{result.inspect}"
 		render html: result if result
 	end
@@ -134,10 +140,11 @@ class TemplateController < ApplicationController
 	def partial
 		req_host = params[:req_host]
 		partial_name = params[:partial_name]
+		locale = params[:locale]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
 
 		el_partial_name = get_partial_template subdomain_config['partials'][partial_name]
-		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config, {req_url: req_url}
+		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config, {locale: locale}
 		return error if result.nil?
 		render html: result
 	end
@@ -193,5 +200,11 @@ class TemplateController < ApplicationController
 	def get_partial_template(partial)
 		return '' if partial.nil?
 		partial['template']
+	end
+
+	def locale_from_url(req_url)
+		req_url = req_url.split('/')
+		req_url.shift
+		req_url[0].nil? ? 'en' : req_url[0]
 	end
 end
