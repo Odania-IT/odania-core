@@ -1,6 +1,6 @@
 module OdaniaCore
 	class Erb
-		attr_accessor :variables, :config, :partial, :asset, :logger, :data
+		attr_accessor :variables, :config, :partial, :asset, :logger, :data, :search
 
 		def initialize(template, subdomain_config, domain_query, data={}, extra_partials={})
 			self.logger = Rails.logger
@@ -11,6 +11,7 @@ module OdaniaCore
 			self.config = Config.new self.variables
 			self.partial = Partial.new self.variables, domain_query
 			self.asset = Asset.new self.variables
+			self.search = Search.new self.variables, domain_query
 
 			if LOCAL_TEST_MODE
 				data = "\n<!-- Full Domain: #{subdomain_config['full_domain']} -->"
@@ -22,6 +23,11 @@ module OdaniaCore
 
 		def render
 			ERB.new(@template).result(binding)
+		end
+
+		# TODO get translations from config
+		def t(key)
+			key
 		end
 
 		class Variables
@@ -82,6 +88,10 @@ module OdaniaCore
 				"--- Config Key Not found: #{key} ---"
 			end
 
+			def exists?(key)
+				!@variables.get_config_key(key).nil?
+			end
+
 			def current_language
 				@current_language
 			end
@@ -94,11 +104,11 @@ module OdaniaCore
 			end
 
 			# Let varnish fetch the partial
-			def get(partial_name)
+			def get(partial_name, data=[])
 				esi_remove = '<esi:remove><p>An error occurred! ESI was not parsed!</p></esi:remove>'
 
 				if @variables.extra_partials[partial_name].nil?
-					esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&req_host=#{@variables.full_domain}"
+					esi_url = "http://internal.core/template/partial?partial_name=#{partial_name}&req_host=#{@variables.full_domain}&data=#{data}"
 				else
 					esi_url = @variables.extra_partials[partial_name]
 				end
@@ -106,7 +116,8 @@ module OdaniaCore
 			end
 
 			# Directly embed the partial into the page
-			def embed(partial_name)
+			def embed(partial_name, resolve_partial_name=true)
+				partial_name = get_partial_name(partial_name) if resolve_partial_name
 				query = {
 					filtered: {
 						filter: {
@@ -119,16 +130,28 @@ module OdaniaCore
 						query: @domain_query
 					}
 				}
-				result = $elasticsearch.search index: $partial_index, type: 'partial', body: query
+				result = $elasticsearch.search index: $partial_index, type: 'partial', body: {query: query}
 				entries = result['hits']
 				total_hits = entries['total']
 
-				return "ERROR PARTIAL NOT FOUND #{partial_name}" if total_hits.eql? 0
+				return "ERROR PARTIAL NOT FOUND #{partial_name} | #{query}" if total_hits.eql? 0
 
-				el_partial_data = get_partial_template @variables.subdomain_config['partials'][partial_name]
-				return '' if el_partial_data.nil?
-				odania_template = OdaniaCore::Erb.new(el_partial_data['template'], @variables.subdomain_config, @domain_query, @variables.data, @variables.extra_partials)
+				hits = entries['hits']
+				hit = hits.first
+				template = hit['_source']['content']
+				odania_template = OdaniaCore::Erb.new(template, @variables.subdomain_config, @domain_query, @variables.data, @variables.extra_partials)
 				odania_template.render.html_safe
+			end
+
+			def get_partial_name(partial_name)
+				get_partial_template @variables.subdomain_config['partials'][partial_name]
+			end
+
+			private
+
+			def get_partial_template(partial)
+				return '' if partial.nil?
+				partial['template']
 			end
 		end
 
@@ -148,6 +171,28 @@ module OdaniaCore
 			def get_asset_url(full_domain)
 				return @variables.subdomain_config['asset_url'] unless @variables.subdomain_config['asset_url'].nil?
 				full_domain
+			end
+		end
+
+		class Search
+			def initialize(variables, domain_query)
+				@variables = variables
+				@domain_query = domain_query
+			end
+
+			def domain_query
+				@domain_query
+			end
+
+			def query(query, type='web')
+				result = $elasticsearch.search index: select_index(type), type: type, body: query
+				result['hits']
+			end
+
+			private
+
+			def select_index(type)
+				'web'.eql?(type.to_s) ? $web_index : $partial_index
 			end
 		end
 	end

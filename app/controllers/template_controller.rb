@@ -141,10 +141,11 @@ class TemplateController < ApplicationController
 		req_host = params[:req_host]
 		partial_name = params[:partial_name]
 		locale = params[:locale]
+		data = params[:data]
 		subdomain_config = Odania.plugin.get_subdomain_config(req_host)
 
 		el_partial_name = get_partial_template subdomain_config['partials'][partial_name]
-		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config, {locale: locale}
+		result = render_direct_page 'partial', req_host, el_partial_name, subdomain_config, {locale: locale, data: data}
 		return error if result.nil?
 		render html: result
 	end
