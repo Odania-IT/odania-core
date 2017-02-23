@@ -10,17 +10,17 @@ class Admin::Api::MenuItemsControllerTest < ActionController::TestCase
 	end
 
 	test 'test should get index' do
-		get :index, {menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
+		get :index, params: {menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
 		assert_response :success
 	end
 
 	test 'test should show content' do
-		get :show, {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
+		get :show, params: {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
 		assert_response :success
 	end
 
 	test 'test should redirect on invalid id' do
-		get :show, {id: 'asd65dsadsatest-test', menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
+		get :show, params: {id: 'asd65dsadsatest-test', menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
 		assert_response :bad_request
 	end
 
@@ -29,7 +29,7 @@ class Admin::Api::MenuItemsControllerTest < ActionController::TestCase
 
 		data = {title: 'Test Title', published: true, target_type: 'CONTENT'}
 		assert_difference 'Odania::MenuItem.count' do
-			post :create, {menu_item: data, target_data: {id: content.id}, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
+			post :create, params: {menu_item: data, target_data: {id: content.id}, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
 		end
 		assert_response :success
 	end
@@ -38,7 +38,7 @@ class Admin::Api::MenuItemsControllerTest < ActionController::TestCase
 		data = {title: 'Test Title', published: true, target_type: 'URL'}
 		menu_item = @menu.menu_items.first
 		target_data = {'url' => 'http://www.perfect-reach.com'}
-		post :update, {id: menu_item.id.to_s, menu_item: data, menu_id: @menu.id.to_s, target_data: target_data, site_id: @site.id, format: :json}
+		post :update, params: {id: menu_item.id.to_s, menu_item: data, menu_id: @menu.id.to_s, target_data: target_data, site_id: @site.id, format: :json}
 		assert_response :success
 		menu_item.reload
 		assert_equal target_data, menu_item.target_data
@@ -49,7 +49,7 @@ class Admin::Api::MenuItemsControllerTest < ActionController::TestCase
 
 	test 'should destroy content' do
 		assert_difference 'Odania::MenuItem.count', -1 do
-			delete :destroy, {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
+			delete :destroy, params: {id: @menu.menu_items.first.id.to_s, menu_id: @menu.id.to_s, site_id: @site.id, format: :json}
 		end
 		assert_response :success
 	end

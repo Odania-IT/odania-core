@@ -31,7 +31,10 @@ class Admin::Api::MenuItemsController < Admin::ApiController
 	end
 
 	def update
-		@menu_item.target_data = odania_target_data_params
+		@menu_item.target_data = {}
+		odania_target_data_params.each_pair do |key, value|
+			@menu_item.target_data[key] = value
+		end
 		if @menu_item.update(content_params)
 			flash[:notice] = t('updated')
 			render action: :show

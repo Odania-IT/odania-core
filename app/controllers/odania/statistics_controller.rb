@@ -14,6 +14,6 @@ class Odania::StatisticsController < ApplicationController
 			end
 		end
 
-		render :text => updated ? 'updated' : 'duplicate'
+		render plain: updated ? 'updated' : 'duplicate'
 	end
 end

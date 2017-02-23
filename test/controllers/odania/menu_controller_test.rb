@@ -29,7 +29,7 @@ class Odania::MenuControllerTest < ActionController::TestCase
 		menu_item.target_data = {'url' => 'http://www.planetech.de'}
 		menu_item.save!
 
-		get :menu_index, {locale: @menu.language.iso_639_1}
+		get :menu_index, params: {locale: @menu.language.iso_639_1}
 		assert_response :redirect
 		assert_redirected_to 'http://www.planetech.de'
 	end

@@ -10,7 +10,7 @@ class Odania::ContentsControllerTest < ActionController::TestCase
 	end
 
 	test 'test should render content list' do
-		get :index, {locale: @site.default_language.iso_639_1}
+		get :index, params: {locale: @site.default_language.iso_639_1}
 		assert_response :success
 		assert assigns(:odania_contents)
 	end
@@ -21,26 +21,26 @@ class Odania::ContentsControllerTest < ActionController::TestCase
 		content.tag_list = 'TZ2'
 		content.save!
 
-		get :index, {tag: 'TZ2', locale: @site.default_language.iso_639_1}
+		get :index, params: {tag: 'TZ2', locale: @site.default_language.iso_639_1}
 		assert_response :success
 		assert assigns(:odania_contents)
 		assert_equal 1, assigns(:odania_contents).count
 	end
 
 	test 'test should render content' do
-		get :show, {id: @content.to_param, locale: @site.default_language.iso_639_1}
+		get :show, params: {id: @content.to_param, locale: @site.default_language.iso_639_1}
 		assert_response :success
 		assert assigns(:odania_content)
 	end
 
 	test 'test should redirect to correct url content' do
-		get :show, {id: @content.id, locale: @site.default_language.iso_639_1}
+		get :show, params: {id: @content.id, locale: @site.default_language.iso_639_1}
 		assert_response :redirect
 		assert_redirected_to odania_content_path(id: @content.to_param)
 	end
 
 	test 'test should render not found for invalid id' do
-		get :show, {id: '123123123', locale: @site.default_language.iso_639_1}
+		get :show, params: {id: '123123123', locale: @site.default_language.iso_639_1}
 		assert_response :not_found
 	end
 end

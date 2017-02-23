@@ -9,17 +9,17 @@ class Odania::Api::SitesControllerTest < ActionController::TestCase
 	end
 
 	test 'test should get index' do
-		get :index, {format: :json}
+		get :index, params: {format: :json}
 		assert_response :success
 	end
 
 	test 'test should show site' do
-		get :show, {id: @site.id, format: :json}
+		get :show, params: {id: @site.id, format: :json}
 		assert_response :success
 	end
 
 	test 'test should give error on invalid id' do
-		get :show, {id: 'asd65dsadsatest-test', format: :json}
+		get :show, params: {id: 'asd65dsadsatest-test', format: :json}
 		assert_response :bad_request
 	end
 end

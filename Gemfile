@@ -18,14 +18,15 @@ group :development do
 end
 
 group :development, :test do
+	gem 'rails-controller-testing'
 	gem 'factory_girl_rails'
 	gem 'minitest'
 	gem 'minitest-reporters'
 	gem 'database_cleaner'
-	gem 'paperclip', '~> 4'
+	gem 'paperclip'
 	gem 'http_accept_language'
 
-	gem 'libv8', '~> 3.11.8.12', :platforms => :ruby
+	gem 'libv8', :platforms => :ruby
 	gem 'therubyracer', '>= 0.11.4', :platforms => :ruby, :require => 'v8'
 	gem 'therubyrhino', '>= 0.11.4', :platforms => :jruby
 	gem 'bootstrap-sass'

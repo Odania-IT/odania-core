@@ -1,5 +1,5 @@
 class Odania::CategoriesController < ApplicationController
-	before_filter :valid_site!
+	before_action :valid_site!
 
 	def index
 		@categories = Odania::Category.where(site_id: current_site.id, language_id: current_menu.language_id).order('title ASC')

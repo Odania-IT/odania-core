@@ -10,17 +10,17 @@ class Odania::Api::StaticPagesControllerTest < ActionController::TestCase
 	end
 
 	test 'test should get index' do
-		get :index, {language_id: @language.id, site_id: @site.id, format: :json}
+		get :index, params: {language_id: @language.id, site_id: @site.id, format: :json}
 		assert_response :success
 	end
 
 	test 'test should show static page' do
-		get :show, {id: @static_page.id, language_id: @language.id, site_id: @site.id, format: :json}
+		get :show, params: {id: @static_page.id, language_id: @language.id, site_id: @site.id, format: :json}
 		assert_response :success
 	end
 
 	test 'test should give error on invalid id' do
-		get :show, {id: 'asd65dsadsatest-test', language_id: @language.id, site_id: @site.id, format: :json}
+		get :show, params: {id: 'asd65dsadsatest-test', language_id: @language.id, site_id: @site.id, format: :json}
 		assert_response :bad_request
 	end
 end

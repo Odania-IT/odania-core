@@ -4,7 +4,7 @@ module Odania
 	module Controllers
 		module Helpers
 
-			# before_filter to make sure that we have a valid site
+			# before_action to make sure that we have a valid site
 			def valid_site!
 				if current_site.nil?
 					domain = request.domain
@@ -15,7 +15,7 @@ module Odania
 					site = Site.active.where(is_default: true).first
 					return redirect_to "http://#{site.host}" unless site.nil?
 
-					render :text => 'There is no (default)-site defined!', status: :service_unavailable
+					render plain: 'There is no (default)-site defined!', status: :service_unavailable
 					return false
 				end
 
@@ -49,7 +49,7 @@ module Odania
 			#     current_user        # Current signed in user
 			#
 			#   Use:
-			#     before_filter :authenticate_user!
+			#     before_action :authenticate_user!
 			#
 			def self.define_helpers(config)
 				# Define methods dynamically based on the configuration

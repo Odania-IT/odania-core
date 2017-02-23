@@ -20,8 +20,8 @@ class HelperTest < ActionDispatch::IntegrationTest
 		assert_equal 'test_user_signed_in', response.body
 	end
 
-	# TODO: Check if we can make a proper test for testing the before_filter
-	test 'authentication before_filter' do
+	# TODO: Check if we can make a proper test for testing the before_action
+	test 'authentication before_action' do
 		Odania.setup do |config|
 			config.authenticate_user_function = "return redirect_to '/'#"
 		end
@@ -38,7 +38,7 @@ class HelperTest < ActionDispatch::IntegrationTest
 		assert_equal '{"host":"'+site.host+'","is_active":true}', response.body
 	end
 
-	test 'test before_filter without an default site' do
+	test 'test before_action without an default site' do
 		Odania::Site.destroy_all
 		get '/test/test_valid_site'
 		assert_response :service_unavailable
@@ -46,13 +46,13 @@ class HelperTest < ActionDispatch::IntegrationTest
 		assert_equal 'There is no (default)-site defined!', response.body
 	end
 
-	test 'test before_filter without an active site' do
+	test 'test before_action without an active site' do
 		get '/test/test_valid_site'
 		assert_response :redirect
 		assert_redirected_to "http://#{@default_site.host}"
 	end
 
-	test 'test before_filter for active site' do
+	test 'test before_action for active site' do
 		site = create(:site)
 		create(:menu_with_items, site: site, amount: 1, language: site.default_language)
 
@@ -73,7 +73,7 @@ class HelperTest < ActionDispatch::IntegrationTest
 	test 'test view helpers' do
 		menu = create(:menu_with_items, site: @default_site, amount: 1, language: @default_site.default_language)
 		host! @default_site.host
-		get '/test/test_view_helper', {locale: menu.language.iso_639_1}
+		get '/test/test_view_helper', params: {locale: menu.language.iso_639_1}
 		assert_response :success
 	end
 end
