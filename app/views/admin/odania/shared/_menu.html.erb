@@ -5,7 +5,7 @@
 
 		<select data-ng-model="current.menuId" data-ng-change="changedMenu()" data-ng-options="menu.id as getLanguage(menu.language_id).iso_639_1 for menu in currentSite.menus"></select>
 
-		&nbsp;&nbsp;<a href="#/sites/{{ current.siteId }}/edit">Edit</a>
+		&nbsp;&nbsp;<a href="#!/sites/{{ current.siteId }}/edit">Edit</a>
 	</div>
 	<div data-ng-if="!currentSite">
 		<%= t('admin.menu.no_site_defined') %>

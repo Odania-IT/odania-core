@@ -21,8 +21,8 @@
 		<td>{{ media.is_global }}</td>
 		<td>{{ getLanguage(media.language_id).iso_639_1 }}</td>
 		<td>{{ media.copyright }}</td>
-		<td><a data-ng-href="#/medias/{{ media.id }}">Show</a></td>
-		<td><a data-ng-href="#/medias/{{ media.id }}/edit">Edit</a></td>
+		<td><a data-ng-href="#!/medias/{{ media.id }}">Show</a></td>
+		<td><a data-ng-href="#!/medias/{{ media.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteMedia(media.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 	</tr>
 	</tbody>
@@ -30,4 +30,4 @@
 
 <br/>
 
-<a data-ng-href="#/medias/new">New Media</a>
+<a data-ng-href="#!/medias/new">New Media</a>

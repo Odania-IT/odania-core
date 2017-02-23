@@ -15,8 +15,8 @@
 	<tr data-ng-repeat="language in languages">
 		<td>{{ language.name }}</td>
 		<td>{{ language.iso_639_1 }}</td>
-		<td><a data-ng-href="#/languages/{{ language.id }}">Show</a></td>
-		<td><a data-ng-href="#/languages/{{ language.id }}/edit">Edit</a></td>
+		<td><a data-ng-href="#!/languages/{{ language.id }}">Show</a></td>
+		<td><a data-ng-href="#!/languages/{{ language.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteLanguage(language.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 	</tr>
 	</tbody>
@@ -24,4 +24,4 @@
 
 <br/>
 
-<%= link_to 'New Language', '#/languages/new' %>
+<%= link_to 'New Language', '#!/languages/new' %>

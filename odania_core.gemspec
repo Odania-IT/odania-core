@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
 	s.add_dependency 'jquery-rails'
 	s.add_dependency 'kaminari'
 	s.add_dependency 'rack-cors'
+	s.add_dependency 'sprockets-rails', '~> 2'
 
 	# Newer sanitize version >= 3 is not compatible with jruby due to dependency on nokogumbo
 	s.add_dependency 'sanitize', '~> 2.1'

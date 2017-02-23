@@ -1,11 +1,8 @@
 module Odania
 	module ApplicationHelper
-		def format_date(datum)
-			if datum.nil? then
-				return '';
-			end
-
-			return datum.strftime('%d.%m.%Y')
+		def format_date(date)
+			return '' if date.nil?
+			date.strftime('%d.%m.%Y')
 		end
 
 		def list_languages(languages)

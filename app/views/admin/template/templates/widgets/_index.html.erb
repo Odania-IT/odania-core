@@ -17,8 +17,8 @@
 			<td>{{ widget.name }}</td>
 			<td>{{ widget.template }}</td>
 			<td>{{ widget.is_global }}</td>
-			<td><a data-ng-href="#/widgets/{{ widget.id }}">Show</a></td>
-			<td><a data-ng-href="#/widgets/{{ widget.id }}/edit">Edit</a></td>
+			<td><a data-ng-href="#!/widgets/{{ widget.id }}">Show</a></td>
+			<td><a data-ng-href="#!/widgets/{{ widget.id }}/edit">Edit</a></td>
 			<td><a ng-confirm-click="deleteWidget(widget.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 		</tr>
 	</tbody>
@@ -26,4 +26,4 @@
 
 <br/>
 
-<%= link_to 'New Widget', '#/widgets/new' %>
+<%= link_to 'New Widget', '#!/widgets/new' %>

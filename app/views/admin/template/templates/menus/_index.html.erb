@@ -60,8 +60,8 @@
 		<td>{{ menu_item.target_type }}</td>
 		<td>{{ menu_item.published }}</td>
 		<td>{{ menu_item.parent_id == null ? '-' : getMenuItem(menu_item.parent_id).title }}</td>
-		<td><a data-ng-href="#/menus/{{ menu.id }}/menu_items/{{ menu_item.id }}">Show</a></td>
-		<td><a data-ng-href="#/menus/{{ menu.id }}/menu_items/{{ menu_item.id }}/edit">Edit</a></td>
+		<td><a data-ng-href="#!/menus/{{ menu.id }}/menu_items/{{ menu_item.id }}">Show</a></td>
+		<td><a data-ng-href="#!/menus/{{ menu.id }}/menu_items/{{ menu_item.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteMenuItem(menu_item.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
 	</tr>
 	</tbody>
@@ -69,6 +69,6 @@
 
 <br/>
 
-<a data-ng-href="#/menus/{{ menu.id }}/menu_items/new">New Menu item</a>
-| <a data-ng-href="#/menus/{{ menu.id }}/edit">Edit</a> | <a data-ng-href="#/menus">Back</a>
+<a data-ng-href="#!/menus/{{ menu.id }}/menu_items/new">New Menu item</a>
+| <a data-ng-href="#!/menus/{{ menu.id }}/edit">Edit</a> | <a data-ng-href="#!/menus">Back</a>
 

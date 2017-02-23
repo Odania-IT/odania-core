@@ -47,7 +47,9 @@ module Odania
 			include scope::Helpers if defined?(scope::Helpers)
 			include scope::UrlHelpers
 
-			layout :set_layout
+			if self.respond_to? 'layout'
+				layout :set_layout
+			end
 		end
 
 		ActiveSupport.on_load(:action_view) do
