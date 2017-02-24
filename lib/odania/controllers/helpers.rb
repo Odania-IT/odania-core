@@ -24,7 +24,7 @@ module Odania
 					return false
 				end
 
-				return true
+				true
 			end
 
 			def valid_menu!
@@ -33,12 +33,12 @@ module Odania
 					return false
 				end
 
-				return true
+				true
 			end
 
 			def require_admin_role!
 				return false unless user_signed_in?
-				return redirect_to root_path, notice: t('Not allowed') unless current_user.admin?
+				redirect_to root_path, notice: t('Not allowed') unless current_user.admin?
 			end
 
 			# Define authentication filters and accessor helpers.
@@ -69,9 +69,11 @@ module Odania
 
 				# Register helpers automatically after loading of action_controller
 				ActiveSupport.on_load(:action_controller) do
-					helper Odania::Controllers::Helpers
+					if self.respond_to? 'helper'
+						helper Odania::Controllers::Helpers
 
-					helper_method :user_signed_in?, :current_user
+						helper_method :user_signed_in?, :current_user
+					end
 				end
 			end
 
