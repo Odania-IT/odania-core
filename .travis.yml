@@ -1,11 +1,11 @@
 language: ruby
 bundler_args: --without development
 rvm:
+  - 2.3
   - 2.2
   - jruby-19mode
   - jruby-head
   - ruby-head
-  - ree
 env:
   - DB=sqlite
   - DB=mysql
@@ -13,7 +13,6 @@ env:
 matrix:
   allow_failures:
     - rvm: jruby-19mode
-    - rvm: ree
     - rvm: ruby-head
     - rvm: jruby-head
 notifications:
