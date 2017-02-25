@@ -32,7 +32,7 @@ class Odania::ApiController < ApplicationController
 
 	def verify_api_user
 		load_api_user
-		return render json: {error: 'unauthorized'}, status: :unauthorized if @current_user.nil?
+		render json: {error: 'unauthorized'}, status: :unauthorized if @current_user.nil?
 	end
 
 	def validate_own_resource

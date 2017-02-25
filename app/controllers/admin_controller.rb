@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 	before_action :authenticate_user!, :choose_site, :require_admin_role!, :set_language
-	skip_before_action :valid_site!
+	skip_before_action :valid_site!, raise: false
 	layout :set_admin_layout
 
 	protected
