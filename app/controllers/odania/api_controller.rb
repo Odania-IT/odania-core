@@ -2,7 +2,7 @@ class Odania::ApiController < ApplicationController
 	after_action :add_flash_to_header
 
 	# @TODO maybe we can add it as header?
-	skip_before_action :verify_authenticity_token
+	skip_before_action :verify_authenticity_token, raise: false
 
 	private
 
