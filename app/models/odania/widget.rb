@@ -3,7 +3,7 @@ class Odania::Widget < ActiveRecord::Base
 	belongs_to :language, :class_name => 'Odania::Language'
 	belongs_to :user, :class_name => 'Odania::User'
 
-	serialize :content, Hash
+	serialize :content #, Hash <- it is currently stored as ActionController::Parameters
 
 	validates_length_of :name, minimum: 1
 
