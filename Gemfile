@@ -47,4 +47,7 @@ group :development, :test do
 	end
 end
 
+# Bug in sprockets
+gem 'sprockets-rails', '2.3.3'
+
 gem 'codeclimate-test-reporter', group: :test, require: nil

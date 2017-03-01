@@ -1,7 +1,7 @@
 <div class="container-fluid" data-ng-controller="SideMenuController">
 	<div data-ng-if="currentSite">
 		<%= t('admin.menu.selected_site') %>:
-		<select data-ng-model="current.siteId" data-ng-change="changedSite()" data-ng-options="site.id as site.name for site in sites"></select>
+		<select data-ng-model="current.siteId" data-ng-change="changedSite()" data-ng-options="site.id as site.host for site in sites"></select>
 
 		<select data-ng-model="current.menuId" data-ng-change="changedMenu()" data-ng-options="menu.id as getLanguage(menu.language_id).iso_639_1 for menu in currentSite.menus"></select>
 
