@@ -56,32 +56,35 @@ app.config(['$routeProvider', '$provide', function ($routeProvider, $provide) {
 		}]
 	};
 
-	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', 'ImageSelectService', function (taRegisterTool, taOptions, ImageSelectService) {
-		// $delegate is the taOptions we are decorating
-		// register the tool with textAngular
-		taRegisterTool('colourRed', {
-			iconclass: "fa fa-file-image-o",
-			action: function (deferred, restoreSelection) {
-				var that = this;
+	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', 'ImageSelectService',
+		function (taRegisterTool, $delegate, ImageSelectService) {
+			// $delegate is the taOptions we are decorating
+			// register the tool with textAngular
+			taRegisterTool('selectImage', {
+				iconclass: "fa fa-file-image-o",
+				action: function (deferred, restoreSelection) {
+					var that = this;
 
-				ImageSelectService.selectImage().then(function (image) {
-					restoreSelection();
-					that.$editor().wrapSelection('InsertImage', image.src);
-					$('img[src="'+image.src+'"]').attr('alt', image.alt).attr('title', image.title);
+					ImageSelectService.selectImage().then(function (image) {
+						restoreSelection();
+						that.$editor().wrapSelection('InsertImage', image.src);
+						$('img[src="' + image.src + '"]').attr('alt', image.alt).attr('title', image.title);
 
-					deferred.resolve();
-				}, function (err) {
-					console.warn('Error image select', err);
-					deferred.reject();
-				});
+						deferred.resolve();
+					}, function (err) {
+						console.warn('Error image select', err);
+						deferred.reject();
+					});
 
-				return false;
-			}
-		});
-		// add the button to the default toolbar definition
-		taOptions.toolbar[3].push('colourRed');
-		return taOptions;
-	}]);
+					return false;
+				}
+			});
+
+			// add the button to the default toolbar definition
+			$delegate.toolbar[3].push('selectImage');
+			return $delegate;
+		}
+	]);
 
 	$routeProvider
 		.when('/dashboard', {

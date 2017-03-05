@@ -17,10 +17,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require ./config
-//= require ./app
+//= require ../textangular/textAngular-rangy.min
 //= require ../textangular/textAngular-sanitize.min
 //= require ../textangular/textAngular.min
-//= require ../textangular/textAngular-rangy.min
+//= require ./config
+//= require ./app
 //= require_tree ../general
 //= require_tree .

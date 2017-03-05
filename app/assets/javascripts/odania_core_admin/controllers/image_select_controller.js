@@ -1,4 +1,4 @@
-app.controller('ImageSelectController', ['$rootScope', '$scope', '$modalInstance', 'MediaResource', function ($rootScope, $scope, $modalInstance, MediaResource) {
+app.controller('ImageSelectController', ['$rootScope', '$scope', '$uibModalInstance', 'MediaResource', function ($rootScope, $scope, $uibModalInstance, MediaResource) {
 	MediaResource.get({
 		siteId: $rootScope.currentSite.id,
 		menuId: $rootScope.currentMenu.id
@@ -14,10 +14,10 @@ app.controller('ImageSelectController', ['$rootScope', '$scope', '$modalInstance
 			return;
 		}
 
-		$modalInstance.close($scope.selectedImage);
+		$uibModalInstance.close($scope.selectedImage);
 	};
 	$scope.modalOptions.close = function () {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 
 	$scope.selectMedia = function(media) {

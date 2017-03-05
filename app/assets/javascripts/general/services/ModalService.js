@@ -1,5 +1,4 @@
-app.service('modalService', ['$modal',
-	function ($modal) {
+app.service('modalService', ['$uibModal', function ($uibModal) {
 
 		var modalDefaults = {
 			backdrop: true,
@@ -44,7 +43,7 @@ app.service('modalService', ['$modal',
 				}
 			}
 
-			return $modal.open(tempModalDefaults).result;
+			return $uibModal.open(tempModalDefaults).result;
 		};
 
 	}
