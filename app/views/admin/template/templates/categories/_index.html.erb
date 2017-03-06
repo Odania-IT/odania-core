@@ -6,6 +6,7 @@
 		<th>Title</th>
 		<th>Is active</th>
 		<th>Language</th>
+		<th>Count</th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -17,6 +18,7 @@
 		<td>{{ category.title }}</td>
 		<td>{{ category.is_active }}</td>
 		<td>{{ getLanguage(category.language_id).iso_639_1 }}</td>
+		<td>{{ category.count }}</td>
 		<td><a data-ng-href="#!/categories/{{ category.id }}">Show</a></td>
 		<td><a data-ng-href="#!/categories/{{ category.id }}/edit">Edit</a></td>
 		<td><a ng-confirm-click="deleteCategory(category.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
