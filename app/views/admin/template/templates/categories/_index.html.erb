@@ -1,0 +1,29 @@
+<h1>Categories for {{ getLanguage(currentMenu.language_id).iso_639_1 }} - {{ getSite(currentSite.id).name }}</h1>
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Title</th>
+		<th>Is active</th>
+		<th>Language</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+
+	<tbody>
+	<tr data-ng-repeat="category in categories">
+		<td>{{ category.title }}</td>
+		<td>{{ category.is_active }}</td>
+		<td>{{ getLanguage(category.language_id).iso_639_1 }}</td>
+		<td><a data-ng-href="#!/categories/{{ category.id }}">Show</a></td>
+		<td><a data-ng-href="#!/categories/{{ category.id }}/edit">Edit</a></td>
+		<td><a ng-confirm-click="deleteCategory(category.id)" ng-confirm-message="Are you sure?">Destroy</a></td>
+	</tr>
+	</tbody>
+</table>
+
+<br/>
+
+<a data-ng-href="#!/categories/new">New Category</a>

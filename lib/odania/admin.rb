@@ -45,5 +45,10 @@ module Odania
 		@@pages[:site] << {name: 'New Static Pages', in_menu: false, path: '/static_pages/new', controller: 'EditStaticPageController', template: 'static_pages/edit'}
 		@@pages[:site] << {name: 'Show Static Pages', in_menu: false, path: '/static_pages/:id', controller: 'StaticPageController', template: 'static_pages/show'}
 		@@pages[:site] << {name: 'Edit Static Pages', in_menu: false, path: '/static_pages/:id/edit', controller: 'EditStaticPageController', template: 'static_pages/edit'}
+
+		@@pages[:site] << {name: 'Categories', in_menu: true, path: '/categories', controller: 'CategoriesController', template: 'categories/index'}
+		@@pages[:site] << {name: 'New Category', in_menu: false, path: '/categories/new', controller: 'EditCategoryController', template: 'categories/edit'}
+		@@pages[:site] << {name: 'Show Category', in_menu: false, path: '/categories/:id', controller: 'CategoryController', template: 'categories/show'}
+		@@pages[:site] << {name: 'Edit Category', in_menu: false, path: '/categories/:id/edit', controller: 'EditCategoryController', template: 'categories/edit'}
 	end
 end
