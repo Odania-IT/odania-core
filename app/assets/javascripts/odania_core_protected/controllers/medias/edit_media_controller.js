@@ -27,9 +27,9 @@ app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'Med
 		$http[method](uploadUrl, fd, {
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
-		}).success(function () {
+		}).then(function () {
 			$location.path('/medias');
-		}).error(function (data) {
+		}, function (data) {
 			$scope.errors = data.errors;
 		});
 	}

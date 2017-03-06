@@ -14,6 +14,7 @@ class Protected::Api::MediasController < Protected::ApiController
 		@media = Odania::Media.new(media_params)
 		@media.user_id = current_user.id
 		@media.site_id = current_site.id
+		@media.language_id = current_site.default_language_id if @media.language_id.nil? or @media.language_id.eql?(0)
 
 		if @media.save
 			flash[:notice] = t('created')

@@ -1,4 +1,5 @@
-app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'MediaResource', '$routeParams', 'eventTypeProvider', '$http', function ($location, $scope, $rootScope, MediaResource, $routeParams, eventTypeProvider, $http) {
+app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'MediaResource', '$routeParams', 'eventTypeProvider', '$http',
+	function ($location, $scope, $rootScope, MediaResource, $routeParams, eventTypeProvider, $http) {
 	console.log("controller :: EditMediaController");
 	var mediaId = null;
 
@@ -27,9 +28,9 @@ app.controller('EditMediaController', ['$location', '$scope', '$rootScope', 'Med
 		$http[method](uploadUrl, fd, {
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
-		}).success(function () {
+		}).then(function () {
 			$location.path('/medias');
-		}).error(function (data) {
+		}, function (data) {
 			$scope.errors = data.errors;
 		});
 	}
