@@ -3,14 +3,14 @@
 		<div class="col-md-9">
 			<h1>Editing Site {{ site.name }}</h1>
 
-			<tabset>
-				<tab heading="General"><%= render partial: 'admin/template/templates/sites/tab_general' %></tab>
-				<tab heading="Description"><%= render partial: 'admin/template/templates/sites/tab_description' %></tab>
-				<tab heading="Email & Tracking"><%= render partial: 'admin/template/templates/sites/tab_mail_tracking' %></tab>
-				<tab heading="Social"><%= render partial: 'admin/template/templates/sites/tab_social' %></tab>
-				<tab heading="Template"><%= render partial: 'admin/template/templates/sites/tab_template' %></tab>
-				<tab heading="Plugins"><%= render partial: 'admin/template/templates/sites/tab_plugins' %></tab>
-			</tabset>
+			<uib-tabset>
+				<uib-tab heading="General"><%= render partial: 'admin/template/templates/sites/tab_general' %></uib-tab>
+				<uib-tab heading="Description"><%= render partial: 'admin/template/templates/sites/tab_description' %></uib-tab>
+				<uib-tab heading="Email & Tracking"><%= render partial: 'admin/template/templates/sites/tab_mail_tracking' %></uib-tab>
+				<uib-tab heading="Social"><%= render partial: 'admin/template/templates/sites/tab_social' %></uib-tab>
+				<uib-tab heading="Template"><%= render partial: 'admin/template/templates/sites/tab_template' %></uib-tab>
+				<uib-tab heading="Plugins"><%= render partial: 'admin/template/templates/sites/tab_plugins' %></uib-tab>
+			</uib-tabset>
 		</div>
 		<div class="col-md-3">
 			<div class="form-group">
