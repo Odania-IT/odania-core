@@ -44,7 +44,7 @@ class Admin::Api::WidgetsController < Admin::ApiController
 	private
 
 	def verify_widget
-		@widget = Odania::Widget.where(site_id: params[:site_id], id: params[:id]).first
+		@widget = Odania::Widget.where('(site_id = ? OR is_global = ?) AND id = ?', params[:site_id], true, params[:id]).first
 		bad_api_request('resource_not_found') if @widget.nil?
 	end
 
