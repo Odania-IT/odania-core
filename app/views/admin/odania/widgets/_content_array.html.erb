@@ -13,9 +13,13 @@
 		<textarea data-ng-model="widget.content[parameter.key][idx][field.key]" data-placeholder="<%= t('admin.views.create_widget.textarea.placeholder') %>"></textarea>
 	</div>
 	<div data-ng-if="field.type == 'site'">
-		<select data-ng-model="widget.content[parameter.key][idx][field.key]" data-ng-options="site.id as site.name for site in sites" class="form-control"></select>
+		<select data-ng-model="widget.content[parameter.key][idx][field.key]" data-ng-options="site.id as site.name for site in sites" class="form-control">
+			<option value="">-</option>
+		</select>
 	</div>
 	<div data-ng-if="field.type == 'widget'">
-		<select data-ng-model="widget.content[parameter.key][idx][field.key]" data-ng-options="widget.id as widget.name for widget in widgets" class="form-control"></select>
+		<select data-ng-model="widget.content[parameter.key][idx][field.key]" data-ng-options="widget.id as widget.name for widget in widgets" class="form-control">
+			<option value="">-</option>
+		</select>
 	</div>
 </div>
