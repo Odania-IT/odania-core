@@ -1,7 +1,0 @@
----
-development:
-  hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>
-test:
-  hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>
-production:
-  hosts: <%= ENV['ELASTICSEARCH_HOSTS'] %>

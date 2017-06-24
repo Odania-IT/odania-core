@@ -1,6 +1,7 @@
 language: ruby
+bundler_args: --without development
 rvm:
-  - 2.2.4
+  - 2.2
   - jruby-19mode
   - jruby-head
   - ruby-head
@@ -17,9 +18,6 @@ notifications:
   email: true
 script:
   - bundle exec rake
-before_script:
-  - sleep 10
-  - cp config/elasticsearch.dist.yml config/elasticsearch.yml
 addons:
   code_climate:
     repo_token: 2b335554fb7a1f2c6b00f37eebda596c8b10fcd1717a8ee55dd449b60a21ac11
