@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    odania (0.1.0)
+    odania (0.2.0)
       devise
       devise-i18n
       elasticsearch
@@ -56,7 +56,7 @@ GEM
       tzinfo (~> 1.1)
     arel (8.0.0)
     bcrypt (3.1.11)
-    bson (4.2.1)
+    bson (4.2.2)
     builder (3.2.3)
     climate_control (0.2.0)
     cocaine (0.5.8)
